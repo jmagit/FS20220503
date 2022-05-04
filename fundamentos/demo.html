@@ -6,23 +6,77 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Demos del curso</title>
+    <link rel="stylesheet" href="./thema/styles.css">
+    <style>
+        .error {
+            color: yellow !important;
+        }
+    </style>
 </head>
 
 <body>
-    <h1>Título del documento</h1>
-    <h2>Subtitulo</h2>
-    <p>Hola mundo</p>
-    <p>
-    Lorem ipsum dolor <b>sit amet consectetur</b> adipisicing elit. 
-    Inventore molestiae alias cum nisi maxime, iusto ullam
-    placeat corporis ut fugit. <i>Corporis quia</i> esse dolorum tempora voluptate,
-     distinctio architecto quod excepturi.
-    </p>
-    <ul>
-        <li>Uno</li>
-        <li>Dos</li>
-        <li>Tres</li>
-    </ul>
+    <header>
+        <a href="/principal.html"><img src="./images/logo.png" width="160" alt="Logotipo del Santander"></a>
+        <nav>
+            <a href="/principal.html">Inicio</a> |
+            <a href="demo.html">Formularios</a> |
+            <a href="particulares">Particulares</a> |
+            <a href="particulares/cuentas.html">Cuentas</a> |
+        </nav>
+    </header>
+    <main>
+        <h1 class="error">Título del documento</h1>
+        <h2>Subtitulo</h2>
+        <p>Hola mundo</p>
+        <h2>Subtitulo</h2>
+        <p>
+            Lorem ipsum dolor <b>sit amet consectetur</b> adipisicing elit.
+            Inventore molestiae alias cum nisi maxime, iusto ullam
+            placeat corporis ut fugit. <i>Corporis quia</i> esse dolorum tempora voluptate,
+            distinctio architecto quod excepturi.
+        </p>
+        <ul class="lista-open">
+            <li>Uno</li>
+            <li class="error cursiva">Dos</li>
+            <li style="color: yellow">Tres</li>
+        </ul>
+        <div>
+            <p>
+                <label for="nombre">Busca</label>
+                <input id="nombre" name="nombre" type="text" value="inicial" required>
+            </p>
+        </div>
+        <form method="get">
+            <input type="hidden" name="oculto" value="esto no se ve">
+            <label for="nombre">Nombre</label>
+            <input id="nombre" name="nombre" type="text" value="inicial" required>
+            <label for="apellidos">Apellidos</label>
+            <input id="apellidos" name="apellidos" type="text">
+            <input id="apellidos" name="apellidos" type="text">
+            <label for="edad">Edad</label>
+            <input id="edad" name="edad" type="number">
+            <br>
+            Conflictivo: <input name="conflictivo" type="checkbox" value="si" checked>
+            <br>
+            <input type="radio" name="genero" value="M">Masculino
+            <input type="radio" name="genero" value="F" checked>Femenino
+            <input type="radio" name="situacion" value="M">Local
+            <input type="radio" name="situacion" value="F" checked>Remoto
+            <select name="nivel" size="10">
+                <option value="1">uno</option>
+                <option value="2" selected>dos</option>
+                <option value="3">tres</option>
+            </select><br>
+            Descripción: <textarea name="descripcion" rows="3"
+                cols="50">Lorem ipsum dolor sit amet consectetur adipisicing elit. Ducimus, praesentium sint non harum commodi alias modi quasi reiciendis facere illo optio ratione suscipit inventore, repudiandae dolor expedita dolorum nulla nihil?</textarea>
+            <input name="boton" type="submit" value="Enviar">
+        </form>
+    </main>
+    <footer class="error">
+        <p class="footer">
+            &copy; Todos los derechos reservados
+        </p>
+    </footer>
 </body>
 
 </html>
