@@ -3,7 +3,7 @@
 ## Front End
 ## HTML
 
-- Prototipo Broker de bolsa
+- Prototipo proyecto
 - Formulario de clientes
 
 ### Ejemplos de refuerzo
