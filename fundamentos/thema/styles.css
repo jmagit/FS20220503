@@ -46,7 +46,7 @@ footer p {
     
 }
 @media print {
-    input[type=submit], input[type=resset],input[type=button], button {
+    input[type=submit], input[type=reset],input[type=button], button {
         display: none;
     }
 
