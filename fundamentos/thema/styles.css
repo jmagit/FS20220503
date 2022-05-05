@@ -1,26 +1,29 @@
+@import url(variables.css);
+
 body {
-    color: black;
-    background-color: snow;
+    color: var(--color-principal-frente);
+    background-color: var(--color-principal-fondo);
 }
 
 body > * {
     text-transform: uppercase;
 }
 #cabecera {
-    background-color: red;
-    color: white;
+    background-color: var(--color-cabecera-fondo);
+    color: var(--color-cabecera-frente);
     padding: 10px;
     margin: -8px;
     display: flex;
     flex-direction: row;
     justify-items: flex-start;
-    align-items: center;
+    align-items: flex-start;
 }
 #cabecera nav {
     margin-left: 5px;
 }
 .error {
-    color: red!important;
+    color: var(--color-error-frente)!important;
+    font-size: calc(var(--tamaño-medio) * var(--factor-grande));
 }
 
 .cursiva, td {
@@ -41,7 +44,7 @@ h1.falta {
 }
 
 form input[type=text] {
-    color: red;
+    color: var(--color-error-frente);
 }
 input[required] {
     border-color: green;

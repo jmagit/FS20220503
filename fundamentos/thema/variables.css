@@ -1,0 +1,11 @@
+:root {
+    --color-principal-fondo: snow;
+    --color-principal-frente: black;
+    --color-cabecera-fondo: red;
+    --color-cabecera-frente: white;
+    --color-error-fondo: white;
+    --color-error-frente: red;
+    --tamaño-medio: 1em;
+    --factor-grande: 0.4;
+    --factor-muygrande: 1.4;
+}
