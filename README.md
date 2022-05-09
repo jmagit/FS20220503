@@ -42,6 +42,7 @@ Sgúen etsduios raleziaods por la Uivenrsdiad ignlsea de Cmdibrage, no ipmotra e
 Cuaquleir tetxo se pduee leer... si se respetan la primera y la última letra de cada palabra
 
 [El Tutorial de JavaScript Moderno](https://es.javascript.info/)
+<https://developer.mozilla.org/es/docs>
 
 ### Ejercicios
 
