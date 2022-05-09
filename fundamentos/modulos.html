@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejemplos de módulos JavaScript</title>
+</head>
+<body>
+    <h1>Mira la consola</h1>
+
+    <script type="module">
+        import defecto, { NOMBRE, calcula } from './js/modulo1.js'
+        import * as m from './js/modulo2.js'
+        import { NOMBRE as OTRO_NOMBRE, calc, principal} from './js/modulo2.js'
+
+        var a = 3
+
+        console.log(NOMBRE)
+        console.log(calcula(3,2))
+        console.log(defecto())
+
+        console.log(m.NOMBRE)
+        console.log(m.calc(3,2))
+        console.log(m.principal())
+        
+        console.log(OTRO_NOMBRE)
+        console.log(calc(3,2))
+        console.log(principal())
+
+        let cad = prompt('Dame tu nombre', 'mundo')
+        alert('mensaje de ' + cad)
+    </script>
+</body>
+</html>
