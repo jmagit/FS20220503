@@ -45,69 +45,168 @@
         // if (typeof (a) === "string" && a instanceof String) { }
         // //rslt = isNaN(+a)
 
-        if (typeof (a) === "string" && a instanceof String) {
-            b = 5;
-            c = 4;
-            if (a > 8) {
+        // if (typeof (a) === "string" && a instanceof String) {
+        //     b = 5;
+        //     c = 4;
+        //     if (a > 8) {
 
-            }
-        } else if (a < 0)
-            c = 3
-        else
-            c = 0
+        //     }
+        // } else if (a < 0)
+        //     c = 3
+        // else
+        //     c = 0
 
-        let tab = new Array()
-        tab = [1, 2, 3]
-        let [a, b, c, ...resto] = tab
-        [a, b] = [b, a]
-        a = tab[0]
-        tab[0] = 7
-        tab[3] = 5
-        tab[7] = 5
-        tab[5] = [3, 2, 1]
-        tab[5] = ''
-        for(let i of tab) {
-            console.log(i)
-        }
-        let rslt = 0
-        // for(let i = 0; i < tab.length; i++) {
+        // let tab = new Array()
+        // tab = [1, 2, 3]
+        // let [a, b, c, ...resto] = tab
+        // [a, b] = [b, a]
+        // a = tab[0]
+        // tab[0] = 7
+        // tab[3] = 5
+        // tab[7] = 5
+        // tab[5] = [3, 2, 1]
+        // tab[5] = ''
+        // for(let i of tab) {
+        //     console.log(i)
+        // }
+        // let rslt = 0
+        // // for(let i = 0; i < tab.length; i++) {
+        // //     rslt += tab[i]
+        // // }
+        // for (let i of tab) {
         //     rslt += tab[i]
         // }
-        for (let i of tab) {
-            rslt += tab[i]
-        }
-        b=-1
-        switch (a) {
-            case 4:
-                b = 1
-            case 1:
-            case 2:
-            case 3:
-                c = 1
-                break
-            case 5:
-                c = 2
-                break
-            default:
-                b = 0
-                c = 0
-                break
-        }
-        fn(...tab)
-        while(true) {
-            // ...
-            if(a<0) break;
-            // ...
-            if(b>0) break
-            // ...
-            continue;
-            algo=0
+        // b=-1
+        // switch (a) {
+        //     case 4:
+        //         b = 1
+        //     case 1:
+        //     case 2:
+        //     case 3:
+        //         c = 1
+        //         break
+        //     case 5:
+        //         c = 2
+        //         break
+        //     default:
+        //         b = 0
+        //         c = 0
+        //         break
+        // }
+        // fn(...tab)
+        // while(true) {
+        //     // ...
+        //     if(a<0) break;
+        //     // ...
+        //     if(b>0) break
+        //     // ...
+        //     continue;
+        //     algo=0
 
+        // }
+        // fn = (a, b, c) => a * b * c
+        // fn = function (a, b, c) { return a * b * c }
+        // // function suma(){ return "cadena" }
+        // let op = [ suma, resta, 1, 2]
+        // let ch = '/'
+        // // ch = '/\'); alert(\'Codigo malicioso'
+        // op[1] = eval(`calcula('${ch}')`)
+        let o = new Object() // {}
+        o.nombre = 'Pepito'
+        o['apellidos'] = 'Grillo'
+        // let cmp = 'apellidos'
+        // o[cmp] = 'kk'
+        o.nombreCompleto = () => `${this.nombre} ${this.apellidos}`
+        o.nombreCompleto.bind(o)
+        o.nombreCompleto = function () {
+            return `${this.nombre} ${this.apellidos}`
         }
+        o = {
+            nombre: 'Carmelo',
+            apellidos: 'Coton',
+            nombreCompleto: function () {
+                return `${this.nombre} ${this.apellidos}`
+            },
+        }
+        function Persona(nombre, apellidos, laEdad = 99) {
+            let vm = this
+            let edad = laEdad
+            let separador = '-'
+            this.nombre = nombre
+            this.apellidos = apellidos
+            this.nombreCompleto = function (tratamiento = 'Sr.') {
+                return `${tratamiento} ${vm.nombre}${separador}${vm.apellidos}`
+            }
+            this.Edad = function () {
+                if (arguments.length === 1) {
+                    if (arguments[0] < 0)
+                        throw new Error('No ha nacido')
+                    edad = arguments[0]
+                } else
+                    return edad
+            }
+        }
+
+        class Persona2 {
+            constructor(nombre, apellidos) {
+                this.nombre = nombre
+                this.apellidos = apellidos
+            }
+            nombreCompleto(tratamiento = 'Sr.') {
+                return `${tratamiento} ${this.nombre} ${this.apellidos}`
+            }
+            get Edad() { return this._edad; }
+            set Edad(value) {
+                if (value < 0)
+                    throw new Error('No ha nacido') 
+                this._edad = value; 
+            }
+        }
+        console.log(typeof(Persona), typeof(Persona2))
+        let o3 = new Persona2('Pepito', 'Grillo')
+        o3.Edad = 99
+        console.log(o3)
+        o3._edad = -10
+        console.log(o3.Edad)
+        // Persona.prototype.nombreCompleto = function (tratamiento = 'Sr.') {
+        //     return `${tratamiento} ${this.nombre} ${this.apellidos}`
+        // }
+        const nombreCompleto = function (tratamiento = 'Sr.') {
+            return `${tratamiento} ${this.nombre} ${this.apellidos}`
+        }
+        let o1 = new Persona('Pepito', 'Grillo')
+        let o2 = new Persona('Carmelo', 'Coton')
+        o1.nombre = 0
+        o1.edad = 'kk'
+        console.log(o1.Edad(), o1.edad)
+        o1.Edad(66)
+        console.log(o1.Edad(), o1.edad)
+        // o1.nombreCompleto = function () {
+        //     return `${this.apellidos}, ${this.nombre}`
+        // }
+        // console.log(o1.nombreCompleto())
+        // console.log(o2.nombreCompleto())
+        // Persona.prototype.nombreCompleto = function () {
+        //     return `${this.apellidos}, ${this.nombre}`
+        // }
+        console.log(o1)
+        console.log(o1.nombreCompleto())
+        console.log(o2.nombreCompleto.apply(o1, ['Don', 1, 2]))
+        nombreCompleto.bind(o1)
+        console.log(nombreCompleto('Don'))
+
     </script>
     <script>
-        console.log(tab[5][2])
-        console.log(tab)
+
+        // console.log(eval('suma(3,5)-2*5'))
+        // console.log(op[1](op[2],op[3]))
+        // try {
+        //     console.log(calc(4, 2, '%'))
+        // } catch (err) {
+        //     console.log(`Error: ${err.message}`)
+        // }
+        // console.log(dobla(4, 2, resta))
+        // console.log(dobla(4, 2, (a, b) => a * b))
     </script>
 </body>
 
