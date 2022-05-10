@@ -9,9 +9,52 @@
 </head>
 
 <body>
+    <div>
+        <form>
+            <input id="nombre" type="text" value="mundo" >
+            <button type="submit" class="saludar">Saluda</button>
+            <output onclick="alert('mal')"></output>
+        </form>
+    </div>
 
     <script src="js/demos.js"></script>
     <script>
+        const btn = document.querySelector('.saludar')
+        function saludar(ev) {
+            const entrada = document.querySelector('#nombre')
+            const salida = document.querySelector('output')
+            salida.innerHTML = `Hola ${entrada.value}`
+            salida.style='color: blue'
+            btn.textContent = 'Despide'
+            entrada.focus()
+            btn.removeEventListener('click', saludar)
+            btn.addEventListener('click', despedir)
+            ev.preventDefault();
+            entrada.hidden = !entrada.hidden
+
+        }
+        function despedir(ev) {
+            const entrada = document.querySelector('#nombre')
+            const salida = document.querySelector('output')
+            salida.innerHTML = `Adios ${entrada.value}`
+            salida.style='color: red'
+            btn.textContent = 'Saluda'
+            btn.removeEventListener('click', despedir)
+            btn.addEventListener('click', saludar)
+            ev.preventDefault();
+            entrada.focus()
+            entrada.hidden = !entrada.hidden
+
+        }
+
+        btn.addEventListener('click', saludar)
+        btn.addEventListener('click', (ev) => { 
+            console.log('pulsa el botón en ' + ev.target.type)
+            //ev.stopPropagation()
+        } )
+        document.querySelector('form').addEventListener('click', (ev) => { 
+            console.log(`pulsa el botón en (${ev.clientX},${ev.clientY})`)
+        } )
         // 'use strict'
         // const TAMAÑO_MAXIMO = 10
         //     (function () {
