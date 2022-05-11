@@ -9,10 +9,62 @@
         .errorMsg {
             color: red;
         }
+        .oculto {
+            display: none;
+        }
     </style>
 </head>
 <body>
+    <p>
+        <label class="oculto" id="prompt" for="numero"></label>
+        <input class="oculto" id="numero" name="numero" type="number" value="1">
+        <input id="boton" type="button" value="Iniciar juego">
+        <output class="oculto" id="message"></output>
+    </p>
+
+
+
     <script src="./ejercicios.js"></script>
+    <script>
+        const prompt = document.querySelector('#prompt')
+        const numero = document.querySelector('#numero')
+        const btn = document.querySelector('#boton')
+        const message = document.querySelector('#message')
+
+        var juego = new Juego(10, 100);
+        // for(let cmp in juego) 
+        //     console.log(cmp)
+        // delete juego.intentos
+        // console.log(juego)
+        function iniciar() {
+            juego.Inicializa()
+            prompt.textContent = `Dame tu número ${juego.intentos + 1} de ${juego.DameMaxIntentos()}:`
+            prompt.className = prompt.className.replace('oculto', '')
+            numero.className = prompt.className.replace('oculto', '')
+            message.className = prompt.className.replace('oculto', '')
+            btn.value = 'Jugar'
+            btn.removeEventListener('click', iniciar)
+            btn.addEventListener('click', jugar)
+        }
+        function jugar() {
+            try {
+                    juego.PruebaCon(+numero.value);
+                    message.textContent = juego.mensaje
+                    if(juego.intentos >= 10 || juego.encontrado) {
+                        prompt.className += ' oculto'
+                        numero.className += ' oculto'
+                        btn.value = 'Iniciar juego'
+                        btn.removeEventListener('click', jugar)
+                        btn.addEventListener('click', iniciar)
+                    } else
+                        prompt.textContent = `Dame tu número ${juego.intentos + 1} de ${juego.DameMaxIntentos()}:`
+                } catch (error) {
+                    message.textContent = 'ERROR: ' + error.message + '\n' + juego.mensaje
+                 }
+        }
+
+        btn.addEventListener('click', iniciar)
+    </script>
     <script>
         // console.log(aleatorio(1, 100))
 
@@ -20,10 +72,13 @@
 
         // console.log(dameArray(10, 0));
         // console.log(dameArray(5, 0, 1, 2, 3));
-        // let params = [10, 0, 1, 2, 3]
+        // let params = [10, '', 1, 2, 3]
         // console.log(dameArray(...params));
-        
-        // console.log(damePrimos(1000));
+        // Array.prototype.dame = dameArray
+
+        // console.log([].dame(10, 0))
+
+        // console.log(damePrimos(100));
         // console.log(damePrimosGenerator(100))
         // console.log(damePrimosIterator(100))
 
@@ -31,24 +86,24 @@
         // casos.forEach(caso => 
         //     console.log(`${caso} ${esNIF(caso)? 'ES': 'NO ES'} un NIF valido`)
         //     )
-        let casos = ['x0000004g','Z6543210Z','Y2345678z', 'y2345678Z', 'Z7654321H', 'Y1234S', 'X0001234J', '4g', '12345678', 'Z', 'Z12345678']
-        casos.forEach(caso => 
-            console.log(`${caso} ${esNIE(caso)? 'ES': 'NO ES'} un NIE valido`)
-            )
-
-        // casos = ['ana', 'reconocer', 'La ruta nos aporto otro paso natural', 'SOMOS O NO SOMOS',
-        //     'Dábale arroz a la zorra el abad', 'áéíóúüuuoiea', 'a¿¡+-*!?\'"a',
-        //     'No subas, abusón', '¿Será lodo o dólares?',
-        //     'Este no lo es'
-        // ]
+        // let casos = ['x0000004g','Z6543210Z','Y2345678z', 'y2345678Z', 'Z7654321H', 'Y1234S', 'X0001234J', '4g', '12345678', 'Z', 'Z12345678']
         // casos.forEach(caso => 
-        //     console.log(`${caso} ${esPalindromo(caso)? 'ES': 'NO ES'} un palíndromo`)
+        //     console.log(`${caso} ${esNIE(caso)? 'ES': 'NO ES'} un NIE valido`)
         //     )
+
+        casos = ['ana', 'reconocer', 'La ruta nos aporto otro paso natural', 'SOMOS O NO SOMOS',
+            'Dábale arroz a la zorra el abad', 'áéíóúüuuoiea', 'a¿¡+-*!?\'"a',
+            'No subas, abusón', '¿Será lodo o dólares?',
+            'Este no lo es'
+        ]
+        casos.forEach(caso => 
+            console.log(`${caso} ${esPalindromo(caso)? 'ES': 'NO ES'} un palíndromo`)
+            )
         
-        // var juego = new Juego(10, 100);
-        // // var juego = new JuegoConClase(10, 100);
-        // console.log(typeof(JuegoConClase))
-        // console.log(juego)
+        // // var juego = new Juego(10, 100);
+        // var juego = new JuegoConClase(10, 100);
+        // // console.log(typeof(JuegoConClase))
+        // // console.log(juego)
         // do {
         //     do {
         //         var numeroLeido = prompt(`Dame tu número ${juego.intentos + 1} de ${juego.DameMaxIntentos()}:`);
