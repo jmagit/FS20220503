@@ -8,10 +8,10 @@ function aleatorio(inicio, fin) {
 }
 
 function JuegoDelNumero() {
-    var numeroBuscado = aleatorio(1, 100);
-    var numeroIntroducido;
-    var intentos = 0;
-    var encontrado = false; 
+    let numeroBuscado = aleatorio(1, 100);
+    let numeroIntroducido;
+    let intentos = 0;
+    let encontrado = false; 
     do {
         intentos += 1;
         // while (true) {
@@ -38,8 +38,8 @@ function JuegoDelNumero() {
 }
 
 function dameArray(numeroElementos, valorPorDefecto = "", ...resto) {
-    var resultado = [];
-    for (var ind = 0; ind < numeroElementos; ind++) {
+    let resultado = [];
+    for (let ind = 0; ind < numeroElementos; ind++) {
         if (resto.length > ind)
             resultado[ind] = resto[ind];
         else
@@ -49,14 +49,14 @@ function dameArray(numeroElementos, valorPorDefecto = "", ...resto) {
 }
 
 function damePrimos(num) {
-    var calculos = 0;
-    var cuantos = +num;
-    var resultado = [];
-    var candidato = 2;
+    let calculos = 0;
+    let cuantos = +num;
+    let resultado = [];
+    let candidato = 2;
     while (cuantos) {
         while (true) {
-            var esPrimo = true;
-            for (var indice in resultado) {
+            let esPrimo = true;
+            for (let indice in resultado) {
                 calculos++;
                 if (candidato % resultado[indice] == 0) {
                     esPrimo = false;
@@ -77,14 +77,14 @@ function damePrimos(num) {
 }
 
 function* primosGenerator(num) {
-    var calculos = 0;
-    var cuantos = +num;
-    var resultado = [];
-    var candidato = 1;
+    let calculos = 0;
+    let cuantos = +num;
+    let resultado = [];
+    let candidato = 1;
     while (true) {
-        var esPrimo = true;
+        let esPrimo = true;
         candidato++;
-        for (var indice in resultado) {
+        for (let indice in resultado) {
             calculos++;
             if (candidato % resultado[indice] == 0) {
                 esPrimo = false;
@@ -102,7 +102,7 @@ function* primosGenerator(num) {
     }
 }
 function damePrimosGenerator(num) {
-    var resultado = [];
+    let resultado = [];
     for (let p of primosGenerator(num)) {
         if(p > 100) break;
         resultado.push(p)
@@ -120,14 +120,14 @@ function primosIterator(num) {
                 return { done: true }
             }
             while (true) {
-                var esPrimo = true;
+                let esPrimo = true;
                 this.candidato++;
                 if (this.actual < this.resultado.length) {
                     this.calculos++;
                     this.candidato = this.resultado[this.actual++]
                     return { done: false, value: this.candidato }
                 }
-                for (var indice in this.resultado) {
+                for (let indice in this.resultado) {
                     this.calculos++;
                     if (this.candidato % this.resultado[indice] == 0) {
                         esPrimo = false;
@@ -152,7 +152,7 @@ function primosIterator(num) {
 }
 
 function damePrimosIterator(num) {
-    var resultado = [];
+    let resultado = [];
     for (let p of primosIterator(num)) {
         if(p > 100) break;
         resultado.push(p)
@@ -176,8 +176,8 @@ function esNIE(value) {
     const numberValue = +value.substr(1, value.length - 2) + 
         (value.charAt(0) === 'Z' ? 20000000 : value.charAt(0) === 'Y' ? 10000000 : 0);
     const letterValue = value.substr(-1);
-    //return letterValue === 'TRWAGMYFPDXBNJZSQVHLCKE'.charAt(numberValue % 23);
-    return esNIF(numberValue.toString() + letterValue)
+    return letterValue === 'TRWAGMYFPDXBNJZSQVHLCKE'.charAt(numberValue % 23);
+    //return esNIF(numberValue.toString() + letterValue)
 }
 
 function esMayusculas(valor) {
@@ -195,7 +195,7 @@ function esPalindromo(cadena) {
 }
 
 function Juego(maxIntentos, valores) {
-    var numeroBuscado;
+    let numeroBuscado;
     this.Inicializa = function () {
         numeroBuscado = aleatorio(1, valores);
         // debugger;
