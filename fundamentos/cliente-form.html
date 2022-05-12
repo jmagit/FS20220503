@@ -89,6 +89,7 @@
 
         function validacion() {
             const form = document.forms.namedItem('miForm');
+            let send = {}
             for (let item of form.elements) {
                 switch (item.name) {
                     case 'nif':
@@ -104,8 +105,10 @@
                     out.textContent = item.validationMessage;
                     out.hidden = item.checkValidity();
                 }
+                send[item.name] = item.value
             }
             document.querySelector('#btnEnviar').disabled = !form.checkValidity()
+            console.log(send)
         }
         // document.querySelector('#nif').addEventListener('change', function (ev) {
         //     if (ev.target.value && !esNIF(ev.target.value)) {

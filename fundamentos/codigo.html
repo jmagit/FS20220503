@@ -237,6 +237,12 @@
         console.log(o2.nombreCompleto.apply(o1, ['Don', 1, 2]))
         nombreCompleto.bind(o1)
         console.log(nombreCompleto('Don'))
+        let cad = JSON.stringify(o1)
+        console.log(cad)
+        cad = '{"nombre":"Hola","apellidos":"Mudo","edad":"55"}'
+        let objeto = JSON.parse(cad)
+        objeto.nombre = objeto.nombre.toUpperCase()
+        console.log(objeto)
 
     </script>
     <script>
