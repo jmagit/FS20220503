@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Demos de AJAX</title>
+    <link rel="stylesheet" href="./theme/styles.css">
+    <link rel="icon" href="./images/favicon.ico">
+</head>
+
+<body>
+    <header id="cabecera">
+        <a href="/principal.html"><img src="./images/logo-santander.svg" width="160" alt="Logotipo del Santander"></a>
+        <nav>
+            <a href="/principal.html"><i class="fas fa-home"></i> Inicio</a>
+            <a href="demo.html"><i class="fas fa-store-alt"></i> Formularios</a>
+            <a href="particulares"><i class="fas fa-address-book"></i> Particulares</a>
+            <a href="particulares/cuentas.html"><i class="fas fa-th-list"></i> Cuentas</a>
+            <a href="cliente-form.html"><i class="fas fa-id-card-alt"></i> Hazte cliente</a>
+        </nav>
+    </header>
+    <main>
+        <div id="paginador"></div>
+        <output id="mensajes"></output>
+        <button id="btnAdd" type="button">Add</button>
+        <img id="ajaxWait" alt="Esperando ..." src="./images/loading.gif" hidden>
+        <table>
+            <thead>
+                <th>Nombre</th>
+                <th>Apellidos</th>
+            </thead>
+            <tbody id="cuerpo"></tbody>
+        </table>
+    </main>
+    <footer class="pie-principal">
+        <div>
+            &copy; 2021 Todos los derechos reservados | <a href="/aviso-legal" target="_blank">Aviso Legal</a> | <a
+                href="/politica-de-privacidad" target="_blank">Política de Privacidad</a> | <a
+                href="/politica-de-cookies" target="_blank">Política de Cookies</a>
+        </div>
+    </footer>
+
+
+
+    <script>
+        // function pidePagina(numPagina) {
+        //     let srv = new XMLHttpRequest()
+        //     srv.onreadystatechange = function () {
+        //         if(srv.readyState === 1) {
+        //             document.querySelector('#ajaxWait').hidden = false;
+        //         }
+        //         if (srv.readyState === 4) {
+        //             if (srv.status === 200) {
+        //                 let data = JSON.parse(srv.responseText);
+        //                 let fragmento = ''
+        //                 for (let i = 0; i < data.pages; i++) {
+        //                     fragmento += `<input type="button" value="${i + 1}" onclick="pidePagina(${i})">`
+        //                 }
+        //                 document.querySelector('#paginador').innerHTML = fragmento
+        //                 if (numPagina >= data.pages)
+        //                     numPagina = data.pages - 1
+        //                 let srv2 = new XMLHttpRequest()
+        //                 srv2.onreadystatechange = function () {
+        //                     if (srv2.readyState === 4) {
+        //                         if (srv2.status === 200) {
+        //                             let data = JSON.parse(srv2.responseText);
+        //                             let fragmento = ''
+        //                             data.forEach(item => {
+        //                                 fragmento += `<tr><td>${item.nombre}</td><td>${item.apellidos}</td></tr>`
+        //                             });
+        //                             document.querySelector('#cuerpo').innerHTML = fragmento
+
+        //                         } else {
+        //                             document.querySelector('#mensajes').textContent = srv.statusText
+        //                         }
+
+        //                     }
+        //                 }
+        //                 srv2.open('get', `http://localhost:4321/api/personas?_page=${numPagina}&_rows=10`)
+        //                 srv2.send()
+        //             } else {
+        //                 document.querySelector('#mensajes').textContent = srv.statusText
+        //             }
+        //             document.querySelector('#ajaxWait').hidden = true;
+        //         }
+        //     }
+        //     srv.open('get', 'http://localhost:4321/api/personas?_page=count&_rows=10')
+        //     srv.send()
+        // }
+        // pidePagina(0)
+
+        function add() {
+            // let srv = new XMLHttpRequest()
+            // srv.onreadystatechange = function () {
+            //     if (srv.readyState === 4) {
+            //         if (srv.status === 200) {
+            //             document.querySelector('#mensajes').textContent = 'Añadido'
+            //         } else {
+            //             document.querySelector('#mensajes').textContent = srv.statusText
+            //         }
+            //     }
+            // }
+            // srv.open('post', 'http://localhost:4321/api/personas')
+            // srv.setRequestHeader('Content-Type', 'application/json')
+            // srv.send('{ "id": 0, "nombre": "Pepito", "apellidos": "Grillo", "edad": 67 }')
+            fetch('http://localhost:4321/api/personas', {
+                method: 'post',
+                headers: {'Content-Type': 'application/json'},
+                body: '{ "id": 0, "nombre": "Pepito", "apellidos": "Grillo", "edad": 67 }'
+            })
+            .then(resp => document.querySelector('#mensajes').textContent = resp.statusText)
+            .catch(err => document.querySelector('#mensajes').textContent = err.statusText )
+        }
+        document.querySelector('#btnAdd').addEventListener('click', add)
+
+        // function pidePagina(numPagina) {
+        //     document.querySelector('#ajaxWait').hidden = false;
+        //     fetch('http://localhost:4321/api/personas?_page=count&_rows=10')
+        //         .catch(err => {
+        //             document.querySelector('#mensajes').textContent = err.statusText
+        //             document.querySelector('#ajaxWait').hidden = true;
+        //         })
+        //         .then(resp => resp.json())
+        //         .then(data => {
+        //             let fragmento = ''
+        //             for (let i = 0; i < data.pages; i++) {
+        //                 fragmento += `<input type="button" value="${i + 1}" onclick="pidePagina(${i})">`
+        //             }
+        //             document.querySelector('#paginador').innerHTML = fragmento
+        //             if (numPagina >= data.pages)
+        //                 numPagina = data.pages - 1
+        //             return fetch(`http://localhost:4321/api/personas?_page=${numPagina}&_rows=10`)
+        //         })
+        //         .catch(err => {
+        //             document.querySelector('#mensajes').textContent = err.statusText
+        //             document.querySelector('#ajaxWait').hidden = true;
+        //         })
+        //         .then(resp => resp.json())
+        //         .then(data => {
+        //             let fragmento = ''
+        //             data.forEach(item => {
+        //                 fragmento += `<tr><td>${item.nombre}</td><td>${item.apellidos}</td></tr>`
+        //             });
+        //             document.querySelector('#cuerpo').innerHTML = fragmento
+        //             document.querySelector('#ajaxWait').hidden = true;
+        //         })
+        //     }
+
+        async function pidePagina(numPagina) {
+            document.querySelector('#ajaxWait').hidden = false;
+            try {
+                let resp = await fetch('http://localhost:4321/api/personas?_page=count&_rows=10')
+                let data = await resp.json()
+                let fragmento = ''
+                for (let i = 0; i < data.pages; i++) {
+                    fragmento += `<input type="button" value="${i + 1}" onclick="pidePagina(${i})">`
+                }
+                document.querySelector('#paginador').innerHTML = fragmento
+                if (numPagina >= data.pages)
+                    numPagina = data.pages - 1
+                resp = await fetch(`http://localhost:4321/api/personas?_page=${numPagina}&_rows=10`)
+                data = await resp.json()
+                fragmento = ''
+                data.forEach(item => {
+                    fragmento += `<tr><td>${item.nombre}</td><td>${item.apellidos}</td></tr>`
+                });
+                document.querySelector('#cuerpo').innerHTML = fragmento
+                document.querySelector('#ajaxWait').hidden = true;
+            } catch (err) {
+                document.querySelector('#mensajes').textContent = err.statusText
+                document.querySelector('#ajaxWait').hidden = true;
+            }
+        }
+
+        pidePagina(0)
+    </script>
+</body>
+
+</html>
