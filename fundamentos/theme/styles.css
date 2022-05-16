@@ -1605,7 +1605,7 @@ button {
   display: grid;
   grid-gap: 5px;
   grid-template-columns: repeat(4, 1fr);
-  background-color: #e6f3ff !important;
+  background-color: #cfe5fa !important;
   border-style: outset !important;
   padding: 6px !important;
   margin: 4px !important;
