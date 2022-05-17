@@ -40,6 +40,7 @@ export const Card = ({ title, children }) => (
 export class Contador extends React.Component {
     constructor(props) {
         super(props);
+        this.btnSube = React.createRef();
         this.state = {
             contador: +props.init,
             delta: +props.delta
@@ -53,7 +54,8 @@ export class Contador extends React.Component {
                 this.notifyChange(cont)
                 return { contador: cont }
             })
-            };
+        };
+        console.log('constructor')
 
     }
     baja(e) {
@@ -72,23 +74,36 @@ export class Contador extends React.Component {
         // this.state.contador = value
     }
     notifyChange(value) {
-        if(this.props.onChange) {
+        if (this.props.onChange) {
             this.props.onChange(value)
         }
     }
     render() {
+        console.log('render')
         return (
             <div>
                 <h1>{this.state.contador}</h1>
                 <p>
-                    <button onClick={this.sube}>Sube</button>&nbsp;
-                    <button onClick={this.baja}>Baja</button>
-                    <button onClick={(ev) => this.init(0, ev)}>init</button>
+                    <button ref={this.btnSube} onClick={this.sube}>Sube</button>&nbsp;
+                    <button onClick={this.baja}>{this.state.contador % 2 ? 'BAJA' : 'baja'}</button>&nbsp;
+                    <button onClick={(ev) => this.init(0, ev)}>init</button>&nbsp;
                     <button onClick={this.init.bind(this, 0)}>init</button>
                 </p>
                 <Saluda nombre={"Nombre " + this.state.contador} />
             </div>
         );
+    }
+    componentDidMount() {
+        console.log('componentDidMount')
+        this.btnSube.current.focus()
+    }
+    componentDidUpdate() {
+        console.log('componentDidUpdate')
+        this.btnSube.current.focus()
+        if (this.state.contador % 2)
+            this.btnSube.current.textContent = 'SUBE'
+        else
+            this.btnSube.current.textContent = 'sube'
     }
 }
 Contador.propTypes = {
@@ -104,60 +119,60 @@ export default function Demos() {
     let [cont, setCont] = useState(10)
 
     const elelement = (
-      <>
-        <h1>Hola mundo</h1>
-        <h2>Que tal</h2>
-      </>
+        <>
+            <h1>Hola mundo</h1>
+            <h2>Que tal</h2>
+        </>
     )
     let nombre = 'Valladolid'
     let listado = [
-      { "id": 1, "nombre": "Camelo", "apellidos": "Coton", "edad": 37, "telefonos": ["12342", "3453", "3334"] },
-      { "id": 2, "nombre": "Pepito", "apellidos": "Grillo", "edad": 67 },
-      { "id": 3, "nombre": "<b>Pierre</b>", "apellidos": "Nodoiuna", "edad": 55 },
-      { "id": 4, "nombre": "Capitan", "apellidos": "Tan", "edad": 18 },
+        { "id": 1, "nombre": "Camelo", "apellidos": "Coton", "edad": 37, "telefonos": ["12342", "3453", "3334"] },
+        { "id": 2, "nombre": "Pepito", "apellidos": "Grillo", "edad": 67 },
+        { "id": 3, "nombre": "<b>Pierre</b>", "apellidos": "Nodoiuna", "edad": 55 },
+        { "id": 4, "nombre": "Capitan", "apellidos": "Tan", "edad": 18 },
     ]
     function negrita(item) {
-      if (item.id % 2) {
-        return <b>{item.nombre}</b>
-      } else {
-        return <>{item.nombre}</>
-      }
+        if (item.id % 2) {
+            return <b>{item.nombre}</b>
+        } else {
+            return <>{item.nombre}</>
+        }
     }
     return (
-      <div className="App">
-        <header className="App-header">
-          <h1>{process.env.REACT_APP_NOMBRE}</h1>
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="btn btn-info"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-          <h1>Secreto: {process.env.REACT_APP_SECRET}</h1>
-        </header>
-        <Contador init={cont} delta={2} onChange={value => setCont(value)} />
-        <p>El contador vale {cont}</p>
-        {elelement}
-        {nombre && <h3 className='alert alert-danger'>Hola {nombre.toUpperCase()}!!!</h3>}
-        <ul>
-          {listado.map(item => (
-            // <li key={item.id}><span dangerouslySetInnerHTML={{__html: item.nombre}} /> {item.apellidos}</li>
-            <li key={item.id} className={item.id % 2 ? 'alert-danger' : 'alert-info'}>{negrita(item)} {item.apellidos}</li>
-          ))}
-        </ul>
-        <Card title="Titulo de la tarjeta">
-          <Saluda nombre="Don Pepito" edad={33} />
-          <Saluda nombre="Don Jose" />
-          <Saluda nombre={nombre + cont} />
-          <Despide nombre="Don Pepito" />
-          <Despide nombre="Don Jose" />
-        </Card>
-      </div>
+        <div className="App">
+            <header className="App-header">
+                <h1>{process.env.REACT_APP_NOMBRE}</h1>
+                <img src={logo} className="App-logo" alt="logo" />
+                <p>
+                    Edit <code>src/App.js</code> and save to reload.
+                </p>
+                <a
+                    className="btn btn-info"
+                    href="https://reactjs.org"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
+                    Learn React
+                </a>
+                <h1>Secreto: {process.env.REACT_APP_SECRET}</h1>
+            </header>
+            <Contador init={cont} delta={1} onChange={value => setCont(value)} />
+            <p>El contador vale {cont}</p>
+            {elelement}
+            {nombre && <h3 className='alert alert-danger'>Hola {nombre.toUpperCase()}!!!</h3>}
+            <ul>
+                {listado.map(item => (
+                    // <li key={item.id}><span dangerouslySetInnerHTML={{__html: item.nombre}} /> {item.apellidos}</li>
+                    <li key={item.id} className={item.id % 2 ? 'alert-danger' : 'alert-info'}>{negrita(item)} {item.apellidos}</li>
+                ))}
+            </ul>
+            <Card title="Titulo de la tarjeta">
+                <Saluda nombre="Don Pepito" edad={33} />
+                <Saluda nombre="Don Jose" />
+                <Saluda nombre={nombre + cont} />
+                <Despide nombre="Don Pepito" />
+                <Despide nombre="Don Jose" />
+            </Card>
+        </div>
     );
 }
