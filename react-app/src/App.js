@@ -1,5 +1,9 @@
 import logo from './logo.svg';
 import './App.css';
+import { Saluda } from './ejemplos';
+//import { Saluda } from './ejemplos.js'
+
+const Despide = (props) => (<h1>Adios {props.nombre}</h1>)
 
 export default function App() {
   const elelement = (
@@ -16,7 +20,7 @@ export default function App() {
     { "id": 4, "nombre": "Capitan", "apellidos": "Tan", "edad": 18 },
   ]
   function negrita(item) {
-    if(item.id % 2) {
+    if (item.id % 2) {
       return <b>{item.nombre}</b>
     } else {
       return <>{item.nombre}</>
@@ -48,6 +52,10 @@ export default function App() {
           <li key={item.id} className={item.id % 2 ? 'alert-danger' : 'alert-info'}>{negrita(item)} {item.apellidos}</li>
         ))}
       </ul>
+      <Saluda nombre="Don Pepito" />
+      <Saluda nombre="Don Jose" />
+      <Despide nombre="Don Pepito" />
+      <Despide nombre="Don Jose" />
     </div>
   );
 }
