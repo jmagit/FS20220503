@@ -7,7 +7,7 @@ import React from 'react';
 export class Saluda extends React.Component {
     constructor(props) {
         super(props)
-        let {nombre, apellidos} = props
+        let { nombre, apellidos } = props
         this.nombre = nombre
     }
     render() {
@@ -17,3 +17,11 @@ export class Saluda extends React.Component {
     }
 }
 
+export const Card = ({ title, children }) => (
+    <div className="card" >
+        <div className="card-body">
+            <h1 className="card-title">{title}</h1>
+            <div className="card-text">{children}</div>
+        </div>
+    </div>
+)
