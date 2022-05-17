@@ -1,11 +1,14 @@
 import logo from './logo.svg';
 import './App.css';
-import { Card, Saluda } from './ejemplos';
+import { Card, Contador, Saluda } from './ejemplos';
+import { useState } from 'react';
 //import { Saluda } from './ejemplos.js'
 
 const Despide = (props) => (<h1>Adios {props.nombre}</h1>)
 
 export default function App() {
+  let [cont, setCont] = useState(10)
+
   const elelement = (
     <>
       <h1>Hola mundo</h1>
@@ -44,6 +47,8 @@ export default function App() {
         </a>
         <h1>Secreto: {process.env.REACT_APP_SECRET}</h1>
       </header>
+      <Contador init={cont} delta={2} onChange={value => setCont(value)} />
+      <p>El contador vale {cont}</p>
       {elelement}
       {nombre && <h3 className='alert alert-danger'>Hola {nombre.toUpperCase()}!!!</h3>}
       <ul>
@@ -53,8 +58,9 @@ export default function App() {
         ))}
       </ul>
       <Card title="Titulo de la tarjeta">
-        <Saluda nombre="Don Pepito" />
+        <Saluda nombre="Don Pepito" edad={33} />
         <Saluda nombre="Don Jose" />
+        <Saluda nombre={nombre + cont} />
         <Despide nombre="Don Pepito" />
         <Despide nombre="Don Jose" />
       </Card>
