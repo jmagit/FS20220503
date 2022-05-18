@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { useState } from 'react';
 import logo from './logo.svg';
 import Calculadora from './calculadora.objeto';
+import { ErrorBoundary } from './comunes';
 
 // export const Saluda = (props) => (<h1>Hola {props.nombre}</h1>)
 
@@ -44,7 +45,8 @@ export class Contador extends React.Component {
         this.btnSube = React.createRef();
         this.state = {
             contador: +props.init,
-            delta: +props.delta
+            delta: +props.delta,
+            color: 'red'
         };
         this.baja = this.baja.bind(this)
         this.init = this.init.bind(this)
@@ -52,9 +54,9 @@ export class Contador extends React.Component {
             e.preventDefault();
             this.setState((prev, props) => {
                 let cont = prev.contador + prev.delta
-                if(cont > this.props.max) cont = this.props.max
+                if (cont > this.props.max) cont = this.props.max
                 this.notifyChange(cont)
-                return { contador: cont }
+                return { contador: cont, color: cont % 2 ? 'red' : 'blue' }
             })
         };
         console.log('constructor')
@@ -64,9 +66,10 @@ export class Contador extends React.Component {
         e.preventDefault();
         this.setState((prev, props) => {
             let cont = prev.contador - prev.delta
-            if(cont < this.props.min) cont = this.props.min
+            //if (cont < 0) throw new Error('Error forzado')
+            if (cont < this.props.min) cont = this.props.min
             this.notifyChange(cont)
-            return { contador: cont }
+            return { contador: cont, color: cont % 2 ? 'red' : 'blue' }
         })
     }
 
@@ -83,9 +86,10 @@ export class Contador extends React.Component {
     }
     render() {
         console.log('render')
+        let estilo = { color: this.state.color }
         return (
             <div className='text-center'>
-                <h1>{this.state.contador}</h1>
+                <h1 style={estilo}>{this.state.contador}</h1>
                 <div className="btn-group" role="group">
                     <button ref={this.btnSube} onClick={this.sube} type="button" className="btn btn-primary">+</button>
                     <button onClick={this.baja} type="button" className="btn btn-primary">-</button>
@@ -146,10 +150,12 @@ export default function Demos() {
             return <>{item.nombre}</>
         }
     }
+    const estilo = {color: 'red', width: '10px'}
+    estilo.color = 'blue';
     return (
         <div className="App">
             <header className="App-header">
-                <h1>{process.env.REACT_APP_NOMBRE}</h1>
+                <h1 style={estilo}>{process.env.REACT_APP_NOMBRE}</h1>
                 <img src={logo} className="App-logo" alt="logo" />
                 <p>
                     Edit <code>src/App.js</code> and save to reload.
@@ -165,6 +171,9 @@ export default function Demos() {
                 <h1>Secreto: {process.env.REACT_APP_SECRET}</h1>
             </header>
             <Calculadora coma onChange={value => setCont(value)} />
+            <ErrorBoundary>
+                <Contador init={cont} delta={1} onChange={value => setCont(value)} />
+            </ErrorBoundary>
             <Contador init={cont} delta={1} onChange={value => setCont(value)} />
             <p>El contador vale {cont}</p>
             {elelement}
