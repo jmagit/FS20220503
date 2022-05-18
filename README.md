@@ -79,3 +79,8 @@ Cuaquleir tetxo se pduee leer... si se respetan la primera y la última letra de
 2. Muro de imágenes.
 3. Formularios
 4. Sistema CRUD Contactos
+
+### Bibliotecas
+
+- <https://github.com/enaqx/awesome-react>
+- <https://www.primefaces.org/primereact/>
