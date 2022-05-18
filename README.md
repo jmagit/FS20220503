@@ -64,3 +64,18 @@ Cuaquleir tetxo se pduee leer... si se respetan la primera y la última letra de
 
 1. Calculadora.
 2. Validar formulario de clientes.
+
+### Ejercicios de refuerzo
+
+  1. <https://www.discoduroderoer.es/category/ejercicio/javascript-ejercicio/>
+  2. <https://www.arkaitzgarro.com/javascript/capitulo-18.html>
+  3. <https://uniwebsidad.com/libros/javascript/capitulo-11>
+
+## ReactJS
+
+### Ejercicios
+
+1. Calculadora.
+2. Muro de imágenes.
+3. Formularios
+4. Sistema CRUD Contactos

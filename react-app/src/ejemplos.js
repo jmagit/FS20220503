@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { useState } from 'react';
 import logo from './logo.svg';
+import Calculadora from './calculadora.objeto';
 
 // export const Saluda = (props) => (<h1>Hola {props.nombre}</h1>)
 
@@ -50,7 +51,8 @@ export class Contador extends React.Component {
         this.sube = (e) => {
             e.preventDefault();
             this.setState((prev, props) => {
-                const cont = prev.contador + prev.delta
+                let cont = prev.contador + prev.delta
+                if(cont > this.props.max) cont = this.props.max
                 this.notifyChange(cont)
                 return { contador: cont }
             })
@@ -61,7 +63,8 @@ export class Contador extends React.Component {
     baja(e) {
         e.preventDefault();
         this.setState((prev, props) => {
-            const cont = prev.contador - prev.delta
+            let cont = prev.contador - prev.delta
+            if(cont < this.props.min) cont = this.props.min
             this.notifyChange(cont)
             return { contador: cont }
         })
@@ -81,15 +84,18 @@ export class Contador extends React.Component {
     render() {
         console.log('render')
         return (
-            <div>
+            <div className='text-center'>
                 <h1>{this.state.contador}</h1>
-                <p>
+                <div className="btn-group" role="group">
+                    <button ref={this.btnSube} onClick={this.sube} type="button" className="btn btn-primary">+</button>
+                    <button onClick={this.baja} type="button" className="btn btn-primary">-</button>
+                </div>
+                {/* <p>
                     <button ref={this.btnSube} onClick={this.sube}>Sube</button>&nbsp;
                     <button onClick={this.baja}>{this.state.contador % 2 ? 'BAJA' : 'baja'}</button>&nbsp;
                     <button onClick={(ev) => this.init(0, ev)}>init</button>&nbsp;
                     <button onClick={this.init.bind(this, 0)}>init</button>
-                </p>
-                <Saluda nombre={"Nombre " + this.state.contador} />
+                </p> */}
             </div>
         );
     }
@@ -100,16 +106,18 @@ export class Contador extends React.Component {
     componentDidUpdate() {
         console.log('componentDidUpdate')
         this.btnSube.current.focus()
-        if (this.state.contador % 2)
-            this.btnSube.current.textContent = 'SUBE'
-        else
-            this.btnSube.current.textContent = 'sube'
+        // if (this.state.contador % 2)
+        //     this.btnSube.current.textContent = 'SUBE'
+        // else
+        //     this.btnSube.current.textContent = 'sube'
     }
 }
 Contador.propTypes = {
     init: PropTypes.number.isRequired,
     delta: PropTypes.number,
-    onChange: PropTypes.func
+    onChange: PropTypes.func,
+    min: PropTypes.number,
+    max: PropTypes.number,
 };
 Contador.defaultProps = {
     delta: 1
@@ -156,6 +164,7 @@ export default function Demos() {
                 </a>
                 <h1>Secreto: {process.env.REACT_APP_SECRET}</h1>
             </header>
+            <Calculadora coma onChange={value => setCont(value)} />
             <Contador init={cont} delta={1} onChange={value => setCont(value)} />
             <p>El contador vale {cont}</p>
             {elelement}
