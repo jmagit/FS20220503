@@ -37,7 +37,7 @@ export class Esperando extends Component {
 export class ValidationMessage extends Component {
   render() {
     if (this.props.msg) {
-      return <span className="errorMsg">{this.props.msg}</span>;
+      return <output className="errorMsg">{this.props.msg}</output>;
     }
     return null;
   }

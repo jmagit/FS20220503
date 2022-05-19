@@ -9,7 +9,7 @@ export default function App() {
   return (
     <div className='container-fluid'>
       <ErrorBoundary>
-        <Demos />
+        <FotoMuro />
       </ErrorBoundary>
     </div>
   )
