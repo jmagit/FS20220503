@@ -7,7 +7,13 @@ export default class PersonasMnt extends Component {
   constructor(props) {
     super(props);
     let pagina = props?.match?.params?.page ? props.match.params.page : 0;
-    this.state = { modo: "list", listado: [], elemento: null, loading: true, pagina };
+    this.state = { 
+      modo: "list", 
+      listado: [], 
+      elemento: null, 
+      loading: true, 
+      pagina 
+    };
     this.idOriginal = null;
     this.url = "http://localhost:4321/api/personas";
   }
@@ -256,7 +262,7 @@ export class PersonasView extends Component {
             type="button"
             onClick={e => this.props.onCancel()}
           >
-            Cancelar
+            Volver
           </button>
         </p>
       </div>
@@ -398,7 +404,7 @@ export class PersonasForm extends Component {
             type="button"
             onClick={this.onCancel}
           >
-            Cancelar
+            Volver
           </button>
         </div>
       </form>
