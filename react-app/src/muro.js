@@ -106,7 +106,7 @@ export class FotoMuro extends Component {
                   titulo={index + 1 + "-" + (subindex + 1)}
                   dim={this.state.dim}
                   onSelecciona={this.anula.bind(this, index, subindex)} >
-                  Descargado de {celda}
+                  Descargado de {celda.download_url}
                 </FotoCard>
               ) : (
                   <FotoButton tamaño={tamaño}
