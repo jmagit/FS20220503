@@ -1,16 +1,17 @@
 import './App.css';
-import Calculadora from './calculadora';
 import { ErrorBoundary } from './comunes';
+import Calculadora from './calculadora';
 import Demos from './ejemplos';
 import Formulario from './formulario';
-import FotoMuro from './muro';
+import {FotoMuro, FotoMuroEx} from './muro';
+import PersonasMnt from './personas';
 
 
 export default function App() {
   return (
     <div className='container-fluid'>
       <ErrorBoundary>
-        <Formulario />
+        <FotoMuro />
       </ErrorBoundary>
     </div>
   )
