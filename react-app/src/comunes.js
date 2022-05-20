@@ -81,7 +81,7 @@ export function useCoordenadas() {
   return coordenadas;
 }
 
-export function Coordenadas(props) {
+export function CoordenadasEx(props) {
   const coordenadas = useCoordenadas();
   return coordenadas.latitud == null ? (<div>Cargando</div>) : (
     <div>
@@ -91,21 +91,21 @@ export function Coordenadas(props) {
     </div>
   );
 }
-// export function Coordenadas(props) {
-//   const [coordenadas, setCoordenadas] = useState({ latitud: null, longitud: null});
-//   let watchId = null;
-//   useEffect(() => {
-//     watchId = window.navigator.geolocation.watchPosition(pos => {
-//       setCoordenadas({latitud: pos.coords.latitude, longitud: pos.coords.longitude });
-//       // console.log('Coordenadas');
-//     });
-//     return () => window.navigator.geolocation.clearWatch(watchId);
-//   });
-//   return coordenadas.latitud == null ? (<div>Cargando</div>) : (
-//       <div>
-//         <h1>Coordenadas</h1>
-//         <h2>Latitud: {coordenadas.latitud}</h2>
-//         <h2>Longitud: {coordenadas.longitud}</h2>
-//       </div>
-//     );
-// }
+export function Coordenadas(props) {
+  const [coordenadas, setCoordenadas] = useState({ latitud: null, longitud: null});
+  let watchId = null;
+  useEffect(() => {
+    watchId = window.navigator.geolocation.watchPosition(pos => {
+      setCoordenadas({latitud: pos.coords.latitude, longitud: pos.coords.longitude });
+      console.log(pos);
+    });
+    return () => window.navigator.geolocation.clearWatch(watchId);
+  });
+  return coordenadas.latitud == null ? (<div>Cargando...</div>) : (
+      <div>
+        <h1>Coordenadas</h1>
+        <h2>Latitud: {coordenadas.latitud}</h2>
+        <h2>Longitud: {coordenadas.longitud}</h2>
+      </div>
+    );
+}

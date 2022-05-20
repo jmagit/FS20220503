@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { useState } from 'react';
 import logo from './logo.svg';
 import Calculadora from './calculadora.objeto';
-import { ErrorBoundary } from './comunes';
+import { Coordenadas, ErrorBoundary, useCoordenadas } from './comunes';
 
 // export const Saluda = (props) => (<h1>Hola {props.nombre}</h1>)
 
@@ -129,7 +129,7 @@ Contador.defaultProps = {
 
 export default function Demos() {
     let [cont, setCont] = useState(10)
-
+    const coordenadas = useCoordenadas();
     const elelement = (
         <>
             <h1>Hola mundo</h1>
@@ -168,8 +168,9 @@ export default function Demos() {
                 >
                     Learn React
                 </a>
-                <h1>Secreto: {process.env.REACT_APP_SECRET}</h1>
+                <h1>Secreto: {process.env.REACT_APP_SECRET} ({coordenadas.latitud}, {coordenadas.longitud} )</h1>
             </header>
+            <Coordenadas />
             <Calculadora coma onChange={value => setCont(value)} />
             <ErrorBoundary>
                 <Contador init={cont} delta={1} onChange={value => setCont(value)} />

@@ -48,10 +48,16 @@ export default class Formulario extends React.Component {
                             else
                                 cntr.setCustomValidity('')
                             break;
+                        case 'recontraseña':
+                            if (cntr.value && cntr.value !== this.form.current.elements.contraseña.value)
+                                cntr.setCustomValidity('No es coinciden las contraseñas')
+                            else
+                                cntr.setCustomValidity('')
+                            break;
 
                     }
                     errores[cntr.name] = cntr.validationMessage;
-                    if(!cntr.checkValidity()) esInvalido = true
+                    if(!cntr.validity.valid) esInvalido = true
                 }
             }
             this.setState({ errores, esInvalido });
@@ -78,12 +84,12 @@ export default class Formulario extends React.Component {
                     <br />
                     <label htmlFor='contraseña'>contraseña:</label>
                     <input type='password' id='contraseña' name='contraseña' value={this.state.elemento.contraseña} onChange={this.handleChange}
-                        required />
+                        required pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*\W).{8,}" />
                     <ValidationMessage msg={this.state.errores.contraseña} />
                     <br />
                     <label htmlFor='recontraseña'>repite contraseña:</label>
                     <input type='password' id='recontraseña' name='recontraseña' value={this.state.elemento.recontraseña} onChange={this.handleChange}
-                        required  />
+                        required pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*\W).{8,}" />
                     <ValidationMessage msg={this.state.errores.recontraseña} />
                     <br />
                     <label htmlFor='nif'>nif:</label>
