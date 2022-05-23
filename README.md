@@ -79,6 +79,8 @@ Cuaquleir tetxo se pduee leer... si se respetan la primera y la última letra de
 2. Muro de imágenes.
 3. Formularios
 4. Sistema CRUD Contactos
+5. Router: Transformar en aplicación los ejercicios anteriores
+6. Redux: Sistema de notificaciones a usuario
 
 ### Bibliotecas
 
