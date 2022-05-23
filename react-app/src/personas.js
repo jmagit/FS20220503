@@ -1,12 +1,12 @@
 import React, { Component } from "react";
 import axios from "axios";
 import { ValidationMessage, Esperando } from "./comunes";
-import { Outlet, useParams, useResolvedPath } from 'react-router-dom';
+import { Outlet, useLocation, useParams, useResolvedPath } from 'react-router-dom';
 // import * as MyStore from "./my-store";
 
 export default function PersonasRoute() {
-    const [id] = useParams()
-    const [url] = useResolvedPath()
+    const {id} = useParams()
+    const {pathname} = useLocation()
       // if (this.props.match.url === this.urlActual) return;
     // this.urlActual = this.props.match.url;
     // if (this.props.match.params.id) {
