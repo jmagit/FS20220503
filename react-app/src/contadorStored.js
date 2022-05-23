@@ -1,6 +1,9 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { contadorDownAction, contadorUpAction } from './my-store'
+import { contadorDownAction, contadorUpAction } from './store/my-store'
+import { useSelector, useDispatch } from 'react-redux';
+import { selectCount, initCount, increment, decrement, } from './store/contador-slice'
+
 const contadorStored = ({ contador, onSube, onBaja }) => (
     <div>
       <h1>{contador}</h1>
@@ -21,3 +24,20 @@ export const ContadorStored = connect(
         }
     }
 )(contadorStored)
+
+
+export default function ContadorNew() {
+    const count = useSelector(selectCount);
+    const dispatch = useDispatch();
+
+    return (
+        <div>
+            <h1>{count}</h1>
+            <p>
+                <input type="button" value="-" onClick={() => dispatch(decrement())} />
+                <input type="button" value="init" onClick={() => dispatch(initCount(10, 2))} />
+                <input type="button" value="+" onClick={() => dispatch(increment())} />
+            </p>
+        </div>
+    )
+}
