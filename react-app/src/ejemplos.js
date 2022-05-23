@@ -4,7 +4,10 @@ import { useState } from 'react';
 import logo from './logo.svg';
 import Calculadora from './calculadora.objeto';
 import { Coordenadas, ErrorBoundary, useCoordenadas } from './comunes';
-import store, { contadorUpAction } from './my-store';
+import store, { contadorUpAction } from './store/my-store';
+import { useSelector } from 'react-redux';
+import { selectCount } from './store/contador-slice';
+import ContadorNew from './contadorStored';
 
 // export const Saluda = (props) => (<h1>Hola {props.nombre}</h1>)
 
@@ -162,6 +165,10 @@ export default function Demos() {
         <div className="App">
             <h1>Stored: {contStore} <input type="button" value="incordia" onClick={() => store.dispatch(contadorUpAction(10))} />
             </h1>
+            <div>
+                <p>{useSelector(selectCount)}</p>
+                <ContadorNew />
+            </div>
             <header className="App-header">
                 <h1 style={estilo}>{process.env.REACT_APP_NOMBRE}</h1>
                 <img src={logo} className="App-logo" alt="logo" />
