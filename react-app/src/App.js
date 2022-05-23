@@ -15,6 +15,7 @@ export default function App() {
       <nav>
         <Link to="/">inicio</Link>&nbsp;|&nbsp;
         <Link to="/contactos">contactos</Link>&nbsp;|&nbsp;
+        <Link to="/personas">personas</Link>&nbsp;|&nbsp;
         <Link to="/chisme/de/hacer/numeros">calculadora</Link>&nbsp;|&nbsp;
         <Link to="/calculadora">calculadora</Link>&nbsp;|&nbsp;
         <Link to="/muro">muro</Link>&nbsp;|&nbsp;
