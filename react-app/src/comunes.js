@@ -34,6 +34,12 @@ export class Esperando extends Component {
   }
 }
 
+export function PageNotFound() {
+  return (
+    <h1>404 Page not found!!!</h1>
+  )
+}
+
 export class ValidationMessage extends Component {
   render() {
     if (this.props.msg) {
