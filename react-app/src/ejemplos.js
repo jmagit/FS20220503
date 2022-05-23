@@ -4,6 +4,7 @@ import { useState } from 'react';
 import logo from './logo.svg';
 import Calculadora from './calculadora.objeto';
 import { Coordenadas, ErrorBoundary, useCoordenadas } from './comunes';
+import store, { contadorUpAction } from './my-store';
 
 // export const Saluda = (props) => (<h1>Hola {props.nombre}</h1>)
 
@@ -130,6 +131,11 @@ Contador.defaultProps = {
 export default function Demos() {
     let [cont, setCont] = useState(10)
     const coordenadas = useCoordenadas();
+    const contStore = store.getState().contador;
+    let estado = store.getState()
+    let local = store
+    store.contador = 0
+
     const elelement = (
         <>
             <h1>Hola mundo</h1>
@@ -154,6 +160,8 @@ export default function Demos() {
     estilo.color = 'blue';
     return (
         <div className="App">
+            <h1>Stored: {contStore} <input type="button" value="incordia" onClick={() => store.dispatch(contadorUpAction(10))} />
+            </h1>
             <header className="App-header">
                 <h1 style={estilo}>{process.env.REACT_APP_NOMBRE}</h1>
                 <img src={logo} className="App-logo" alt="logo" />
