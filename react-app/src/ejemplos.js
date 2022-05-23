@@ -85,7 +85,7 @@ export class Contador extends React.Component {
         }
     }
     render() {
-        console.log('render')
+        // console.log('render')
         let estilo = { color: this.state.color }
         return (
             <div className='text-center'>
@@ -104,11 +104,11 @@ export class Contador extends React.Component {
         );
     }
     componentDidMount() {
-        console.log('componentDidMount')
+        // console.log('componentDidMount')
         this.btnSube.current.focus()
     }
     componentDidUpdate() {
-        console.log('componentDidUpdate')
+        // console.log('componentDidUpdate')
         this.btnSube.current.focus()
         // if (this.state.contador % 2)
         //     this.btnSube.current.textContent = 'SUBE'
@@ -170,7 +170,7 @@ export default function Demos() {
                 </a>
                 <h1>Secreto: {process.env.REACT_APP_SECRET} ({coordenadas.latitud}, {coordenadas.longitud} )</h1>
             </header>
-            <Coordenadas />
+            {/* <Coordenadas /> */}
             <Calculadora coma onChange={value => setCont(value)} />
             <ErrorBoundary>
                 <Contador init={cont} delta={1} onChange={value => setCont(value)} />

@@ -1,18 +1,43 @@
 import React, { Component } from "react";
 import axios from "axios";
 import { ValidationMessage, Esperando } from "./comunes";
+import { Outlet, useParams, useResolvedPath } from 'react-router-dom';
 // import * as MyStore from "./my-store";
 
-export default class PersonasMnt extends Component {
+export default function PersonasRoute() {
+    const [id] = useParams()
+    const [url] = useResolvedPath()
+      // if (this.props.match.url === this.urlActual) return;
+    // this.urlActual = this.props.match.url;
+    // if (this.props.match.params.id) {
+    //   if (this.props.match.url.endsWith('/edit'))
+    //     this.edit(this.props.match.params.id);
+    //   else
+    //     this.view(this.props.match.params.id);
+    // } else {
+    //   if (this.props.match.url.endsWith('/add'))
+    //     this.add();
+    //   else
+    //     this.list();
+    // }
+
+  return (
+    <>
+      <h1>Personas</h1>
+      <Outlet />
+    </>
+  )
+}
+export class PersonasMnt extends Component {
   constructor(props) {
     super(props);
     let pagina = props?.match?.params?.page ? props.match.params.page : 0;
-    this.state = { 
-      modo: "list", 
-      listado: [], 
-      elemento: null, 
-      loading: true, 
-      pagina 
+    this.state = {
+      modo: "list",
+      listado: [],
+      elemento: null,
+      loading: true,
+      pagina
     };
     this.idOriginal = null;
     this.url = "http://localhost:4321/api/personas";
