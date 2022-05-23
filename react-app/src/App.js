@@ -7,6 +7,7 @@ import { FotoMuro, FotoMuroEx } from './muro';
 import PersonasRoute, { PersonasMnt, PersonasForm, PersonasList, PersonasView } from './personas';
 import { BrowserRouter, Link, Navigate, Outlet, Route, Routes } from 'react-router-dom';
 import { ContactoAdd, ContactoEdit, Contactos, ContactosConRutas, ContactosList, ContactoView } from './contactos';
+import { ContadorStored } from './contadorStored';
 
 
 export default function App() {
@@ -21,6 +22,7 @@ export default function App() {
         <Link to="/muro">muro</Link>&nbsp;|&nbsp;
         <Link to="/formularios">formulario</Link>&nbsp;|&nbsp;
         <Link to="/falsa.html">html</Link>&nbsp;|&nbsp;
+        <Link to="/cont">cont</Link>&nbsp;|&nbsp;
       </nav>
       <div className='container-fluid'>
         <ErrorBoundary>
@@ -56,6 +58,7 @@ export default function App() {
               <Route path=':id' element={<ContactoView />} />
               <Route path=':id/edit' element={<ContactoEdit />} />
             </Route>
+            <Route path='/cont' element={<ContadorStored />} />
 
 
             <Route path='*' element={<PageNotFound />} />
