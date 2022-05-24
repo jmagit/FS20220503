@@ -1,10 +1,10 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import PropTypes from 'prop-types';
 import { useState } from 'react';
 import logo from './logo.svg';
 import Calculadora from './calculadora.objeto';
 import { Coordenadas, ErrorBoundary, useCoordenadas } from './comunes';
-import store, { contadorUpAction } from './store/my-store';
+import store from './store/store';
 import { useSelector } from 'react-redux';
 import { selectCount } from './store/contador-slice';
 import ContadorNew from './contadorStored';
@@ -63,7 +63,7 @@ export class Contador extends React.Component {
                 return { contador: cont, color: cont % 2 ? 'red' : 'blue' }
             })
         };
-        console.log('constructor')
+        //console.log('constructor')
 
     }
     baja(e) {
@@ -133,7 +133,7 @@ Contador.defaultProps = {
 
 export default function Demos() {
     let [cont, setCont] = useState(10)
-    const coordenadas = useCoordenadas();
+    // const coordenadas = useCoordenadas();
     const contStore = store.getState().contador;
     let estado = store.getState()
     let local = store
@@ -161,10 +161,13 @@ export default function Demos() {
     }
     const estilo = {color: 'red', width: '10px'}
     estilo.color = 'blue';
+    const txtNotify = useRef(null);
     return (
         <div className="App">
-            <h1>Stored: {contStore} <input type="button" value="incordia" onClick={() => store.dispatch(contadorUpAction(10))} />
-            </h1>
+            <p>
+                <input type="text" defaultValue="Notificación de ejemplo" ref={txtNotify} />
+                <input type="button" value="add" onClick={() => store.AddNotify(txtNotify.current.value)} />
+            </p>
             <div>
                 <p>{useSelector(selectCount)}</p>
                 <ContadorNew />
@@ -183,7 +186,7 @@ export default function Demos() {
                 >
                     Learn React
                 </a>
-                <h1>Secreto: {process.env.REACT_APP_SECRET} ({coordenadas.latitud}, {coordenadas.longitud} )</h1>
+                <h1>Secreto: {process.env.REACT_APP_SECRET} {/*({coordenadas.latitud}, {coordenadas.longitud} )*/}</h1>
             </header>
             {/* <Coordenadas /> */}
             <Calculadora coma onChange={value => setCont(value)} />
