@@ -17,7 +17,7 @@ export default function App() {
     <BrowserRouter>
       <MainHeader />
       <Notificaciones />
-      <div className='container-fluid'>
+      <main className='container-fluid'>
         <ErrorBoundary>
           <Routes>
             <Route path='/' element={<Demos />} />
@@ -58,7 +58,7 @@ export default function App() {
             <Route path='*' element={<PageNotFound />} />
           </Routes>
         </ErrorBoundary>
-      </div>
+      </main>
     </BrowserRouter>
   )
 }
