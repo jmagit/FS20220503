@@ -1,34 +1,23 @@
 import React, { Component } from "react";
 import axios from "axios";
 import { ValidationMessage, Esperando } from "./comunes";
-import { Outlet, useLocation, useParams, useResolvedPath } from 'react-router-dom';
-// import * as MyStore from "./my-store";
+import { Outlet, useLocation, useParams } from 'react-router-dom';
+import store from "./store/store";
 
-export default function PersonasRoute() {
-    const {id} = useParams()
-    const {pathname} = useLocation()
-      // if (this.props.match.url === this.urlActual) return;
-    // this.urlActual = this.props.match.url;
-    // if (this.props.match.params.id) {
-    //   if (this.props.match.url.endsWith('/edit'))
-    //     this.edit(this.props.match.params.id);
-    //   else
-    //     this.view(this.props.match.params.id);
-    // } else {
-    //   if (this.props.match.url.endsWith('/add'))
-    //     this.add();
-    //   else
-    //     this.list();
-    // }
+const withRouter = WrappedComponent => props => {
+  const params = useParams();
+  const { pathname } = useLocation()
+  const match = { url: pathname, params: useParams() } 
 
   return (
-    <>
-      <h1>Personas</h1>
-      <Outlet />
-    </>
-  )
-}
-export class PersonasMnt extends Component {
+    <WrappedComponent
+      {...props}
+      params={params}
+      match={match}
+    />
+  );
+};
+class PersonasMnt extends Component {
   constructor(props) {
     super(props);
     let pagina = props?.match?.params?.page ? props.match.params.page : 0;
@@ -61,11 +50,11 @@ export class PersonasMnt extends Component {
             });
           })
           .catch(err => {
-            // MyStore.AddErrNotifyCmd(err);
+            store.AddErrNotify(err);
             this.setState({ loading: false });
           });
       }).catch(err => {
-        // MyStore.AddErrNotifyCmd(err);
+        store.AddErrNotify(err);
         this.setState({ loading: false });
       });
 
@@ -102,7 +91,7 @@ export class PersonasMnt extends Component {
         this.idOriginal = key;
       })
       .catch(err => {
-        // MyStore.AddErrNotifyCmd(err);
+        store.AddErrNotify(err);
         this.setState({ loading: false });
       });
   }
@@ -118,7 +107,7 @@ export class PersonasMnt extends Component {
         });
       })
       .catch(err => {
-        // MyStore.AddErrNotifyCmd(err);
+        store.AddErrNotify(err);
         this.setState({ loading: false });
       });
   }
@@ -129,7 +118,7 @@ export class PersonasMnt extends Component {
       .delete(this.url + `/${key}`)
       .then(resp => this.list())
       .catch(err => {
-        // MyStore.AddErrNotifyCmd(err);
+        store.AddErrNotify(err);
         this.setState({ loading: false });
       });
   }
@@ -144,7 +133,7 @@ export class PersonasMnt extends Component {
           .post(this.url, elemento)
           .then(data => this.cancel())
           .catch(err => {
-            // MyStore.AddErrNotifyCmd(err);
+            store.AddErrNotify(err);
             this.setState({ loading: false });
           });
         break;
@@ -153,34 +142,34 @@ export class PersonasMnt extends Component {
           .put(this.url + `/${this.idOriginal}`, elemento)
           .then(data => this.cancel())
           .catch(err => {
-            // MyStore.AddErrNotifyCmd(err);
+            store.AddErrNotify(err);
             this.setState({ loading: false });
           });
         break;
     }
   }
   decodeRuta() {
-    // if (this.props.match.url === this.urlActual) return;
-    // this.urlActual = this.props.match.url;
-    // if (this.props.match.params.id) {
-    //   if (this.props.match.url.endsWith('/edit'))
-    //     this.edit(this.props.match.params.id);
-    //   else
-    //     this.view(this.props.match.params.id);
-    // } else {
-    //   if (this.props.match.url.endsWith('/add'))
-    //     this.add();
-    //   else
-    //     this.list();
-    // }
+    if (this.props.match.url === this.urlActual) return;
+    this.urlActual = this.props.match.url;
+    if (this.props.match.params.id) {
+      if (this.props.match.url.endsWith('/edit'))
+        this.edit(this.props.match.params.id);
+      else
+        this.view(this.props.match.params.id);
+    } else {
+      if (this.props.match.url.endsWith('/add'))
+        this.add();
+      else
+        this.list();
+    }
   }
 
   componentDidMount() {
-    this.list();
-    // this.decodeRuta();
+    // this.list();
+    this.decodeRuta();
   }
   componentDidUpdate() {
-    // this.decodeRuta();
+    this.decodeRuta();
   }
 
   render() {
@@ -436,3 +425,5 @@ export class PersonasForm extends Component {
     );
   }
 }
+
+export default withRouter(PersonasMnt)

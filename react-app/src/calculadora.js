@@ -58,9 +58,9 @@ export default class Calculadora extends Component {
   render() {
     let cabecera = [];
     if (this.state.resumen) {
-      cabecera.push(<Resumen resumen={this.state.resumen} coma={this.props.coma} />)
+      cabecera.push(<Resumen key="resumen" resumen={this.state.resumen} coma={this.props.coma} />)
     }
-    cabecera.push(<Pantalla pantalla={this.state.pantalla} coma={this.props.coma} />)
+    cabecera.push(<Pantalla key="pantalla" pantalla={this.state.pantalla} coma={this.props.coma} />)
     return (
       <div className="Calculadora">
         {/* <Resumen resumen={this.state.resumen} />

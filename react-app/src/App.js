@@ -4,26 +4,19 @@ import Calculadora from './calculadora';
 import Demos from './ejemplos';
 import Formulario from './formulario';
 import { FotoMuro, FotoMuroEx } from './muro';
-import PersonasRoute, { PersonasMnt, PersonasForm, PersonasList, PersonasView } from './personas';
+import PersonasMnt from './personas';
 import { BrowserRouter, Link, Navigate, Outlet, Route, Routes } from 'react-router-dom';
 import { ContactoAdd, ContactoEdit, Contactos, ContactosConRutas, ContactosList, ContactoView } from './contactos';
 import { ContadorStored } from './contadorStored';
+import { Notificaciones } from './notificaciones';
+import MainHeader from './main-header';
 
 
 export default function App() {
   return (
     <BrowserRouter>
-      <nav>
-        <Link to="/">inicio</Link>&nbsp;|&nbsp;
-        <Link to="/contactos">contactos</Link>&nbsp;|&nbsp;
-        <Link to="/personas">personas</Link>&nbsp;|&nbsp;
-        <Link to="/chisme/de/hacer/numeros">calculadora</Link>&nbsp;|&nbsp;
-        <Link to="/calculadora">calculadora</Link>&nbsp;|&nbsp;
-        <Link to="/muro">muro</Link>&nbsp;|&nbsp;
-        <Link to="/formularios">formulario</Link>&nbsp;|&nbsp;
-        <Link to="/falsa.html">html</Link>&nbsp;|&nbsp;
-        <Link to="/cont">cont</Link>&nbsp;|&nbsp;
-      </nav>
+      <MainHeader />
+      <Notificaciones />
       <div className='container-fluid'>
         <ErrorBoundary>
           <Routes>
@@ -39,7 +32,8 @@ export default function App() {
               /personas/1/edit  --> edit
               /personas/add  --> add
              */}
-            <Route path='/personas' element={<PersonasRoute />}>
+            {/* <Route path='/personas' element={<PersonasRoute />}> */}
+            <Route path='/personas'>
               <Route index element={<PersonasMnt />} />
               <Route path='add' element={<PersonasMnt />} />
               <Route path=':id' element={<PersonasMnt />} />
