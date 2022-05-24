@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
+import store from "./store/store";
 import "./calculadora.css";
 
 const Pantalla = props => (
@@ -134,7 +135,8 @@ export default class Calculadora extends Component {
         return { pantalla: prev.pantalla + "." };
       });
     } else
-			console.warn('Ya está la coma');
+      store.AddNotify('Ya está la coma');
+			//console.warn('Ya está la coma');
   }
 
   borrar() {
