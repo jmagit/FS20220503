@@ -8,7 +8,8 @@
     "ios": "expo start --ios",
     "web": "expo start --web",
     "eject": "expo eject",
-    "emu": "C:\\Archivos\\emulator\\emulator -avd Android_Accelerated_x86_Oreo",
+    "emu": "C:\\Archivos\\emulator\\emulator -avd Pixel_2_API_26",
+    "emu2": "C:\\Archivos\\emulator\\emulator -avd Android_Accelerated_x86_Oreo",
     "serve": "cd ..\\MOCKWebServer && npm start"
   },
   "dependencies": {
