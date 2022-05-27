@@ -10,12 +10,13 @@ import importImg from '../assets/favicon.png'
 import data from '../data/contactos.json'
 import Calculadora from './calculadora';
 import styles from '../theme/styles';
+import { Link } from '@react-navigation/native'
 
 export default function Demos() {
     console.log('Iniciando aplicación')
     return (
         <View style={{ flex: 1 }}>
-            <Calculadora />
+            <ContactosList />
             <StatusBar hidden />
         </View>
     )
@@ -23,53 +24,53 @@ export default function Demos() {
 
 const ShareExample = () => {
     const onShare = async () => {
-      try {
-        const result = await Share.share({
-          message:
-            'React Native | A framework for building native apps using React',
-        });
-        if (result.action === Share.sharedAction) {
-          if (result.activityType) {
-            // shared with activity type of result.activityType
-          } else {
-            // shared
-          }
-        } else if (result.action === Share.dismissedAction) {
-          // dismissed
+        try {
+            const result = await Share.share({
+                message:
+                    'React Native | A framework for building native apps using React',
+            });
+            if (result.action === Share.sharedAction) {
+                if (result.activityType) {
+                    // shared with activity type of result.activityType
+                } else {
+                    // shared
+                }
+            } else if (result.action === Share.dismissedAction) {
+                // dismissed
+            }
+        } catch (error) {
+            alert(error.message);
         }
-      } catch (error) {
-        alert(error.message);
-      }
     };
     const SECONDS = 1000;
 
     return (
-      <View style={{ marginTop: 50 }}>
-        <Button onPress={onShare} title="Share" />
-        <Button onPress={() => Vibration.vibrate([1 * SECONDS, 5 * SECONDS, 2 * SECONDS], true)} title="vibrate" />
-      </View>
+        <View style={{ marginTop: 50 }}>
+            <Button onPress={onShare} title="Share" />
+            <Button onPress={() => Vibration.vibrate([1 * SECONDS, 5 * SECONDS, 2 * SECONDS], true)} title="vibrate" />
+        </View>
     );
-  };
+};
 
-const EstilosView = ({style}) => {
+const EstilosView = ({ style }) => {
     console.log(style)
     console.log(Object.assign({}, ...style))
     return (
         <View style={styles.containerFluid}>
-            <Text style={styles.texto}>Uno 
-            <Text style={{fontSize: 12}}>Pequeño</Text>
-            <Text style={styles.cursiva}>anidado</Text>
+            <Text style={styles.texto}>Uno
+                <Text style={{ fontSize: 12 }}>Pequeño</Text>
+                <Text style={styles.cursiva}>anidado</Text>
             </Text>
-            <TouchableWithoutFeedback onPress={()=>alert('click')}>
-                <Text style={[styles.texto, styles.error, { color: 'yellow'}]}>Dos</Text>
+            <TouchableWithoutFeedback onPress={() => alert('click')}>
+                <Text style={[styles.texto, styles.error, { color: 'yellow' }]}>Dos</Text>
             </TouchableWithoutFeedback>
             <Text>Tres</Text>
-            <Text style={{color: styles.containerFluid.color}}>Cuatro</Text>
+            <Text style={{ color: styles.containerFluid.color }}>Cuatro</Text>
             <Text>Cinco</Text>
-            <Button title='Boton' style={{backgroundColor: 'red', color: 'yellow'}} color='red' onPress={()=>alert('click')} />
+            <Button title='Boton' style={{ backgroundColor: 'red', color: 'yellow' }} color='red' onPress={() => alert('click')} />
 
         </View>
-        
+
     )
 }
 
@@ -199,15 +200,47 @@ function Fotos() {
     )
 }
 
-function ContactosItem(props) {
-    return (
-        <View style={{ marginBottom: 5 }}>
-            <Text>{props.nombre} {props.apellidos}</Text>
-            <Text>{props.email}</Text>
+export function ContactosDetails({ navigation, route, state }) {
+    // const elemento = data.find(item => item.id == route.params.id)
+    const id = route.params.id
+    const [isLoading, setIsLoading] = React.useState(true)
+    const [item, setItem] = React.useState({})
+
+    const getItem = async () => {
+        try {
+            const response = await fetch(
+                `http://192.168.137.1:4321/api/contactos/${id}`, { headers: { Accept: 'application/json' } }
+            )
+            const data = await response.json()
+            setItem(data)
+        } catch (error) {
+            console.error(error)
+        } finally {
+            setIsLoading(false)
+        }
+    }
+    React.useEffect(() => getItem(), [id])
+
+    return isLoading ? (<ActivityIndicator style={{ flex: 1 }} />) : (
+        <View style={{ margin: 5, flex: 1 }}>
+            <Image source={{ uri: item.avatar, width: 100, height: 100 }} style={{ width: 100, height: 100 }} />
+            <Text>{item.nombre} {item.apellidos}</Text>
+            <Text>{item.email}</Text>
         </View>
     )
 }
-function ContactosList() {
+
+export function ContactosItem(props) {
+    return (
+        <Link to={{ screen: 'Contacto', params: { id: props.id } }}>
+            <View style={{ marginBottom: 5 }}>
+                <Text>{props.nombre} {props.apellidos}</Text>
+                <Text>{props.email}</Text>
+            </View>
+        </Link>
+    )
+}
+export function ContactosList() {
     return (
         <FlatList
             data={data}
