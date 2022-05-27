@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, Button, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, Button, TouchableOpacity, Appearance } from 'react-native';
 import { useState } from 'react';
 
 const Pantalla = props => (
@@ -20,13 +20,13 @@ const BtnCalcular = ({ texto, onClick, style }) => {
     return (
         // <Button style={style} onPress={handleClick} title={texto} />
         <TouchableOpacity style={style} onPress={handleClick} >
-            <Text style={{ fontSize: 28, color: '#b5b7bb' }}>{texto}</Text>
+            <Text style={{ fontSize: 28, color: Appearance.getColorScheme() === 'dark' ? '#b5b7bb' : '#7c7c7c' }}>{texto}</Text>
         </TouchableOpacity>
     );
 }
 
 export default function Calculadora(props) {
-    const [darkMode, setDarkMode] = useState(false);
+    const [darkMode, setDarkMode] = useState(Appearance.getColorScheme() === 'dark');
     const [pantalla, setPantalla] = useState(props.init ? props.init.toString() : '0');
     const [resumen, setResumen] = useState('');
     const [acumulado, setAcumulado] = useState(0);
@@ -64,7 +64,6 @@ export default function Calculadora(props) {
             console.error('No es un valor numérico.');
         }
     }
-
     const ponComa = () => {
         if (limpiar) {
             if (!isFinite(acumulado) || isNaN(acumulado)) {
@@ -130,10 +129,15 @@ export default function Calculadora(props) {
 
     //const styles = StyleSheet.compose(stylesCommons, darkMode ? darkTheme: lightTheme)
     const styles = StyleSheet.create({
+        container: {
+            flex: 1,
+            // justifyContent: 'space-between',
+            // alignItems: 'stretch',
+        },
         visor: {
             backgroundColor: darkMode ? '#282f3b' : '#f5f5f5',
             maxWidth: '100%',
-            minHeight: '35%',
+            height: '20%',
             alignItems: 'flex-end',
             justifyContent: 'flex-end',
         },
@@ -151,7 +155,7 @@ export default function Calculadora(props) {
         },
         botones: {
             width: '100%',
-            height: '40%',
+            height: '80%',
             flexDirection: 'row',
             flexWrap: 'wrap',
         },
@@ -160,7 +164,7 @@ export default function Calculadora(props) {
             alignItems: 'center',
             justifyContent: 'center',
             minWidth: '24%',
-            minHeight: '54%',
+            minHeight: '20%',
             flex: 2,
         },
         textoBoton: {
@@ -180,7 +184,7 @@ export default function Calculadora(props) {
     })
 
     return (
-        <View>
+        <View style={styles.container}>
             <View style={styles.visor}>
                 <Text style={styles.resumen}>{resumen}</Text>
                 <Text style={styles.pantalla}>{pantalla}</Text>

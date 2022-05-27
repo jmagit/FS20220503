@@ -15,7 +15,7 @@ export default function Demos() {
     console.log('Iniciando aplicación')
     return (
         <View style={{ flex: 1 }}>
-            <ShareExample style={[styles.texto, styles.error, { color: 'yellow'}]} />
+            <Calculadora />
             <StatusBar hidden />
         </View>
     )
@@ -46,7 +46,7 @@ const ShareExample = () => {
     return (
       <View style={{ marginTop: 50 }}>
         <Button onPress={onShare} title="Share" />
-        <Button onPress={() => Vibration.vibrate([1 * SECONDS, 5 * SECONDS, 2 * SECONDS], true)} title="vibratem" />
+        <Button onPress={() => Vibration.vibrate([1 * SECONDS, 5 * SECONDS, 2 * SECONDS], true)} title="vibrate" />
       </View>
     );
   };
