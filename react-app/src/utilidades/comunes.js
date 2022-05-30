@@ -1,6 +1,7 @@
 import { Component, useState, useEffect, useRef } from "react";
-import loading from './loading.gif';
+import { NavLink } from 'react-router-dom';
 import './comunes.css';
+import loading from '../imagenes/loading.gif';
 
 export class ErrorBoundary extends Component {
   constructor(props) {
@@ -114,4 +115,23 @@ export function Coordenadas(props) {
         <h2>Longitud: {coordenadas.longitud}</h2>
       </div>
     );
+}
+
+export function Paginacion({ actual, total, url }) {
+  let items = [];
+  for (let number = 0; number < total; number++) {
+      items.push(
+          number === actual ?
+              <li key={number} className="page-item active" aria-current="page"><NavLink to={url + number} className="page-link">{number + 1}</NavLink></li>
+              :
+              <li key={number} className="page-item"><NavLink to={url + number} className="page-link">{number + 1}</NavLink></li>
+      );
+  }
+  return (
+      <nav aria-label="Page navigation">
+          <ul className="pagination">
+              {items}
+          </ul>
+      </nav>
+  )
 }

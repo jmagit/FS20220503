@@ -1,6 +1,6 @@
 import React from 'react';
-import { ValidationMessage } from './comunes';
-import { esNIF } from './biblioteca'
+import { ValidationMessage } from './utilidades/comunes';
+import { esNIF } from './utilidades/biblioteca'
 export default class Formulario extends React.Component {
     constructor(props) {
         super(props)

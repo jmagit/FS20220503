@@ -1,12 +1,12 @@
 import React, { Component } from "react";
 import axios from "axios";
 import { Link } from 'react-router-dom';
-
-import { ValidationMessage, Esperando, ErrorMessage } from "./comunes";
+import { ValidationMessage, Esperando, ErrorMessage } from "../utilidades/comunes";
+import withRouter from '../utilidades/WithRouter'
 
 const URL_BASE = "http://localhost:4321/api/blog";
 
-export default class Blog extends Component {
+class Blog extends Component {
   constructor(props) {
     super(props);
 
@@ -197,7 +197,7 @@ class BlogLst extends Component {
           <div className="col-md-6 px-0">
             <h1 className="display-4 font-italic">{ultimo.titulo}</h1>
             <p className="lead my-3">
-              {this.elipsis(ultimo.texto, 100)}
+              {this.elipsis(this.striptags(ultimo.texto), 200)}
             </p>
             <p className="lead mb-0">
               <button
@@ -291,6 +291,7 @@ class BlogView extends Component {
             >
               Editar
             </button>
+            <Link className="btn btn-link btn-outline-danger" to={`/blog/${this.props.elemento.id}/edit`}>edit</Link>
           </h2>
           <p className="blog-post-meta">
             {this.props.elemento.fecha} by {this.props.elemento.autor}
@@ -306,6 +307,7 @@ class BlogView extends Component {
             >
               Volver
             </button>
+            <Link className="btn btn-link btn-outline-danger" to={`/blog`}>volver</Link>
           </p>
         </div>
       </div>
@@ -448,8 +450,11 @@ class BlogForm extends Component {
           >
             Volver
           </button>
+          <Link className="btn btn-link btn-outline-danger" to={`/blog`}>volver</Link>
         </div>
       </form>
     );
   }
 }
+
+export default withRouter(Blog)

@@ -1,6 +1,6 @@
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { remove, clear, selectListado, selectHayNotificaciones } from './store/notification-slice'
+import { remove, clear, selectListado, selectHayNotificaciones } from '../store/notification-slice'
 
 export const Notificaciones = () => {
     const listado = useSelector(selectListado);
