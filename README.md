@@ -86,3 +86,10 @@ Cuaquleir tetxo se pduee leer... si se respetan la primera y la última letra de
 
 - <https://github.com/enaqx/awesome-react>
 - <https://www.primefaces.org/primereact/>
+
+## Instalaciones
+
+docker run -d --name mysql-sakila -e MYSQL_ROOT_PASSWORD=root -p 3306:3306 1maa/sakila:latest
+
+docker run -d --name mongodb -p 27017:27017 mongo
+
