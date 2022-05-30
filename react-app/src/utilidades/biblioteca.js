@@ -144,3 +144,14 @@ export function esMayusculas(valor) {
     if(!valor) return true;
     return valor.toString().toUpperCase() == valor;
 }
+
+export function esPasado(valor) {
+    if(!valor) return true;
+	if(valor instanceof Date) return Date.now() - valor > 0
+	return isNaN(Date.parse(valor)) ? false : (Date.now() - Date.parse(valor) > 0)
+}
+export function esFuturo(valor) {
+    if(!valor) return true;
+	if(valor instanceof Date) return Date.now() - valor < 0
+	return isNaN(Date.parse(valor)) ? false : (Date.now() - Date.parse(valor) < 0)
+}

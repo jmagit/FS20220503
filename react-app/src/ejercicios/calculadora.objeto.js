@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import "./calculadora.css";
-import { Calculadora as Calc } from './biblioteca';
+import { Calculadora as Calc } from '../utilidades/biblioteca';
 
 const Pantalla = props => (
   <output className="Pantalla">

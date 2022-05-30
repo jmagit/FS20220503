@@ -1,15 +1,16 @@
 import './App.css';
-import { ErrorBoundary, PageNotFound } from './comunes';
-import Calculadora from './calculadora';
+import { ErrorBoundary, PageNotFound } from './utilidades/comunes';
+import Calculadora from './ejercicios/calculadora';
 import Demos from './ejemplos';
 import Formulario from './formulario';
-import { FotoMuro, FotoMuroEx } from './muro';
-import PersonasMnt from './personas';
+import { FotoMuro, FotoMuroEx } from './ejercicios/muro';
+import PersonasMnt from './ajax/personas';
 import { BrowserRouter, Link, Navigate, Outlet, Route, Routes } from 'react-router-dom';
-import { ContactoAdd, ContactoEdit, Contactos, ContactosConRutas, ContactosList, ContactoView } from './contactos';
+import { ContactoAdd, ContactoEdit, Contactos, ContactosConRutas, ContactosList, ContactoView } from './ajax/contactos';
 import { ContadorStored } from './contadorStored';
-import { Notificaciones } from './notificaciones';
+import { Notificaciones } from './utilidades/notificaciones';
 import MainHeader from './main-header';
+import Blog from './ajax/blog';
 
 
 export default function App() {
@@ -39,20 +40,20 @@ export default function App() {
               <Route path=':id' element={<PersonasMnt />} />
               <Route path=':id/edit' element={<PersonasMnt />} />
             </Route>
-            <Route path='/contactoss/*' element={<ContactosConRutas />} />
-            {/* <Route path='/contactos' element={<Contactos />}>
+            <Route path='/contactos/*' element={<ContactosConRutas />} />
+            {/* <Route path='/contactos' element={<Outlet />}>
               <Route index element={<ContactosList />} />
               <Route path='add' element={<ContactoAdd />} />
               <Route path=':id' element={<ContactoView />} />
               <Route path=':id/edit' element={<ContactoEdit />} />
             </Route> */}
-            <Route path='/contactos' element={<Outlet />}>
-              <Route index element={<ContactosList />} />
-              <Route path='add' element={<ContactoAdd />} />
-              <Route path=':id' element={<ContactoView />} />
-              <Route path=':id/edit' element={<ContactoEdit />} />
-            </Route>
             <Route path='/cont' element={<ContadorStored />} />
+            <Route path='/blog' element={<Blog />} >
+              <Route index element={<Blog />} />
+              <Route path='add' element={<Blog />} />
+              <Route path=':id' element={<Blog />} />
+              <Route path=':id/edit' element={<Blog />} />
+            </Route>
 
 
             <Route path='*' element={<PageNotFound />} />

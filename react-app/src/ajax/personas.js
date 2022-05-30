@@ -1,22 +1,10 @@
 import React, { Component } from "react";
-import axios from "axios";
-import { ValidationMessage, Esperando } from "./comunes";
 import { Outlet, useLocation, useParams } from 'react-router-dom';
-import store from "./store/store";
+import axios from "axios";
+import { ValidationMessage, Esperando } from "../utilidades/comunes";
+import withRouter from '../utilidades/WithRouter'
+import store from "../store/store";
 
-const withRouter = WrappedComponent => props => {
-  const params = useParams();
-  const { pathname } = useLocation()
-  const match = { url: pathname, params: useParams() } 
-
-  return (
-    <WrappedComponent
-      {...props}
-      params={params}
-      match={match}
-    />
-  );
-};
 class PersonasMnt extends Component {
   constructor(props) {
     super(props);
