@@ -93,3 +93,7 @@ docker run -d --name mysql-sakila -e MYSQL_ROOT_PASSWORD=root -p 3306:3306 1maa/
 
 docker run -d --name mongodb -p 27017:27017 mongo
 
+https://www.heidisql.com/download.php
+
+https://www.mongodb.com/try/download/compass
+
