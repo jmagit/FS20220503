@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Pagination } from 'react-bootstrap';
-import { Esperando } from './comunes';
-import { Contador } from './ejemplos';
+import { Esperando } from '../utilidades/comunes';
+import { Contador } from '../ejemplos';
 
 class FotoCard extends Component {
   render() {

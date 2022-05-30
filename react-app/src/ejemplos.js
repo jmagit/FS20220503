@@ -1,11 +1,11 @@
 import React, { useRef } from 'react';
 import PropTypes from 'prop-types';
 import { useState } from 'react';
-import logo from './logo.svg';
-import Calculadora from './calculadora.objeto';
-import { Coordenadas, ErrorBoundary, useCoordenadas } from './comunes';
-import store from './store/store';
 import { useSelector } from 'react-redux';
+import logo from './imagenes/logo.svg';
+import Calculadora from './ejercicios/calculadora';
+import { Coordenadas, ErrorBoundary, useCoordenadas } from './utilidades/comunes';
+import store from './store/store';
 import { selectCount } from './store/contador-slice';
 import ContadorNew from './contadorStored';
 

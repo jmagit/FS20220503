@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import store from "./store/store";
+import store from "../store/store";
 import "./calculadora.css";
 
 const Pantalla = props => (
