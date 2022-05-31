@@ -12,5 +12,8 @@
     "curso"
   ],
   "author": "Javier",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "dotenv": "^16.0.1"
+  }
 }
