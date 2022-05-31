@@ -1,0 +1,129 @@
+// require('dotenv').config();
+// const http = require('http');
+
+// const hostname = '127.0.0.1';
+// let port = process.env.PORT || 3000;
+
+// process.argv.slice(2).forEach((val, index) => {
+//     console.log(`${index}: ${val.includes('=') ? `name: ${val.split('=')[0]} value: ${val.split('=')[1]}` : val}`);
+//     if(val.includes('=') && val.split('=')[0] === 'PORT')
+//         port=val.split('=')[1]
+// });
+
+// const server = http.createServer((req, res) => {
+//   res.statusCode = 200;
+//   res.setHeader('Content-Type', 'text/plain');
+//   res.end('Adios mundo.\n');
+//   console.clear()
+// });
+
+// server.listen(port, hostname, () => {
+//   console.log(`Server running at http://${hostname}:${port}/`);
+// });
+
+// let nombre = 'mundo'
+
+// console.log(`Adios ${nombre}`)
+// console.log('Mi %s tiene %d patas' , 'gato' , 4)
+// console.log(port, nombre, hostname)
+// // console.log(server)
+
+// const readline = require('readline').createInterface({
+//     input: process.stdin, output: process.stdout,
+// });
+// readline.question(`¿Como te llamas? `, name => {
+//     console.log(`Hola ${name}`);
+//     readline.close();
+// });
+// import {esNIF} from './modules/biblioteca.js'
+
+// const circulo = require('./modules/circulo')
+// console.log( 'El área de un círculo con radio 4 es ' + circulo.area(4));
+// console.log( 'La circunferencia de un círculo con radio 4 es ' + circulo.circumference(4));
+// console.log(circulo)
+// const Cuadrado = require('./modules/cuadrado')
+// console.log(Cuadrado)
+// let cuadrado = new Cuadrado(4)
+// console.log( 'El área de un cuadrado con lado 4 es ' + cuadrado.area());
+// console.log( 'La perímetro de un cuadrado con lado 4 es ' + cuadrado.perimetro());
+// console.log( 'La circunferencia de un círculo con radio 4 es ' + Cuadrado.circumference(4));
+// console.log('El 12345678Z' + (esNIF('12345678Z') ? 'es NIF' : 'no es NIF'))
+
+// const fs = require('fs');
+// // const data = fs.readFileSync('app.js'); // blocks here until file is read
+// // console.log('Termine')
+
+// fs.readFile('package-lock.json', (err, data) => {
+//     if (err) throw err;
+//     console.log('Termine con package-lock.json')
+// });
+// fs.readFile('app.js', (err, data) => {
+//     if (err) throw err;
+//     console.log('Termine con app.js')
+// });
+
+// console.log('Sigo')
+
+// const EventEmitter = require('events');
+// class MyEmitter extends EventEmitter {}
+// const myEmitter = new MyEmitter();
+// function eventControler(msg) {
+//     //setImmediate(() => console.log(`EXTRA: ${msg}`))
+//     process.nextTick(() => console.log(`EXTRA: ${msg}`))
+//     console.log(`Termina con EXTRA`)
+// } 
+// myEmitter.on('pinta', msg => {
+//     if(!msg) {
+//         throw new Error('Falta el mensaje');
+//         // myEmitter.emit('error', new Error('Falta el mensaje'));
+//     }
+
+//     console.log(`NORMAL: ${msg}`)
+// });
+// myEmitter.on('pinta', eventControler);
+// // myEmitter.on('error', error => console.log('ERROR: ' +  error.message))
+// process.on('uncaughtException', (error, origin) => console.log('ERROR RAIZ: ' +  error.message));
+
+// myEmitter.emit('pinta', 'uno');
+// myEmitter.off('pinta', eventControler)
+// myEmitter.emit('pinta', 'dos');
+// myEmitter.once('pinta', msg => console.log(`ONCE: ${msg}`));
+// myEmitter.emit('pinta', 'tres');
+// myEmitter.emit('pinta', 'cuatro');
+// //myEmitter.removeAllListeners('pinta')
+// myEmitter.emit('pinta', 'cinco');
+// try {
+//     myEmitter.emit('pinta');
+// } catch (error) {
+//     console.log('Error', error)
+// }
+
+// const fs = require('fs')
+// fs.readFile('app.js', (err, data) => {
+//     if (err) {
+//         console.log('ERROR: ' + err.message)
+//         return
+//     }
+//     console.log('Leido')
+//     fs.writeFile('out.txt', data, err => {
+//         if (err) {
+//             console.log('ERROR: ' + err.message)
+//             return
+//         } else {
+//             console.log('Escrito')
+//             console.log('Copiado')
+//         }
+//     })
+// })
+const fs = require('fs/promises');
+
+(async () => {
+    try {
+        let data = await fs.readFile('app.js')
+        console.log('Leido')
+        await fs.writeFile('out.txt', data)
+        console.log('Escrito')
+    } catch (error) {
+        console.log('ERROR: ' + error.message)
+    }
+})().then(() => console.log('Copiado'))
