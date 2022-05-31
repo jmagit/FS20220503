@@ -97,3 +97,5 @@ https://www.heidisql.com/download.php
 
 https://www.mongodb.com/try/download/compass
 
+https://dev.mysql.com/downloads/workbench/
+
