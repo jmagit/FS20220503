@@ -1,0 +1,10 @@
+extends layout
+
+block content
+  p Quedan #{intentos} intentos
+  form.cabecera-principal__login(method="post")
+    input(type="hidden", name="intentos", value=intentos)
+    input(type="text", name="user", size="8", placeholder="Usuario", value=user)
+    input(type="password", name="password", size="8", placeholder="Contraseña", value=password)
+    input(type="submit", value="Login")
+    input(type="submit", value="Registrarse")
