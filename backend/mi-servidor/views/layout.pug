@@ -3,5 +3,12 @@ html
   head
     title= title
     link(rel='stylesheet', href='/stylesheets/style.css')
+    link(rel='stylesheet', href='/stylesheets/styles.css')
   body
-    block content
+    header#cabecera
+      img(src='/images/logo-santander.svg', height=40)
+      nav
+        a(href='/demos/formulario') Login
+        a(href='/users/login') Pug
+    main
+      block content

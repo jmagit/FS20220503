@@ -1,25 +1,25 @@
-require('dotenv').config();
-const http = require('http');
+// require('dotenv').config();
+// const http = require('http');
 
-const hostname = '127.0.0.1';
-let port = process.env.PORT || 3000;
+// const hostname = '127.0.0.1';
+// let port = process.env.PORT || 3000;
 
-process.argv.slice(2).forEach((val, index) => {
-    console.log(`${index}: ${val.includes('=') ? `name: ${val.split('=')[0]} value: ${val.split('=')[1]}` : val}`);
-    if(val.includes('=') && val.split('=')[0] === 'PORT')
-        port=val.split('=')[1]
-});
+// process.argv.slice(2).forEach((val, index) => {
+//     console.log(`${index}: ${val.includes('=') ? `name: ${val.split('=')[0]} value: ${val.split('=')[1]}` : val}`);
+//     if(val.includes('=') && val.split('=')[0] === 'PORT')
+//         port=val.split('=')[1]
+// });
 
-const server = http.createServer((req, res) => {
-  res.statusCode = 200;
-  res.setHeader('Content-Type', 'text/plain');
-  res.end('Adios mundo.\n');
-  console.clear()
-});
+// const server = http.createServer((req, res) => {
+//   res.statusCode = 200;
+//   res.setHeader('Content-Type', 'text/plain');
+//   res.end('Adios mundo.\n');
+//   console.clear()
+// });
 
-server.listen(port, hostname, () => {
-  console.log(`Server running at http://${hostname}:${port}/`);
-});
+// server.listen(port, hostname, () => {
+//   console.log(`Server running at http://${hostname}:${port}/`);
+// });
 
 // let nombre = 'mundo'
 
@@ -127,3 +127,29 @@ server.listen(port, hostname, () => {
 //         console.log('ERROR: ' + error.message)
 //     }
 // })().then(() => console.log('Copiado'))
+
+var mysql = require('mysql')
+var connection = mysql.createConnection({
+  host: 'localhost',
+  user: 'root',
+  password: 'root',
+  database: 'sakila'
+})
+
+connection.connect()
+
+// connection.query('SELECT * FROM `sakila`.`category`', function (err, rows, fields) {
+//   if (err) throw err
+//   // rows.forEach(item => {
+//   //   console.log(`${item.category_id}\t${item.name}`)
+//   // });
+//   console.log(JSON.stringify(rows.map(item => ({ id: item.category_id, categoria: item.name}))))
+// })
+connection.query(' SELECT actor_id id, first_name nombre , last_name apellidos FROM sakila.actor', function (err, rows, fields) {
+  if (err) throw err
+  // rows.forEach(item => {
+  //   console.log(`${item.category_id}\t${item.name}`)
+  // });
+  //console.log(rows)
+  console.log(JSON.stringify(rows.map(item => item.RowDataPacket)))
+})
