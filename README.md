@@ -87,7 +87,9 @@ Cuaquleir tetxo se pduee leer... si se respetan la primera y la última letra de
 - <https://github.com/enaqx/awesome-react>
 - <https://www.primefaces.org/primereact/>
 
-## Instalaciones
+## Microservicios
+
+### Instalaciones de bases de datos
 
 docker run -d --name mysql-sakila -e MYSQL_ROOT_PASSWORD=root -p 3306:3306 1maa/sakila:latest
 
@@ -99,11 +101,11 @@ https://www.mongodb.com/try/download/compass
 
 https://dev.mysql.com/downloads/workbench/
 
-## ORM
+### NodeJS
+#### ORM
 
-npm install sequelize mysql2 
+npm install sequelize mysql2  
 
-npm install sequelize-auto --save-dev
+npm install sequelize-auto --save-dev  
 
 npx sequelize-auto -o "./models" -e mysql -h localhost -p 3306 -d sakila -u root -x root
-
