@@ -27,3 +27,7 @@ user=admin&password=P@$$w0rd¬intentos=100
 
 get http://localhost:4200/demos/eco
 Accept: application/octet-stream
+
+###
+
+DELETE http://localhost:4200/actores/208

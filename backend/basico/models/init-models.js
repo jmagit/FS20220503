@@ -34,7 +34,7 @@ function initModels(sequelize) {
   var staff = _staff(sequelize, DataTypes);
   var store = _store(sequelize, DataTypes);
 
-  actor.belongsToMany(film, { as: 'film_id_films', through: film_actor, foreignKey: "actor_id", otherKey: "film_id" });
+  actor.belongsToMany(film, { as: 'peliculas', through: film_actor, foreignKey: "actor_id", otherKey: "film_id" });
   category.belongsToMany(film, { as: 'film_id_film_film_categories', through: film_category, foreignKey: "category_id", otherKey: "film_id" });
   film.belongsToMany(actor, { as: 'actor_id_actors', through: film_actor, foreignKey: "film_id", otherKey: "actor_id" });
   film.belongsToMany(category, { as: 'category_id_categories', through: film_category, foreignKey: "film_id", otherKey: "category_id" });

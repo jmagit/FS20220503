@@ -153,6 +153,8 @@
 //   //console.log(rows)
 //   console.log(JSON.stringify(rows.map(item => item.RowDataPacket)))
 // })
+const MongoClient = require('mongodb').MongoClient;
+
 const url = 'mongodb://localhost:27017';
 const dbName = 'curso';
 
