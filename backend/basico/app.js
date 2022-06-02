@@ -128,28 +128,43 @@
 //     }
 // })().then(() => console.log('Copiado'))
 
-var mysql = require('mysql')
-var connection = mysql.createConnection({
-  host: 'localhost',
-  user: 'root',
-  password: 'root',
-  database: 'sakila'
-})
+// var mysql = require('mysql')
+// var connection = mysql.createConnection({
+//   host: 'localhost',
+//   user: 'root',
+//   password: 'root',
+//   database: 'sakila'
+// })
 
-connection.connect()
+// connection.connect()
 
-// connection.query('SELECT * FROM `sakila`.`category`', function (err, rows, fields) {
+// // connection.query('SELECT * FROM `sakila`.`category`', function (err, rows, fields) {
+// //   if (err) throw err
+// //   // rows.forEach(item => {
+// //   //   console.log(`${item.category_id}\t${item.name}`)
+// //   // });
+// //   console.log(JSON.stringify(rows.map(item => ({ id: item.category_id, categoria: item.name}))))
+// // })
+// connection.query(' SELECT actor_id id, first_name nombre , last_name apellidos FROM sakila.actor', function (err, rows, fields) {
 //   if (err) throw err
 //   // rows.forEach(item => {
 //   //   console.log(`${item.category_id}\t${item.name}`)
 //   // });
-//   console.log(JSON.stringify(rows.map(item => ({ id: item.category_id, categoria: item.name}))))
+//   //console.log(rows)
+//   console.log(JSON.stringify(rows.map(item => item.RowDataPacket)))
 // })
-connection.query(' SELECT actor_id id, first_name nombre , last_name apellidos FROM sakila.actor', function (err, rows, fields) {
-  if (err) throw err
-  // rows.forEach(item => {
-  //   console.log(`${item.category_id}\t${item.name}`)
-  // });
-  //console.log(rows)
-  console.log(JSON.stringify(rows.map(item => item.RowDataPacket)))
-})
+const url = 'mongodb://localhost:27017';
+const dbName = 'curso';
+
+const client = new MongoClient(url);
+
+client.connect(function (err) {
+    if(err) throw err;
+    const db = client.db(dbName);
+    const collection = db.collection('personas');
+    collection.find({}).toArray(function (err, docs) {
+        if(err) throw err;
+        console.log(docs);
+        client.close();
+    });
+});
