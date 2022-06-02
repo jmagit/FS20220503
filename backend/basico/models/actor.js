@@ -1,15 +1,22 @@
 const Sequelize = require('sequelize');
-module.exports = function(sequelize, DataTypes) {
+module.exports = function (sequelize, DataTypes) {
   return sequelize.define('actor', {
     actor_id: {
       autoIncrement: true,
       type: DataTypes.SMALLINT.UNSIGNED,
       allowNull: false,
-      primaryKey: true
+      primaryKey: true,
     },
     first_name: {
       type: DataTypes.STRING(45),
-      allowNull: false
+      allowNull: false,
+      validate: {
+        len: [2, 10],
+        esMayusculas(valor) {
+          if (valor.toString().toUpperCase() !== valor)
+            throw new Error('Debe estar en mayúsculas');
+        }
+      }
     },
     last_name: {
       type: DataTypes.STRING(45),
