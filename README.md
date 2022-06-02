@@ -99,3 +99,11 @@ https://www.mongodb.com/try/download/compass
 
 https://dev.mysql.com/downloads/workbench/
 
+## ORM
+
+npm install sequelize mysql2 
+
+npm install sequelize-auto --save-dev
+
+npx sequelize-auto -o "./models" -e mysql -h localhost -p 3306 -d sakila -u root -x root
+
