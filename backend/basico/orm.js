@@ -17,23 +17,34 @@ async function conMuchos() {
         console.log(row.toJSON())
     });
 }
-async function conPaginas(page=0, limit=20) {
-    let rows = await dbContext.actor.findAll({ offset: page*limit, limit , order: ['first_name', 'last_name'] })
-    console.log(rows.map(row => ({id: row.actor_id, name: row.first_name + ' ' + row.last_name})))
+async function conPaginas(page = 0, limit = 20) {
+    let rows = await dbContext.actor.findAll({ offset: page * limit, limit, order: ['first_name', 'last_name'] })
+    console.log(rows.map(row => ({ id: row.actor_id, name: row.first_name + ' ' + row.last_name })))
 }
 async function conAsociaciones() {
     // let row = await dbContext.actor.findByPk(1)
     // let rows = await row.getPeliculas()
     let row = await dbContext.actor.findByPk(1, { include: 'peliculas' })
-    let rows = row.peliculas 
-    console.log({id: row.actor_id, name: row.first_name + ' ' + row.last_name, films: rows.map(item => ({id: item.film_id, name: item.title}))})
+    let rows = row.peliculas
+    console.log({ id: row.actor_id, name: row.first_name + ' ' + row.last_name, films: rows.map(item => ({ id: item.film_id, name: item.title })) })
 }
 async function insert() {
-    let row = await dbContext.actor.build({first_name: 'Pepito', last_name: 'Grillo'})
-    // if(!row.validate()) {
-    //     console.log('400 Datos invalidos')
-    //     return;
-    // }
+    // let row = await dbContext.actor.build({first_name: 'Pepito', last_name: 'Grillo'})
+    let row = await dbContext.actor.build({ first_name: 'Pepito', last_name: null })
+    try {
+        await row.validate()
+    } catch (error) {
+        console.log('400 Datos inválidos')
+        console.log(error.errors) 
+        // formato https://datatracker.ietf.org/doc/html/rfc7807
+        console.log({
+            type: "https://tools.ietf.org/html/rfc7231#section-6.5.1",
+            status: 400,
+            title: 'One or more validation errors occurred.',
+            errors: Object.assign({}, ...error.errors.map(item => ({ [item.path]: item.message })))
+        })
+        return;
+    }
     // // let pelis = await dbContext.film.findAll({ where: { film_id: { [Op.lt]: 4 } } })
     // // pelis.forEach(item => row.).createPelicula({actor_id})
     // // row.createPelicula(await dbContext.film.findAll({ where: { film_id: { [Op.lt]: 4 } } }))
@@ -45,7 +56,7 @@ async function insert() {
     await conMuchos()
 }
 async function update() {
-    let row = await dbContext.actor.findOne({ order: [['actor_id','DESC']] })
+    let row = await dbContext.actor.findOne({ order: [['actor_id', 'DESC']] })
     console.log(row)
     row.first_name = row.first_name.toUpperCase()
     console.log('Guardo ...')
@@ -54,7 +65,7 @@ async function update() {
     // await conMuchos()
 }
 async function remove() {
-    let row = await dbContext.actor.findOne({ order: [['actor_id','DESC']] })
+    let row = await dbContext.actor.findOne({ order: [['actor_id', 'DESC']] })
     console.log(row)
     await row.destroy()
     console.log(row)
@@ -65,7 +76,7 @@ async function remove() {
 // conMuchos().then(() => { console.log(`Termine ${new Date().toLocaleTimeString('es')}`); process.exit(0) }, err => console.error(`ERROR ${new Date().toLocaleTimeString('es')}: `, err))
 // conPaginas(1, 10).then(()=> { console.log(`Termine ${new Date().toLocaleTimeString('es')}`); process.exit(0)}, err => console.error(`ERROR ${new Date().toLocaleTimeString('es')}: `, err))
 // conAsociaciones().then(() => { console.log(`Termine ${new Date().toLocaleTimeString('es')}`); process.exit(0) }, err => console.error(`ERROR ${new Date().toLocaleTimeString('es')}: `, err))
-// insert().then(() => { console.log(`Termine ${new Date().toLocaleTimeString('es')}`); process.exit(0) }, err => console.error(`ERROR ${new Date().toLocaleTimeString('es')}: `, err))
+insert().then(() => { console.log(`Termine ${new Date().toLocaleTimeString('es')}`); process.exit(0) }, err => console.error(`ERROR ${new Date().toLocaleTimeString('es')}: `, err))
 // update().then(() => { console.log(`Termine ${new Date().toLocaleTimeString('es')}`); process.exit(0) }, err => console.error(`ERROR ${new Date().toLocaleTimeString('es')}: `, err))
 // remove().then(() => { console.log(`Termine ${new Date().toLocaleTimeString('es')}`); process.exit(0) }, err => console.error(`ERROR ${new Date().toLocaleTimeString('es')}: `, err))
 

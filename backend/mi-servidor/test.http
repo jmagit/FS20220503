@@ -30,4 +30,47 @@ Accept: application/octet-stream
 
 ###
 
-DELETE http://localhost:4200/actores/208
+get http://localhost:4200/api/actores?page=all&rows=10&order=first_name,last_name&proyection=first_name,last_name
+
+###
+
+get http://localhost:4200/api/actores?find=pe
+###
+
+get http://localhost:4200/api/actores/209
+
+###
+
+post http://localhost:4200/api/actores
+Content-Type: application/json
+
+{
+  "actor_id": 2,
+  "first_name": "GRILLO",
+  "last_name": "Grillo",
+  "last_update": "2006-02-15T04:34:33.000Z"
+}
+
+###
+
+put http://localhost:4200/api/actores/209
+Content-Type: application/json
+
+{
+  "actor_id": 209,
+  "first_name": "PEPITO",
+  "last_name": "Grillo",
+  "last_update": "2006-02-15T04:34:33.000Z"
+}
+
+###
+
+delete http://localhost:4200/api/actores/1
+
+###
+
+get http://localhost:4200/api/actores/1/peliculas
+
+###
+
+get http://localhost:4200/api/ciudades/1?mode=details
