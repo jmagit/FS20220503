@@ -25,6 +25,16 @@ app.use('/demos', require('./routes/demos'));
 app.use('/api/actores', require('./routes/actores'));
 app.use('/api/ciudades', require('./routes/ciudades'));
 
+app.use(function (req, res, next) {
+  var origen = req.header("Origin")
+  if (!origen) origen = '*'
+  res.header('Access-Control-Allow-Origin', origen)
+  res.header('Access-Control-Allow-Headers', 'Origin, Content-Type, Accept, Authorization, X-Requested-With, X-XSRF-TOKEN')
+  res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH, OPTIONS')
+  res.header('Access-Control-Allow-Credentials', 'true')
+  next()
+})
+
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));

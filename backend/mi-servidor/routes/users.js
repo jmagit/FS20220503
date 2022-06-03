@@ -5,7 +5,7 @@ var router = express.Router();
 router.get('/', function(req, res, next) {
   res.send('respond with a resource');
 });
-router.route('/login.jpg')
+router.route('/login')
     .get(function (req, res) {
         res.render('login', { user: "", password: "P@$$w0rd", intentos: 3 } )
     })

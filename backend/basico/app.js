@@ -153,20 +153,69 @@
 //   //console.log(rows)
 //   console.log(JSON.stringify(rows.map(item => item.RowDataPacket)))
 // })
-const MongoClient = require('mongodb').MongoClient;
+// const MongoClient = require('mongodb').MongoClient;
 
-const url = 'mongodb://localhost:27017';
-const dbName = 'curso';
+// const url = 'mongodb://localhost:27017';
+// const dbName = 'curso';
 
-const client = new MongoClient(url);
+// const client = new MongoClient(url);
 
-client.connect(function (err) {
-    if(err) throw err;
-    const db = client.db(dbName);
-    const collection = db.collection('personas');
-    collection.find({}).toArray(function (err, docs) {
-        if(err) throw err;
-        console.log(docs);
-        client.close();
-    });
-});
+// client.connect(function (err) {
+//     if(err) throw err;
+//     const db = client.db(dbName);
+//     const collection = db.collection('personas');
+//     collection.find({}).toArray(function (err, docs) {
+//         if(err) throw err;
+//         console.log(docs);
+//         client.close();
+//     });
+// });
+
+const bcrypt = require('bcrypt');
+const saltRounds = 10;
+
+async function encriptaPassword(password) {
+    const salt = await bcrypt.genSalt(saltRounds)
+    const hash = await bcrypt.hash(password, salt)
+    console.log(hash)
+    return hash
+}
+async function verificaPassword(password, hash) {
+    return await bcrypt.compare(password, hash)
+    // try {
+    //     let rslt = await bcrypt.compare(password, hash)
+    //     console.log("Return: " + rslt)
+    //     return true;
+    // } catch (error) {
+    //     console.log(error)
+    //     return false;
+    // }
+}
+
+
+// // encriptaPassword('P@$$w0rd')
+// // encriptaPassword('P@$$w0rd')
+// verificaPassword('P@$$w0rd', '$2b$10$oRUQiRh4HImiCoD2wIlyyul/V.KwOh/lCAebDa9G5m1C/667NutzG')
+//     .then(rslt => console.log(rslt ? 'OK': 'KO'), () => console.log('KO'))
+// verificaPassword('P@$$w0rd', '$2b$10$Yot/z1BPEB9qnZPPjkDU6eKNtNClSV.IuBbg3JQgPsehicP/jn/b6')
+//     .then(rslt => console.log(rslt ? 'OK': 'KO'), () => console.log('KO'))
+// //console.log(verificaPassword('P@$$w0rd', '$2b$10$YoT/z1BPEB9qnZPPjkDU6eKNtNClSV.IuBbg3JQgPsehicP/jn/b6') ? 'OK' : 'KO')
+// // console.log(verificaPassword('P@$$w0rd', "$2b$10$5i7NYY8y3qmK3bmLmU8uMOHTawhPq7ddD7F6SfOf9ZKz76V8XssM6"))
+
+const jwt = require('jsonwebtoken')
+const APP_SECRET = 'Es segura al 99%'
+const AUTHENTICATION_SCHEME = 'Bearer '
+
+// let token = AUTHENTICATION_SCHEME + jwt.sign({
+//     usr: 'admin',
+//     name: 'Pepito Grillo',
+//     roles: ['inversor']
+// }, APP_SECRET, { expiresIn: '1h' })
+// console.log(token)
+
+try {
+    let decoded = jwt.verify('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3IiOiJhZG1pbiIsIm5hbWUvOiJQZXBpdG8gR3JpbGxvIiwicm9sZXMiOlsiaW52ZXJzb3IiXSwiaWF0IjoxNjU0MjU3MTAxLCJleHAiOjE2NTQyNjA3MDF9.zFg9UzCtjGItCyt7Pi38L3iyzXwahtWuyaZDAsPBN8A', APP_SECRET);
+    console.log(decoded)
+} catch (err) {
+    console.log(err)
+}
