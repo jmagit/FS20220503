@@ -2,12 +2,14 @@ import { configureStore } from '@reduxjs/toolkit';
 import { contadorReducer } from './my-store';
 import newContadorReducer from './contador-slice'
 import notificationReducer, { add, remove, clear } from './notification-slice'
+import authSlice from './auth-slice';
 
 const store = configureStore({
     reducer: {
       contador: contadorReducer,
       cont: newContadorReducer,
       notification: notificationReducer,
+      auth: authSlice
     },
   });
 
