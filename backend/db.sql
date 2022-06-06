@@ -30,16 +30,6 @@ CREATE TABLE `Roles` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `Roles`
---
-
-LOCK TABLES `Roles` WRITE;
-/*!40000 ALTER TABLE `Roles` DISABLE KEYS */;
-INSERT INTO `Roles` VALUES ('Administradores','Administradores'),('Empleados','Empleados'),('Usuarios','Usuarios autenticados');
-/*!40000 ALTER TABLE `Roles` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `RolesPorUsuario`
 --
 
@@ -56,15 +46,6 @@ CREATE TABLE `RolesPorUsuario` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
---
--- Dumping data for table `RolesPorUsuario`
---
-
-LOCK TABLES `RolesPorUsuario` WRITE;
-/*!40000 ALTER TABLE `RolesPorUsuario` DISABLE KEYS */;
-INSERT INTO `RolesPorUsuario` VALUES ('adm@kk.kk','Administradores'),('admin','Administradores'),('emp@kk.kk','Empleados'),('adm@kk.kk','Usuarios'),('admin','Usuarios'),('emp@kk.kk','Usuarios'),('usr@kk.kk','Usuarios');
-/*!40000 ALTER TABLE `RolesPorUsuario` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `Usuarios`
@@ -92,6 +73,26 @@ INSERT INTO `Usuarios` VALUES ('adm@kk.kk','$2b$10$5i7NYY8y3qmK3bmLmU8uMOHTawhPq
 /*!40000 ALTER TABLE `Usuarios` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
+--
+-- Dumping data for table `Roles`
+--
+
+LOCK TABLES `Roles` WRITE;
+/*!40000 ALTER TABLE `Roles` DISABLE KEYS */;
+INSERT INTO `Roles` VALUES ('Administradores','Administradores'),('Empleados','Empleados'),('Usuarios','Usuarios autenticados');
+/*!40000 ALTER TABLE `Roles` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Dumping data for table `RolesPorUsuario`
+--
+
+LOCK TABLES `RolesPorUsuario` WRITE;
+/*!40000 ALTER TABLE `RolesPorUsuario` DISABLE KEYS */;
+INSERT INTO `RolesPorUsuario` VALUES ('adm@kk.kk','Administradores'),('admin','Administradores'),('emp@kk.kk','Empleados'),('adm@kk.kk','Usuarios'),('admin','Usuarios'),('emp@kk.kk','Usuarios'),('usr@kk.kk','Usuarios');
+/*!40000 ALTER TABLE `RolesPorUsuario` ENABLE KEYS */;
+UNLOCK TABLES;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
