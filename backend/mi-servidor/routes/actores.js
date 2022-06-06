@@ -1,22 +1,27 @@
-var express = require('express');
+const express = require('express');
 const { Sequelize, DataTypes, Op, QueryTypes } = require('sequelize');
+const { formatError, formatLocation } = require('../lib/data')
+const security = require("../lib/security");
 const initModels = require("../models/init-models");
 const sequelize = new Sequelize('mysql://root:root@localhost:3306/sakila')
 const dbContext = initModels(sequelize);
 
 var router = express.Router();
 
-function formatError(error) {
-    return { message: error.message }
-}
-function formatValidationError(error) {
-    return {
-        type: "https://tools.ietf.org/html/rfc7231#section-6.5.1",
-        status: 400,
-        title: 'One or more validation errors occurred.',
-        errors: Object.assign({}, ...error.errors.map(item => ({ [item.path]: item.message })))
-    }
-}
+// router.use(security.onlyAuthenticated)
+router.use(security.onlyInRole('Empleados,Administradores'))
+
+// router.use(function (req, res, next) {
+//     if (!res.locals.isAuthenticated) {
+//         res.status(401).end()
+//         return
+//     }
+//     if (!res.locals.isInRole('Administradores')) {
+//         res.status(403).end()
+//         return
+//     }
+//     next()
+// })
 router.route('/')
     .get(async function (req, res) { // get all
         const page = +req.query.page || 0;
@@ -34,7 +39,7 @@ router.route('/')
             options.order = req.query.order.split(',')
         }
         if (req.query.find) {
-            options.where = { first_name: {[Op.startsWith]: req.query.find}}
+            options.where = { first_name: { [Op.startsWith]: req.query.find } }
         }
         try {
             let resultado = await dbContext.actor.findAll(options)
@@ -48,10 +53,10 @@ router.route('/')
         try {
             await row.validate()
             await row.save()
-            res.append('location', req.url + '/' + row.actor_id)
+            res.append('location', formatLocation(req, row.actor_id))
             res.sendStatus(201)
         } catch (error) {
-            res.status(400).send(formatValidationError(error))
+            res.status(400).send(formatError(error))
         }
     })
 
@@ -82,7 +87,7 @@ router.route('/:id')
             await row.save()
             res.sendStatus(204)
         } catch (error) {
-            res.status(400).send(formatValidationError(error))
+            res.status(400).send(formatError(error))
         }
     })
     .delete(async function (req, res) { // remove
@@ -93,8 +98,9 @@ router.route('/:id')
         }
         try {
             await row.destroy()
+            res.sendStatus(204)
         } catch (error) {
-            res.status(409).json(formatError(error))
+            res.status(409).json(formatError(error, 409))
         }
     })
 

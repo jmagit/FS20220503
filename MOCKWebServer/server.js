@@ -11,7 +11,7 @@ var cookieParser = require('cookie-parser')
 //const writeFile = util.promisify(fs.writeFile)
 
 let PUERTO = process.env.PORT || '4321';
-const _DATALOG = false 
+const _DATALOG = false
 const DIR_API_REST = '/api/'
 const DIR_API_AUTH = '/' // DIR_API_REST
 const DIR_PUBLIC = 'public'
@@ -26,10 +26,10 @@ const PROP_NAME = 'idUsuario'
 const PASSWORD_PATTERN = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*\W).{8,}$/
 const USR_FILENAME = __dirname + '/data/usuarios.json'
 
-const VALIDATE_XSRF_TOKEN = false;
+const VALIDATE_XSRF_TOKEN = true;
 
 process.argv.forEach((val, index) => {
-  if(val.toLocaleLowerCase().startsWith('--port='))
+  if (val.toLocaleLowerCase().startsWith('--port='))
     PUERTO = val.substr('--port='.length)
 });
 
@@ -131,16 +131,18 @@ app.use(function (req, res, next) {
 })
 
 // Cookie-to-Header Token
-app.use(function (req, res, next) {
-  if (VALIDATE_XSRF_TOKEN) {
-    if ('POST|PUT|DELETE|PATCH'.indexOf(req.method.toUpperCase()) >= 0 && req.cookies['XSRF-TOKEN'] !== req.headers['x-xsrf-token']) {
+if (VALIDATE_XSRF_TOKEN) {
+  app.use(function (req, res, next) {
+    if ('POST|PUT|DELETE|PATCH'.indexOf(req.method.toUpperCase()) >= 0 &&
+      !req.path.includes("/login") &&
+      (!req.cookies['XSRF-TOKEN'] || !req.headers['x-xsrf-token'] || req.cookies['XSRF-TOKEN'] !== req.headers['x-xsrf-token'])) {
       res.status(401).end('No autorizado.')
       return
     }
     generateXsrfTokenCookie(res)
-  }
-  next()
-})
+    next()
+  })
+}
 
 // Ficheros publicos
 app.use(express.static(DIR_PUBLIC))
@@ -250,9 +252,9 @@ app.post(DIR_API_AUTH + 'login', function (req, res) {
     let usr = req.body.name
     let pwd = req.body.password
     if (!PASSWORD_PATTERN.test(pwd)) {
-      res.status(200).json(rslt).end()      
+      res.status(200).json(rslt).end()
       return
-    } 
+    }
     fs.readFile(USR_FILENAME, 'utf8', async function (err, data) {
       var lst = JSON.parse(data)
       var ele = lst.find(ele => ele[PROP_USERNAME] == usr)
@@ -276,7 +278,7 @@ app.post(DIR_API_AUTH + 'login', function (req, res) {
   }
 })
 app.get(DIR_API_AUTH + 'register', function (req, res) {
-  if(!res.locals.isAutenticated) {
+  if (!res.locals.isAutenticated) {
     res.status(401).end()
     return
   }
@@ -341,7 +343,7 @@ app.put(DIR_API_AUTH + 'register', function (req, res) {
 })
 app.put(DIR_API_AUTH + 'register/password', function (req, res) {
   var ele = req.body
-  if(!res.locals.isAutenticated) {
+  if (!res.locals.isAutenticated) {
     res.status(401).end()
     return false
   }
@@ -350,7 +352,7 @@ app.put(DIR_API_AUTH + 'register/password', function (req, res) {
     var ind = lst.findIndex(row => row[PROP_USERNAME] == res.locals.usr)
     if (ind == -1) {
       res.status(404).end()
-    } else if(PASSWORD_PATTERN.test(ele.newPassword) && await bcrypt.compare(ele.oldPassword, lst[ind][PROP_PASSWORD])) {
+    } else if (PASSWORD_PATTERN.test(ele.newPassword) && await bcrypt.compare(ele.oldPassword, lst[ind][PROP_PASSWORD])) {
       lst[ind][PROP_PASSWORD] = await encriptaPassword(ele.newPassword)
       console.log(lst)
       fs.writeFile(USR_FILENAME, JSON.stringify(lst), 'utf8', function (err) {
@@ -413,13 +415,13 @@ lstServicio.forEach(servicio => {
       if (req.query._page != undefined || req.query._rows != undefined) {
         const rows = req.query._rows && !isNaN(+req.query._rows) ? Math.abs(+req.query._rows) : 20;
         if (req.query._page && req.query._page.toUpperCase() == "COUNT") {
-          res.json({pages: Math.ceil(lst.length / rows), rows: lst.length }).end()
+          res.json({ pages: Math.ceil(lst.length / rows), rows: lst.length }).end()
           return;
         }
         const page = req.query._page && !isNaN(+req.query._page) ? Math.abs(+req.query._page) : 0;
         lst = lst.slice(page * rows, page * rows + rows)
       }
-      if(_DATALOG) console.log(JSON.stringify(lst))
+      if (_DATALOG) console.log(JSON.stringify(lst))
       res.json(lst).end()
     } catch (error) {
       res.status(500).json(error).end()
@@ -431,7 +433,7 @@ lstServicio.forEach(servicio => {
       var lst = JSON.parse(data)
       var ele = lst.find(ele => ele[servicio.pk] == req.params.id)
       if (ele) {
-        if(_DATALOG) console.log(ele)
+        if (_DATALOG) console.log(ele)
         res.status(200).json(ele).end()
       } else {
         res.status(404).end()
@@ -462,7 +464,7 @@ lstServicio.forEach(servicio => {
           }
         }
         lst.push(ele)
-        if(_DATALOG) console.log(lst)
+        if (_DATALOG) console.log(lst)
         await fs.promises.writeFile(servicio.fich, JSON.stringify(lst), 'utf8');
         res.status(201).json(lst).end()
       } else {
@@ -486,7 +488,7 @@ lstServicio.forEach(servicio => {
         res.status(404).end()
       } else {
         lst[ind] = ele
-        if(_DATALOG) console.log(lst)
+        if (_DATALOG) console.log(lst)
         await fs.promises.writeFile(servicio.fich, JSON.stringify(lst), 'utf8');
         res.status(200).json(lst).end()
       }
@@ -508,7 +510,7 @@ lstServicio.forEach(servicio => {
         res.status(404).end()
       } else {
         lst[ind] = ele
-        if(_DATALOG) console.log(lst)
+        if (_DATALOG) console.log(lst)
         await fs.promises.writeFile(servicio.fich, JSON.stringify(lst), 'utf8');
         res.status(200).json(lst).end()
       }
@@ -530,7 +532,7 @@ lstServicio.forEach(servicio => {
         res.status(404).end()
       } else {
         lst[ind] = Object.assign(lst[ind], ele)
-        if(_DATALOG) console.log(lst)
+        if (_DATALOG) console.log(lst)
         await fs.promises.writeFile(servicio.fich, JSON.stringify(lst), 'utf8');
         res.status(200).json(lst).end()
       }
@@ -552,7 +554,7 @@ lstServicio.forEach(servicio => {
         res.status(404).end()
       } else {
         lst.splice(ind, 1)
-        if(_DATALOG) console.log(lst)
+        if (_DATALOG) console.log(lst)
         await fs.promises.writeFile(servicio.fich, JSON.stringify(lst), 'utf8');
         res.status(204).json(lst).end()
       }
@@ -589,14 +591,14 @@ app.get('/', function (req, res) {
 })
 
 // PushState de HTML5
-app.get('/*', function(req, res, next) {
+app.get('/*', function (req, res, next) {
   console.log('NOT FOUND: %s', req.originalUrl)
   if (fs.existsSync(DIR_PUBLIC + '/index.html')) {
     res.sendFile('index.html', { root: DIR_PUBLIC });
   } else {
     next();
   }
-}); 
+});
 
 app.use(function (err, req, res, next) {
   console.log('ERROR: %s', req.originalUrl)
