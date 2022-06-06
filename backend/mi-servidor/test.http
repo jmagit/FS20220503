@@ -48,6 +48,8 @@ get http://localhost:4200/api/actores/209
 ###
 
 post http://localhost:4200/api/actores
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3IiOiJhZG1pbiIsIm5hbWUiOiJBZG1pbmlzdHJhZG9yIiwicm9sZXMiOlsiVXN1YXJpb3MiLCJBZG1pbmlzdHJhZG9yZXMiXSwiaWF0IjoxNjU0NTIzOTUwLCJleHAiOjE2NTQ1Mjc1NTB9.PJ1SrZG7KUADzR-j7R0Xyyg5GoN0DE7N9-J9TiXj0o4
+X-XSRF-TOKEN: 123456790ABCDEF
 Content-Type: application/json
 
 {
@@ -60,7 +62,7 @@ Content-Type: application/json
 ###
 
 put http://localhost:4200/api/actores/207
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3IiOiJhZG1pbiIsIm5hbWUiOiJBZG1pbmlzdHJhZG9yIiwicm9sZXMiOlsiVXN1YXJpb3MiLCJBZG1pbmlzdHJhZG9yZXMiXSwiaWF0IjoxNjU0NTAyMTQ0LCJleHAiOjE2NTQ1MDU3NDR9.SIF3DJaML9vIStLpFypXCYbxB37VcJveYa21QN8URNc
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3IiOiJhZG1pbiIsIm5hbWUiOiJBZG1pbmlzdHJhZG9yIiwicm9sZXMiOlsiVXN1YXJpb3MiLCJBZG1pbmlzdHJhZG9yZXMiXSwiaWF0IjoxNjU0NTIzOTUwLCJleHAiOjE2NTQ1Mjc1NTB9.PJ1SrZG7KUADzR-j7R0Xyyg5GoN0DE7N9-J9TiXj0o4
 X-XSRF-TOKEN: 123456790ABCDEF
 Content-Type: application/json
 
