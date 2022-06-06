@@ -1,6 +1,5 @@
 # ITINERARIO FULL STACK
 
-## Front End
 ## HTML
 
 - Prototipo proyecto Crowdlending
@@ -29,6 +28,7 @@
 - [Iconos](https://fontawesome.com/)
 - [Textos](https://www.lipsum.com/)
 - [Flexbox](https://flexboxfroggy.com/#es)
+- [Markdown](https://www.markdownguide.org/basic-syntax/)
 
 ### Ejemplos de refuerzo
 
@@ -82,30 +82,75 @@ Cuaquleir tetxo se pduee leer... si se respetan la primera y la última letra de
 5. Router: Transformar en aplicación los ejercicios anteriores
 6. Redux: Sistema de notificaciones a usuario
 
+---
+
+## Native React
+
+### Ejercicios
+
+1. Calculadora.
+2. Sistema CRUD Contactos
+3. React Navigation: Adaptación de la aplicación a múltiples pantallas
+
 ### Bibliotecas
 
 - <https://github.com/enaqx/awesome-react>
 - <https://www.primefaces.org/primereact/>
 
+---
+
 ## Microservicios
 
 ### Instalaciones de bases de datos
 
-docker run -d --name mysql-sakila -e MYSQL_ROOT_PASSWORD=root -p 3306:3306 1maa/sakila:latest
+#### Contenedores
 
-docker run -d --name mongodb -p 27017:27017 mongo
+    docker run -d --name mysql-sakila -e MYSQL_ROOT_PASSWORD=root -p 3306:3306 1maa/sakila:latest  
+    docker run -d --name mongodb -p 27017:27017 mongo
 
-https://www.heidisql.com/download.php
+#### Utilidades
 
-https://www.mongodb.com/try/download/compass
-
-https://dev.mysql.com/downloads/workbench/
+- https://www.mongodb.com/try/download/compass  
+- https://dev.mysql.com/downloads/workbench/
+- https://www.heidisql.com/download.php  
 
 ### NodeJS
+
 #### ORM
 
-npm install sequelize mysql2  
+    npm install sequelize mysql2  
+    npm install sequelize-auto --save-dev  
+    npx sequelize-auto -o "./models" -e mysql -h localhost -p 3306 -d sakila -u root -x root
 
-npm install sequelize-auto --save-dev  
+#### Ejercicios
 
-npx sequelize-auto -o "./models" -e mysql -h localhost -p 3306 -d sakila -u root -x root
+1. Creación de un servidor
+2. Acceso a bases de datos
+3. API REST de Actores con ORM
+4. Seguridad: autenticación y autorización
+5. Incorporación de la autenticación y autorización en el front end
+
+---
+
+## Proyecto final
+
+### Back End
+
+- Microservicio: Promotores e Inversores
+- Microservicio: Autenticación
+- Requisitos adicionales
+  - Base de datos relacional
+  - Validaciones de servidor
+  - Con batería de pruebas
+  - *Documentado con OpenApi*
+  - *Despliegue con Docker*
+
+### Front End
+
+- Aplicación React: Crowdlending
+- Requisitos adicionales
+  - Con batería de pruebas
+  - Con enrutamientos
+  - Validaciones de cliente
+  - Con estilo propio: Diseño adaptable, BEM, ...
+  - Accesible
