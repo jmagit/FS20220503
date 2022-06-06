@@ -1,22 +1,12 @@
 var express = require('express');
 const { Sequelize, DataTypes, Op, QueryTypes } = require('sequelize');
+const { formatError, formatLocation } = require('../lib/data')
 const initModels = require("../models/init-models");
 const sequelize = new Sequelize('mysql://root:root@localhost:3306/sakila')
 const dbContext = initModels(sequelize);
 
 var router = express.Router();
 
-function formatError(error) {
-    return { message: error.message }
-}
-function formatValidationError(error) {
-    return {
-        type: "https://tools.ietf.org/html/rfc7231#section-6.5.1",
-        status: 400,
-        title: 'One or more validation errors occurred.',
-        errors: Object.assign({}, ...error.errors.map(item => ({ [item.path]: item.message })))
-    }
-}
 router.route('/')
     .get(async function (req, res) { // get all
         const page = +req.query.page || 0;
@@ -48,10 +38,10 @@ router.route('/')
         try {
             await row.validate()
             await row.save()
-            res.append('location', req.url + '/' + row.city_id)
+            res.append('location', formatLocation(req, row.city_id))
             res.sendStatus(201)
         } catch (error) {
-            res.status(400).send(formatValidationError(error))
+            res.status(400).send(formatError(error))
         }
     })
 
@@ -86,7 +76,7 @@ router.route('/:id')
             await row.save()
             res.sendStatus(204)
         } catch (error) {
-            res.status(400).send(formatValidationError(error))
+            res.status(400).send(formatError(error))
         }
     })
     .delete(async function (req, res) { // remove
@@ -97,6 +87,7 @@ router.route('/:id')
         }
         try {
             await row.destroy()
+            res.sendStatus(204)
         } catch (error) {
             res.status(409).json(formatError(error))
         }

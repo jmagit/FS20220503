@@ -11,9 +11,15 @@ import { ContadorStored } from './contadorStored';
 import { Notificaciones } from './utilidades/notificaciones';
 import MainHeader from './main-header';
 import Blog from './ajax/blog';
+import { useSelector } from 'react-redux';
+import { selectIsAuthenticated, selectIsInRole } from './store/auth-slice';
 
 
 export default function App() {
+  const isAuthenticated = useSelector(selectIsAuthenticated)
+  const isEmpleado = useSelector(selectIsInRole('Empleados'))
+  const isAdministrador = useSelector(selectIsInRole('Administradores'))
+
   return (
     <BrowserRouter>
       <MainHeader />
@@ -34,13 +40,13 @@ export default function App() {
               /personas/add  --> add
              */}
             {/* <Route path='/personas' element={<PersonasRoute />}> */}
-            <Route path='/personas'>
+            {true && <Route path='/personas'>
               <Route index element={<PersonasMnt />} />
               <Route path='add' element={<PersonasMnt />} />
               <Route path=':id' element={<PersonasMnt />} />
               <Route path=':id/edit' element={<PersonasMnt />} />
-            </Route>
-            <Route path='/contactos/*' element={<ContactosConRutas />} />
+            </Route>}
+            {isAuthenticated && <Route path='/contactos/*' element={<ContactosConRutas />} />}
             {/* <Route path='/contactos' element={<Outlet />}>
               <Route index element={<ContactosList />} />
               <Route path='add' element={<ContactoAdd />} />
@@ -48,12 +54,12 @@ export default function App() {
               <Route path=':id/edit' element={<ContactoEdit />} />
             </Route> */}
             <Route path='/cont' element={<ContadorStored />} />
-            <Route path='/blog' element={<Blog />} >
+            {isEmpleado && <Route path='/blog' element={<Blog />} >
               <Route index element={<Blog />} />
               <Route path='add' element={<Blog />} />
               <Route path=':id' element={<Blog />} />
               <Route path=':id/edit' element={<Blog />} />
-            </Route>
+            </Route>}
 
 
             <Route path='*' element={<PageNotFound />} />

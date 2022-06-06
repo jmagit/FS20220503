@@ -1,8 +1,8 @@
 import { Component, useEffect, useState } from 'react';
-import { Link, NavLink, Outlet, useParams, Routes, Route, useNavigate, useSearchParams } from 'react-router-dom';
+import { NavLink, Outlet, useParams, Routes, Route, useNavigate, useSearchParams } from 'react-router-dom';
 import axios from "axios";
 import { Esperando, PageNotFound, Paginacion } from '../utilidades/comunes';
-import { esFuturo, esPasado } from '../utilidades/biblioteca';
+import { esPasado } from '../utilidades/biblioteca';
 import store from "../store/store";
 
 function ValidationMessage({ msg }) {
@@ -35,7 +35,6 @@ export function ContactosConRutas() {
         </>
     )
 }
-
 
 const API_URL = 'http://localhost:4321/api/contactos'
 
@@ -70,7 +69,7 @@ export function ContactosList() {
                     });
             }).catch(err => {
                 store.AddErrNotify(err);
-                this.setState({ loading: false });
+                setLoading(false);
             });
     }, [pagina, paginas]);
 

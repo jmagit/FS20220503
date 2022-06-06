@@ -31,6 +31,12 @@ Accept: application/octet-stream
 ###
 
 get http://localhost:4200/api/actores?page=all&rows=10&order=first_name,last_name&proyection=first_name,last_name
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3IiOiJlbXBAa2sua2siLCJuYW1lIjoiRW1wbGVhZG8iLCJyb2xlcyI6WyJVc3VhcmlvcyIsIkVtcGxlYWRvcyJdLCJpYXQiOjE2NTQzMzg4MDksImV4cCI6MTY1NDM0MjQwOX0.d_biTZ9AOvkQWb2aCaL5P7NISE2E-PeqH1lykz-qMLI
+
+###
+
+get http://localhost:4200/api/actores?page=all
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3IiOiJhZG1pbiIsIm5hbWUiOiJBZG1pbmlzdHJhZG9yIiwicm9sZXMiOlsiVXN1YXJpb3MiLCJBZG1pbmlzdHJhZG9yZXMiXSwiaWF0IjoxNjU0NTAyMTQ0LCJleHAiOjE2NTQ1MDU3NDR9.SIF3DJaML9vIStLpFypXCYbxB37VcJveYa21QN8URNc
 
 ###
 
@@ -53,11 +59,13 @@ Content-Type: application/json
 
 ###
 
-put http://localhost:4200/api/actores/209
+put http://localhost:4200/api/actores/207
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3IiOiJhZG1pbiIsIm5hbWUiOiJBZG1pbmlzdHJhZG9yIiwicm9sZXMiOlsiVXN1YXJpb3MiLCJBZG1pbmlzdHJhZG9yZXMiXSwiaWF0IjoxNjU0NTAyMTQ0LCJleHAiOjE2NTQ1MDU3NDR9.SIF3DJaML9vIStLpFypXCYbxB37VcJveYa21QN8URNc
+X-XSRF-TOKEN: 123456790ABCDEF
 Content-Type: application/json
 
 {
-  "actor_id": 209,
+  "actor_id": 207,
   "first_name": "PEPITO",
   "last_name": "Grillo",
   "last_update": "2006-02-15T04:34:33.000Z"
@@ -65,7 +73,7 @@ Content-Type: application/json
 
 ###
 
-delete http://localhost:4200/api/actores/1
+delete http://localhost:4200/api/actores/217
 
 ###
 
@@ -74,3 +82,29 @@ get http://localhost:4200/api/actores/1/peliculas
 ###
 
 get http://localhost:4200/api/ciudades/1?mode=details
+
+###
+
+post http://localhost:4200/api/login
+Content-Type: application/json
+
+{ "name": "admin", "password": "P@$$w0rd" }
+
+###
+
+post http://localhost:4200/api/login?cookie=true
+Content-Type: application/json
+
+{ "name": "emp@kk.kk", "password": "P@$$w0rd" }
+
+###
+
+get http://localhost:4200/api/auth
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3IiOiJhZG1pbiIsIm5hbWUiOiJBZG1pbmlzdHJhZG9yIiwicm9sZXMiOlsiVXN1YXJpb3MiLCJBZG1pbmlzdHJhZG9yZXMiXSwiaWF0IjoxNjU0NDk3NjY2LCJleHAiOjE2NTQ1MDEyNjZ9.thQ-Li-V7C4Dhqkdo4qL_C2a1pmVtz5Zy5Wg0zdOG4o
+
+###
+
+post  http://localhost:4200/api/auth
+Set-Cookie: XSRF-TOKEN=123456790ABCDEF; Path=/,Authorization=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3IiOiJlbXBAa2sua2siLCJuYW1lIjoiRW1wbGVhZG8iLCJyb2xlcyI6WyJVc3VhcmlvcyIsIkVtcGxlYWRvcyJdLCJpYXQiOjE2NTQzMjM5MzksImV4cCI6MTY1NDMyNzUzOX0.I_AfrlIIPC8-vkIuih1Y5rjYoy5TydvJqEObas1rSXc; Path=/; 
+x-xsrf-token: 123456790ABCDEF
+
