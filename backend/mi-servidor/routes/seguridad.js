@@ -127,6 +127,23 @@ router.get(DIR_API_AUTH + 'logout', function (req, res) {
     res.status(200).end()
 })
 
+router.post(DIR_API_AUTH + 'register', function (req, res) {
+    res.clearCookie('Authorization');
+    res.status(200).end()
+})
+router.get(DIR_API_AUTH + 'register', function (req, res) {
+    res.clearCookie('Authorization');
+    res.status(200).end()
+})
+router.put(DIR_API_AUTH + 'register', function (req, res) {
+    res.clearCookie('Authorization');
+    res.status(200).end()
+})
+router.put(DIR_API_AUTH + 'change-password', function (req, res) {
+    res.clearCookie('Authorization');
+    res.status(200).end()
+})
+
 router.all(DIR_API_AUTH + 'auth', function (req, res) {
     res.status(200).json({ isAuthenticated: res.locals.isAuthenticated, usr: res.locals.usr, name: res.locals.name, roles: res.locals.roles })
 })
