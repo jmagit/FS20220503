@@ -5,6 +5,7 @@ const cookieParser = require('cookie-parser');
 const jwt = require('jsonwebtoken')
 const bcrypt = require('bcrypt')
 const fs = require('fs/promises')
+const { formatError } = require('../lib/data')
 
 const DIR_API_AUTH = '/api/' // DIR_API_REST
 const APP_SECRET = 'Es segura al 99%'
@@ -18,7 +19,7 @@ const SALT_ROUNDS = 10;
 
 const USR_FILENAME = 'data/usuarios.json'
 
-const VALIDATE_XSRF_TOKEN = true;
+const VALIDATE_XSRF_TOKEN = false;
 
 // parse header/cookies
 router.use(cookieParser())
@@ -58,7 +59,7 @@ router.use(function (req, res, next) {
         res.locals.isInRole = role => res.locals.roles.includes(role)
         next();
     } catch (err) {
-        res.status(401).end(err);
+        res.status(401).json(err);
     }
 })
 
@@ -68,7 +69,7 @@ if (VALIDATE_XSRF_TOKEN) {
       if ('POST|PUT|DELETE|PATCH'.indexOf(req.method.toUpperCase()) >= 0 &&
         !req.path.includes("/login") &&
         (!req.cookies['XSRF-TOKEN'] || !req.headers['x-xsrf-token'] || req.cookies['XSRF-TOKEN'] !== req.headers['x-xsrf-token'])) {
-        res.status(401).end('No autorizado.')
+        res.status(401).json(formatError('No autorizado.', 401))
         return
       }
       generateXsrfTokenCookie(res)
