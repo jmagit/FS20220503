@@ -1,9 +1,7 @@
 var express = require('express');
 const { Sequelize, DataTypes, Op, QueryTypes } = require('sequelize');
 const { formatError, formatLocation } = require('../lib/data')
-const initModels = require("../models/init-models");
-const sequelize = new Sequelize('mysql://root:root@localhost:3306/sakila')
-const dbContext = initModels(sequelize);
+const { sequelize, dbContext } = require('../lib/sakila-db')
 
 var router = express.Router();
 

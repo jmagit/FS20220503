@@ -110,3 +110,85 @@ post  http://localhost:4200/api/auth
 Set-Cookie: XSRF-TOKEN=123456790ABCDEF; Path=/,Authorization=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3IiOiJlbXBAa2sua2siLCJuYW1lIjoiRW1wbGVhZG8iLCJyb2xlcyI6WyJVc3VhcmlvcyIsIkVtcGxlYWRvcyJdLCJpYXQiOjE2NTQzMjM5MzksImV4cCI6MTY1NDMyNzUzOX0.I_AfrlIIPC8-vkIuih1Y5rjYoy5TydvJqEObas1rSXc; Path=/; 
 x-xsrf-token: 123456790ABCDEF
 
+###
+
+post http://localhost:4200/api/register
+Content-Type: application/json
+
+{
+  "username": "kk@kk.kk",
+  "nombre": "kk",
+  "password": "Pássw0rd",
+  "roles": "Usuarios,Empleados"
+}
+###
+
+post http://localhost:4200/api/login
+Content-Type: application/json
+
+{ "name": "kk@kk.kk", "password": "Pássw0rd" }
+
+###
+
+get http://localhost:4200/api/register
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3IiOiJra0Bray5rayIsIm5hbWUiOiJrayIsInJvbGVzIjpbIlVzdWFyaW9zIl0sImlhdCI6MTY1NDYyODEzMCwiZXhwIjoxNjU0NjMxNzMwfQ.uf-RFd1nvj6jKyAD6ohI0Gcvy65Ga8Ff0h7om0gsIl4
+###
+
+put http://localhost:4200/api/register
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3IiOiJra0Bray5rayIsIm5hbWUiOiJrayIsInJvbGVzIjpbIlVzdWFyaW9zIl0sImlhdCI6MTY1NDYyODEzMCwiZXhwIjoxNjU0NjMxNzMwfQ.uf-RFd1nvj6jKyAD6ohI0Gcvy65Ga8Ff0h7om0gsIl4
+Content-Type: application/json
+
+{
+  "username": "kkk@kk.kk",
+  "nombre": "kkk",
+  "password": "Pássw0rd",
+  "roles": "Usuarios,Empleados"
+}
+
+###
+
+put http://localhost:4200/api/change-password
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3IiOiJra0Bray5rayIsIm5hbWUiOiJrayIsInJvbGVzIjpbIlVzdWFyaW9zIl0sImlhdCI6MTY1NDYyODEzMCwiZXhwIjoxNjU0NjMxNzMwfQ.uf-RFd1nvj6jKyAD6ohI0Gcvy65Ga8Ff0h7om0gsIl4
+Content-Type: application/json
+
+{
+  "oldpassword": "Pássw0rd",
+  "newpassword": "Pássw0rd"
+}
+
+###
+
+get http://localhost:4200/admin/users
+
+
+###
+
+get http://localhost:4200/admin/users/kk@kk.kk
+
+###
+
+put http://localhost:4200/admin/users/kk@kk.kk
+Content-Type: application/json
+
+{
+  "idUsuario": "kk@kk.kk",
+  "nombre": "kkk",
+  "roles": ["Usuarios","Administradores"]
+}
+
+
+###
+
+put http://localhost:4200/admin/users/kk@kk.kk
+Content-Type: application/json
+
+{
+  "idUsuario": "kk@kk.kk",
+  "nombre": "kkk",
+   "roles": ["Empleados"]
+}
+
+###
+
+delete http://localhost:4200/admin/users/kk@kk.kk
+
