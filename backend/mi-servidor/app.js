@@ -18,6 +18,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', require('./routes/index'));
 app.use('/', require('./routes/seguridad'));
+app.use('/admin/users', require('./routes/usuarios'));
 app.use('/users', require('./routes/users'));
 app.use('/demos', require('./routes/demos'));
 app.use('/api/actores', require('./routes/actores'));

@@ -37,12 +37,12 @@ DROP TABLE IF EXISTS `RolesPorUsuario`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `RolesPorUsuario` (
-  `idUsuarios` varchar(200) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `idUsuario` varchar(200) COLLATE utf8mb4_unicode_ci NOT NULL,
   `idRol` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
-  PRIMARY KEY (`idUsuarios`,`idRol`),
+  PRIMARY KEY (`idUsuario`,`idRol`),
   KEY `FK_RolesPorUsuario_Roles` (`idRol`),
   CONSTRAINT `FK_RolesPorUsuario_Roles` FOREIGN KEY (`idRol`) REFERENCES `Roles` (`idRol`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `FK_RolesPorUsuario_Usuarios` FOREIGN KEY (`idUsuarios`) REFERENCES `Usuarios` (`idUsuarios`) ON DELETE CASCADE ON UPDATE CASCADE
+  CONSTRAINT `FK_RolesPorUsuario_Usuarios` FOREIGN KEY (`idUsuario`) REFERENCES `Usuarios` (`idUsuario`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -55,11 +55,11 @@ DROP TABLE IF EXISTS `Usuarios`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `Usuarios` (
-  `idUsuarios` varchar(200) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `idUsuario` varchar(200) COLLATE utf8mb4_unicode_ci NOT NULL,
   `password` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
   `nombre` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
   `roles` varchar(250) COLLATE utf8mb4_unicode_ci DEFAULT '',
-  PRIMARY KEY (`idUsuarios`)
+  PRIMARY KEY (`idUsuario`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 

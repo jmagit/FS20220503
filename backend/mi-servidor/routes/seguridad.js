@@ -6,6 +6,7 @@ const jwt = require('jsonwebtoken')
 const bcrypt = require('bcrypt')
 const fs = require('fs/promises')
 const { formatError } = require('../lib/data')
+const { sequelize, dbContext } = require('../lib/autenticacion-db')
 
 const DIR_API_AUTH = '/api/' // DIR_API_REST
 const APP_SECRET = 'Es segura al 99%'
@@ -24,7 +25,9 @@ const VALIDATE_XSRF_TOKEN = false;
 // parse header/cookies
 router.use(cookieParser())
 function generateXsrfTokenCookie(res) {
-    res.cookie('XSRF-TOKEN', '123456790ABCDEF', { httpOnly: false })
+    if (VALIDATE_XSRF_TOKEN) {
+        res.cookie('XSRF-TOKEN', '123456790ABCDEF', { httpOnly: false })
+    }
 }
 
 // Cross-origin resource sharing (CORS)
@@ -66,17 +69,16 @@ router.use(function (req, res, next) {
 // Cookie-to-Header Token
 if (VALIDATE_XSRF_TOKEN) {
     router.use(function (req, res, next) {
-      if ('POST|PUT|DELETE|PATCH'.indexOf(req.method.toUpperCase()) >= 0 &&
-        !req.path.includes("/login") &&
-        (!req.cookies['XSRF-TOKEN'] || !req.headers['x-xsrf-token'] || req.cookies['XSRF-TOKEN'] !== req.headers['x-xsrf-token'])) {
-        res.status(401).json(formatError('No autorizado.', 401))
-        return
-      }
-      generateXsrfTokenCookie(res)
-      next()
+        if ('POST|PUT|DELETE|PATCH'.indexOf(req.method.toUpperCase()) >= 0 &&
+            !req.path.includes("/login") &&
+            (!req.cookies['XSRF-TOKEN'] || !req.headers['x-xsrf-token'] || req.cookies['XSRF-TOKEN'] !== req.headers['x-xsrf-token'])) {
+            res.status(401).json(formatError('No autorizado.', 401))
+            return
+        }
+        generateXsrfTokenCookie(res)
+        next()
     })
-  }
-
+}
 
 // Control de acceso
 async function encriptaPassword(password) {
@@ -100,20 +102,23 @@ router.post(DIR_API_AUTH + 'login', async function (req, res) {
             setTimeout(() => res.status(200).json(payload).end(), 1000)
             return
         }
-        const data = await fs.readFile(USR_FILENAME, 'utf8')
-        var lst = JSON.parse(data)
-        var ele = lst.find(ele => ele[PROP_USERNAME] == usr)
+        // const data = await fs.readFile(USR_FILENAME, 'utf8')
+        // var lst = JSON.parse(data)
+        // var ele = lst.find(ele => ele[PROP_USERNAME] == usr)
+        const ele = await dbContext.Usuarios.findByPk(usr)
         if (ele && await bcrypt.compare(pwd, ele[PROP_PASSWORD])) {
             let token = jwt.sign({
                 usr: ele[PROP_USERNAME],
                 name: ele.nombre,
-                roles: ele.roles
+                // roles: ele.roles
+                roles: ele.roles.split(',')
             }, APP_SECRET, { expiresIn: '1h' })
             payload = {
                 success: true,
                 token: AUTHENTICATION_SCHEME + token,
                 name: ele[PROP_NAME],
-                roles: ele.roles
+                //                roles: ele.roles
+                roles: ele.roles.split(',')
             }
             if (req.query.cookie && req.query.cookie.toLowerCase() === "true")
                 res.cookie('Authorization', token, { maxAge: 3600000 })
@@ -128,21 +133,93 @@ router.get(DIR_API_AUTH + 'logout', function (req, res) {
     res.status(200).end()
 })
 
-router.post(DIR_API_AUTH + 'register', function (req, res) {
-    res.clearCookie('Authorization');
-    res.status(200).end()
-})
-router.get(DIR_API_AUTH + 'register', function (req, res) {
-    res.clearCookie('Authorization');
-    res.status(200).end()
-})
-router.put(DIR_API_AUTH + 'register', function (req, res) {
-    res.clearCookie('Authorization');
-    res.status(200).end()
-})
-router.put(DIR_API_AUTH + 'change-password', function (req, res) {
-    res.clearCookie('Authorization');
-    res.status(200).end()
+router.route(DIR_API_AUTH + 'register')
+    .post(async function (req, res) { // Auto registro de usuarios
+        try {
+            let row = await dbContext.Usuarios.build({ idUsuario: req.body.username, password: req.body.password, nombre: req.body.nombre })
+            let pwd = req.body.password
+            row.password = 'valida'
+            await row.validate()
+            if (!PASSWORD_PATTERN.test(pwd)) {
+                throw new Error('Invalid format password')
+            }
+            row.password = await encriptaPassword(pwd)
+            row.roles = 'Usuarios'
+            await row.save()
+            await dbContext.RolesPorUsuario.create({idUsuario: row.idUsuario, idRol: 'Usuarios'})
+            res.sendStatus(201)
+        } catch (error) {
+            res.status(400).send(formatError(error))
+        }
+    })
+    .get(async function (req, res) { // Consulta de sus datos de usuario
+        if (!res.locals.isAuthenticated) {
+            res.status(401).end()
+            return
+        }
+        try {
+            const row = await dbContext.Usuarios.findByPk(res.locals.usr)
+            if (row) {
+                res.status(200).json({ username: row.idUsuario, nombre: row.nombre }).end()
+            } else {
+                res.status(401).end()
+            }
+        } catch (error) {
+            res.status(500).json(formatError(error))
+        }
+    })
+    .put(async function (req, res) {  // Mantenimiento de sus datos de usuario
+        if (!res.locals.isAuthenticated) {
+            res.status(401).end()
+            return
+        }
+        try {
+            const row = await dbContext.Usuarios.findByPk(res.locals.usr)
+            if (row) {
+                try {
+                    row.set({ idUsuario: req.body.username, nombre: req.body.nombre })
+                    await row.save()
+                    res.sendStatus(204)
+                } catch (error) {
+                    res.status(400).send(formatError(error))
+                }
+            } else {
+                res.status(401).end()
+            }
+        } catch (error) {
+            res.status(500).json(formatError(error))
+        }
+    })
+
+router.put(DIR_API_AUTH + 'change-password', async function (req, res) {  // Cambio de su propia contraseña
+    if (!res.locals.isAuthenticated) {
+        res.status(401).end()
+        return
+    }
+    var payload = {
+        success: false
+    }
+    try {
+        if (!req.body || !req.body.oldpassword || !req.body.newpassword) {
+            throw new Error('Invalid data')
+        }
+        let old = req.body.oldpassword
+        let pwd = req.body.newpassword
+        if (!PASSWORD_PATTERN.test(old) || !PASSWORD_PATTERN.test(pwd)) {
+            throw new Error('Invalid format password')
+        }
+        const ele = await dbContext.Usuarios.findByPk(res.locals.usr)
+        if (ele && await bcrypt.compare(old, ele[PROP_PASSWORD])) {
+            ele.password = await encriptaPassword(pwd)
+            await ele.save()
+            payload.success = true
+            res.status(200).json(payload).end()
+        } else {
+            res.status(403).json(payload).end()
+        }
+    } catch (error) {
+        res.status(400).send(formatError(error))
+    }
 })
 
 router.all(DIR_API_AUTH + 'auth', function (req, res) {
