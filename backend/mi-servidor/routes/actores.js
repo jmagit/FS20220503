@@ -1,12 +1,10 @@
 const express = require('express');
 const { Sequelize, DataTypes, Op, QueryTypes } = require('sequelize');
 const { formatError, formatLocation } = require('../lib/data')
+const { sequelize, dbContext } = require('../lib/sakila-db')
 const security = require("../lib/security");
-const initModels = require("../models/init-models");
-const sequelize = new Sequelize('mysql://root:root@localhost:3306/sakila')
-const dbContext = initModels(sequelize);
 
-var router = express.Router();
+const router = express.Router();
 
 // router.use(security.onlyAuthenticated)
 router.use(security.onlyInRole('Empleados,Administradores'))

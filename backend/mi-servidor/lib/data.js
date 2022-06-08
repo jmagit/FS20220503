@@ -1,5 +1,5 @@
 exports.formatError = (error, status = 400) => {
-    if (error.name === 'SequelizeValidationError')
+    if (error.name === 'SequelizeValidationError' || error.name === 'SequelizeUniqueConstraintError')
         return {
             type: "https://tools.ietf.org/html/rfc7231#section-6.5.1",
             status: 400,
