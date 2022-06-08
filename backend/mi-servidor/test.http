@@ -131,11 +131,12 @@ Content-Type: application/json
 ###
 
 get http://localhost:4200/api/register
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3IiOiJra0Bray5rayIsIm5hbWUiOiJrayIsInJvbGVzIjpbIlVzdWFyaW9zIl0sImlhdCI6MTY1NDYyODEzMCwiZXhwIjoxNjU0NjMxNzMwfQ.uf-RFd1nvj6jKyAD6ohI0Gcvy65Ga8Ff0h7om0gsIl4
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3IiOiJra0Bray5rayIsIm5hbWUiOiJrayIsInJvbGVzIjpbIlVzdWFyaW9zIl0sImlhdCI6MTY1NDY3ODg3MywiZXhwIjoxNjU0NjgyNDczfQ.8buvScPXH5hb1aCc-caPmifwZO030_-PRFQXvcA7mv8
+
 ###
 
 put http://localhost:4200/api/register
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3IiOiJra0Bray5rayIsIm5hbWUiOiJrayIsInJvbGVzIjpbIlVzdWFyaW9zIl0sImlhdCI6MTY1NDYyODEzMCwiZXhwIjoxNjU0NjMxNzMwfQ.uf-RFd1nvj6jKyAD6ohI0Gcvy65Ga8Ff0h7om0gsIl4
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3IiOiJra0Bray5rayIsIm5hbWUiOiJrayIsInJvbGVzIjpbIlVzdWFyaW9zIl0sImlhdCI6MTY1NDY3ODg3MywiZXhwIjoxNjU0NjgyNDczfQ.8buvScPXH5hb1aCc-caPmifwZO030_-PRFQXvcA7mv8
 Content-Type: application/json
 
 {
@@ -148,11 +149,11 @@ Content-Type: application/json
 ###
 
 put http://localhost:4200/api/change-password
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3IiOiJra0Bray5rayIsIm5hbWUiOiJrayIsInJvbGVzIjpbIlVzdWFyaW9zIl0sImlhdCI6MTY1NDYyODEzMCwiZXhwIjoxNjU0NjMxNzMwfQ.uf-RFd1nvj6jKyAD6ohI0Gcvy65Ga8Ff0h7om0gsIl4
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3IiOiJra0Bray5rayIsIm5hbWUiOiJrayIsInJvbGVzIjpbIlVzdWFyaW9zIl0sImlhdCI6MTY1NDY3ODg3MywiZXhwIjoxNjU0NjgyNDczfQ.8buvScPXH5hb1aCc-caPmifwZO030_-PRFQXvcA7mv8
 Content-Type: application/json
 
 {
-  "oldpassword": "Pássw0rd",
+  "oldpassword": "P@ssw0rd",
   "newpassword": "Pássw0rd"
 }
 
@@ -172,7 +173,7 @@ Content-Type: application/json
 
 {
   "idUsuario": "kk@kk.kk",
-  "nombre": "kkk",
+  "nombre": "k",
   "roles": ["Usuarios","Administradores"]
 }
 
