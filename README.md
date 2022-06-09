@@ -114,6 +114,12 @@ Cuaquleir tetxo se pduee leer... si se respetan la primera y la última letra de
 - https://dev.mysql.com/downloads/workbench/
 - https://www.heidisql.com/download.php  
 
+### Paquetes Java
+
+- https://downloads.mysql.com/archives/get/p/3/file/mysql-connector-java-5.1.49.zip  
+- https://sourceforge.net/projects/hibernate/files/hibernate-orm/5.5.3.Final/hibernate-release-5.5.3.Final.zip/download
+
+
 ### NodeJS
 
 #### ORM
