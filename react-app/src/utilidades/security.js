@@ -5,6 +5,8 @@ import { login, logout } from '../store/auth-slice'
 import { Esperando } from './comunes';
 import store from "../store/store";
 
+const API_AUTH = process.env.REACT_APP_API_AUTH || 'http://localhost:4321/'
+
 axios.interceptors.request.use((config) => {
     if (store.getState().auth.isAuth)
         config.headers['Authorization'] = store.getState().auth.authToken;
@@ -26,7 +28,7 @@ export const LoginComponent = () => {
 
     const onLogin = () => {
         setLoading(true);
-        axios.post('http://localhost:4321/login?cookie=true', { name: usr, password: pwd })
+        axios.post(API_AUTH + 'login', { name: usr, password: pwd })
             .then(resp => {
                 if (resp.data.success) {
                     dispatch(login({ authToken: resp.data.token, name: resp.data.name, roles: resp.data.roles }))

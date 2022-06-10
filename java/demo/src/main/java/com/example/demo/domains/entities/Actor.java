@@ -2,11 +2,17 @@ package com.example.demo.domains.entities;
 
 import java.io.Serializable;
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 
+import org.hibernate.validator.constraints.Length;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.sql.Timestamp;
 import java.util.List;
+import java.util.Objects;
 
 
 /**
@@ -25,12 +31,16 @@ public class Actor implements Serializable {
 	private int actorId;
 
 	@Column(name="first_name")
+	@NotBlank
+	@Length(min=2, max=45)
+	@JsonProperty("nombre")
 	private String firstName;
 
 	@Column(name="last_name")
 	private String lastName;
 
 	@Column(name="last_update")
+	@JsonFormat(pattern = "dd-MM-yyyy hh:mm:ss")
 	private Timestamp lastUpdate;
 
 	//bi-directional many-to-one association to FilmActor
@@ -100,5 +110,24 @@ public class Actor implements Serializable {
 		return "Actor [actorId=" + actorId + ", firstName=" + firstName + ", lastName=" + lastName + ", lastUpdate="
 				+ lastUpdate + "]";
 	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(actorId);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Actor other = (Actor) obj;
+		return actorId == other.actorId;
+	}
+	
+	
 
 }

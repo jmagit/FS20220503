@@ -186,10 +186,8 @@ export default function Demos() {
                 >
                     Learn React
                 </a>
-                <h1>Secreto: {process.env.REACT_APP_SECRET} {/*({coordenadas.latitud}, {coordenadas.longitud} )*/}</h1>
+                <h1>Secreto: {process.env.REACT_APP_API_AUTH} {/*({coordenadas.latitud}, {coordenadas.longitud} )*/}</h1>
             </header>
-            {/* <Coordenadas /> */}
-            <Calculadora coma onChange={value => setCont(value)} />
             <ErrorBoundary>
                 <Contador init={cont} delta={1} onChange={value => setCont(value)} />
             </ErrorBoundary>
@@ -203,6 +201,8 @@ export default function Demos() {
                     <li key={item.id} className={item.id % 2 ? 'alert-danger' : 'alert-info'}>{negrita(item)} {item.apellidos}</li>
                 ))}
             </ul>
+            {/* <Coordenadas /> */}
+            <Calculadora coma onChange={value => setCont(value)} />
             <Card title="Titulo de la tarjeta">
                 <Saluda nombre="Don Pepito" edad={33} />
                 <Saluda nombre="Don Jose" />

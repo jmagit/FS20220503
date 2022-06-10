@@ -1,5 +1,8 @@
 package com.example.demo;
 
+import javax.transaction.Transactional;
+import javax.validation.Validator;
+
 import org.hibernate.cache.spi.support.AbstractReadWriteAccess.Item;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -17,17 +20,31 @@ public class DemoApplication implements CommandLineRunner {
 
 	@Autowired
 	Persona persona;
-	
+
 	@Autowired
 	ActorRepository dao;
-	
+	@Autowired // Validation.buildDefaultValidatorFactory().getValidator()
+	private Validator validator;
+
 	@Override
+	@Transactional
 	public void run(String... args) throws Exception {
-		persona.saluda();
-		System.out.println("Hola mundo");
-		persona.despide();
-		
-		dao.findAll().forEach(item -> System.out.println(item));
+//		persona.saluda();
+//		System.out.println("Hola mundo");
+//		persona.despide();
+//
+//		// dao.findAll().forEach(item -> System.out.println(item));
+//		var actor = dao.findById(1).get();
+//		actor.setFirstName("P");
+//		var constraintViolations = validator.validate(actor);
+//		if (constraintViolations.size() > 0) {
+//			constraintViolations.forEach(item -> System.out.println(item.getPropertyPath() + ": " + item.getMessage()));
+//		} else
+//			dao.save(actor);
+//		actor.getFilmActors().forEach(item -> System.out.println(item.getFilm().getTitle()));
+//		dao.findByActorIdBetweenAndLastNameEndingWith(50, 100, "a").forEach(item -> System.out.println(item));
+//		dao.findTopNum5ByFirstNameStartingWith("P").forEach(item -> System.out.println(item));
+
 	}
 
 }
