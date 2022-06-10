@@ -18,11 +18,12 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', require('./routes/index'));
 app.use('/', require('./routes/seguridad'));
-app.use('/admin/users', require('./routes/usuarios'));
-app.use('/users', require('./routes/users'));
-app.use('/demos', require('./routes/demos'));
-app.use('/api/actores', require('./routes/actores'));
-app.use('/api/ciudades', require('./routes/ciudades'));
+app.use('/v1/admin/users', require('./routes/usuarios'));
+app.use('/v1/users', require('./routes/users'));
+app.use('/v2/users', require('./routes/users'));
+app.use('/v1/demos', require('./routes/demos'));
+app.use('/v1/api/actores', require('./routes/actores'));
+app.use('/v1/api/ciudades', require('./routes/ciudades'));
 
 app.use(function (req, res, next) {
   var origen = req.header("Origin")

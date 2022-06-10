@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { ValidationMessage, Esperando, ErrorMessage } from "../utilidades/comunes";
 import withRouter from '../utilidades/WithRouter'
 
-const URL_BASE = "http://localhost:4321/api/blog";
+const URL_BASE = (process.env.REACT_APP_API_URL || 'http://localhost:4321/api/') + 'blog';
 
 class Blog extends Component {
   constructor(props) {

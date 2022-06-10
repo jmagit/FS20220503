@@ -10,7 +10,7 @@ export const authSlice = createSlice({
             state.isAuth = true
             state.authToken= action.payload.authToken
             state.name= action.payload.name
-            state.roles= action.payload.roles
+            state.roles= action.payload.roles || []
          },
         logout: (state, action) => { 
             state.isAuth = false

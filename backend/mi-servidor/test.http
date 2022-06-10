@@ -193,3 +193,13 @@ Content-Type: application/json
 
 delete http://localhost:4200/admin/users/kk@kk.kk
 
+###
+
+get http://localhost:8001/auto/actors
+Accept: application/xml
+
+###
+
+http://localhost:8010/actores
+Accept: application/xml
+

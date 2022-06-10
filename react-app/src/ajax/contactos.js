@@ -36,7 +36,7 @@ export function ContactosConRutas() {
     )
 }
 
-const API_URL = 'http://localhost:4321/api/contactos'
+const API_URL = (process.env.REACT_APP_API_URL || 'http://localhost:4321/api/') + 'contactos'
 
 export function ContactosList() {
     const ROWS = 7
