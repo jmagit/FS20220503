@@ -30,10 +30,10 @@ spring:
         filters:
           - RewritePath=/catalogo, /
           - RewriteLocationResponseHeader=AS_IN_REQUEST, Location, ,
-      - id: serv-demos
+      - id: contactos-service
         predicates:
-          - Path=/demos/**
-        uri: lb://demo-service
+          - Path=/api/contactos/**
+        uri: lb://contactos-service
         filters:
           - RewritePath=/demos, /
       - id: serv-demos
@@ -45,8 +45,8 @@ spring:
       - id: serv-autentication
         predicates:
           - Path=/auth/**
-        uri: http://localhost:8091/
-#        uri: lb://autentication-service
+#        uri: http://localhost:8091/
+        uri: lb://autentication-service
         filters:
           - RewritePath=/auth, /
       - id: serv-search

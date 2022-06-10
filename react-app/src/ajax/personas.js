@@ -17,7 +17,7 @@ class PersonasMnt extends Component {
       pagina
     };
     this.idOriginal = null;
-    this.url = "http://localhost:4321/api/personas";
+    this.url = (process.env.REACT_APP_API_URL || 'http://localhost:4321/api/') + 'personas';
   }
 
   list() {
