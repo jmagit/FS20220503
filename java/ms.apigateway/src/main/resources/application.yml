@@ -34,8 +34,6 @@ spring:
         predicates:
           - Path=/api/contactos/**
         uri: lb://contactos-service
-        filters:
-          - RewritePath=/demos, /
       - id: serv-demos
         predicates:
           - Path=/demos/**
@@ -44,17 +42,18 @@ spring:
           - RewritePath=/demos, /
       - id: serv-autentication
         predicates:
-          - Path=/auth/**
-#        uri: http://localhost:8091/
+          - Path=/login/**
         uri: lb://autentication-service
-        filters:
-          - RewritePath=/auth, /
       - id: serv-search
         predicates:
           - Path=/search/**
         uri: https://www.google.com/
         filters:
           - RewritePath=/search, /
+      - id: mock-server
+        predicates:
+          - Path=/api/**
+        uri: http://localhost:4321
       - id: front-end
         predicates:
           - Path=/**
