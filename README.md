@@ -137,6 +137,15 @@ Cuaquleir tetxo se pduee leer... si se respetan la primera y la última letra de
 
 ---
 
+## Pruebas
+
+### Ejercicios
+
+1. Manual de técnicas de pruebas
+2. [Kata: Gilded Rose](https://github.com/emilybache/GildedRose-Refactoring-Kata/blob/master/GildedRoseRequirements_es.md)
+
+---
+
 ## Proyecto final
 
 ### Back End
