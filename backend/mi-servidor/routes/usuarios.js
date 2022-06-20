@@ -1,7 +1,8 @@
 const express = require('express');
+// eslint-disable-next-line no-unused-vars
 const { Sequelize, DataTypes, Op, QueryTypes } = require('sequelize');
 const { formatError, formatLocation } = require('../lib/data')
-const { sequelize, dbContext } = require('../lib/autenticacion-db')
+const { dbContext } = require('../lib/autenticacion-db')
 const security = require("../lib/security");
 
 const router = express.Router();
