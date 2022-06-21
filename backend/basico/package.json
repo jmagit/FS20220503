@@ -4,7 +4,7 @@
   "description": "Demos de NodeJS",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest"
   },
   "keywords": [
     "demos",
@@ -23,6 +23,8 @@
     "sequelize": "^6.20.1"
   },
   "devDependencies": {
+    "@types/jest": "^28.1.2",
+    "jest": "^28.1.1",
     "sequelize-auto": "^0.8.8"
   }
 }
