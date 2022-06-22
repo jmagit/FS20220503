@@ -143,6 +143,10 @@ Cuaquleir tetxo se pduee leer... si se respetan la primera y la última letra de
 
 1. Manual de técnicas de pruebas
 2. [Kata: Gilded Rose](https://github.com/emilybache/GildedRose-Refactoring-Kata/blob/master/GildedRoseRequirements_es.md)
+3. Jest para Backend: Batería de pruebas unitarias de los ejemplos básicos de NodeJS.
+4. Jest para Frontend: Batería de pruebas unitarias de la calculadora.
+5. E2E y aceptación: Batería de pruebas Postaman en el microservicio de contactos.
+6. E2E y aceptación: Batería de pruebas Selenium en el frontend de contactos.
 
 ---
 

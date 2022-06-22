@@ -16,7 +16,7 @@ describe('Pruebas de la calculadora', () => {
         });
         it.todo('Esta pa luego');
 
-        it.skip('Suma de rara', () => {
+        it('Suma rara', () => {
             let calc = new Calculadora()
 
             let resultado = calc.suma(0.1, 0.2)
@@ -29,6 +29,25 @@ describe('Pruebas de la calculadora', () => {
             test(`returns ${expected}`, () => {
                 expect(calculadora.suma(a, b)).toBe(expected);
             });
+        });
+        it('mock suma', async () => {
+            const spy = jest.spyOn(calculadora, 'suma');
+            spy.mockReturnValue(5);
+            expect(calculadora.suma(2, 2)).toBe(5);
+            expect(spy).toBeCalled();
+        });
+        it('mock resta', async () => {
+            const spy = jest.spyOn(calculadora, 'resta');
+            spy.mockReturnValue(5);
+            expect(calculadora.resta(2, 2)).toBe(5);
+            expect(spy).toBeCalled();
+        });
+        it('mock producto', async () => {
+            calculadora.multiplica = jest.fn();
+            const spy = jest.spyOn(calculadora, 'multiplica');
+            spy.mockReturnValue(5);
+            expect(calculadora.multiplica(2, 2)).toBe(5);
+            expect(spy).toBeCalled();
         });
 
     });
@@ -59,14 +78,56 @@ describe('Asíncronas', () => {
         // expect(promesa).toBeDefined()
     })
     it('leer promesa', () => {
-        expect(fs.promises.readFile(__filename, (err, data) => {
+        return fs.promises.readFile(__filename, (err, data) => {
             if (err) throw err;
-            return data.length;
-        })).resolves.toBeGreaterThan(1000)
+            expect(data.length).toBeGreaterThan(1000)
+        })
     })
 
     it('leer async', async () => {
         let data = await fs.promises.readFile(__filename)
-        expect(data.data.length).toBeGreaterThan(1000)
+        expect(data.length).toBeGreaterThan(1000)
     })
+})
+
+describe('Dobles de prueba', () => {
+    function queLLama(num, fn) {
+        return fn(num) + 5
+        //return 45
+    }
+    it('Crear función', () => {
+        const mock = jest.fn(x => 42 + x);
+
+        // expect(mock(3)).toBe(45)
+        expect(queLLama(3, mock)).toBe(50)
+        expect(mock.mock.calls.length).toBe(1)
+        expect(mock.mock.calls[0][0]).toBe(3)
+        expect(mock.mock.results[0].value).toBe(45)
+
+    })
+
+    it('Con valores predefinidos', () => {
+        const myMock = jest.fn();
+        myMock.mockReturnValue(4).mockReturnValueOnce(false).mockReturnValueOnce(true);
+        expect(myMock()).toBeFalsy()
+        expect(myMock()).toBeTruthy()
+        expect(myMock()).toBe(4)
+    })
+
+    it('promesas resueltas', async () => {
+        const asyncMock = jest.fn().mockResolvedValue(43);
+        let rslt = await asyncMock(); // 43
+        expect(rslt).toBe(43);
+    });
+    it('promesas rechazada', async () => {
+        const asyncMock = jest.fn().mockRejectedValue(new Error("fallo"));
+        //const asyncMock = jest.fn().mockResolvedValue(43);
+        try {
+            let rslt = await asyncMock();
+            fail('Tenia que haber fallado')
+        } catch (err) {
+            expect(err.message).toBe('fallo');
+        }
+    });
+
 })
