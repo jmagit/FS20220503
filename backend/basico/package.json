@@ -4,7 +4,7 @@
   "description": "Demos de NodeJS",
   "main": "app.js",
   "scripts": {
-    "test": "jest"
+    "test": "jest --collectCoverage"
   },
   "keywords": [
     "demos",

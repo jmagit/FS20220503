@@ -84,8 +84,8 @@ export class Contador extends React.Component {
         // this.state.contador = value
     }
     notifyChange(value) {
-        if (this.props.onChange) {
-            this.props.onChange(value)
+        if (this.props.onCambia) {
+            this.props.onCambia(value)
         }
     }
     render() {
@@ -93,7 +93,7 @@ export class Contador extends React.Component {
         let estilo = { color: this.state.color }
         return (
             <div className='text-center'>
-                <h1 style={estilo}>{this.state.contador}</h1>
+                <h1 data-testid="pantalla" style={estilo}>{this.state.contador}</h1>
                 <div className="btn-group" role="group">
                     <button ref={this.btnSube} onClick={this.sube} type="button" className="btn btn-primary">+</button>
                     <button onClick={this.baja} type="button" className="btn btn-primary">-</button>
@@ -123,7 +123,7 @@ export class Contador extends React.Component {
 Contador.propTypes = {
     init: PropTypes.number.isRequired,
     delta: PropTypes.number,
-    onChange: PropTypes.func,
+    onCambia: PropTypes.func,
     min: PropTypes.number,
     max: PropTypes.number,
 };
@@ -184,14 +184,14 @@ export default function Demos() {
                     target="_blank"
                     rel="noopener noreferrer"
                 >
-                    Learn React
+                    Aprende React
                 </a>
                 <h1>Secreto: {process.env.REACT_APP_API_AUTH} {/*({coordenadas.latitud}, {coordenadas.longitud} )*/}</h1>
             </header>
             <ErrorBoundary>
-                <Contador init={cont} delta={1} onChange={value => setCont(value)} />
+                <Contador init={cont} delta={1} onCambia={value => setCont(value)} />
             </ErrorBoundary>
-            <Contador init={cont} delta={1} onChange={value => setCont(value)} />
+            <Contador init={cont} delta={1} onCambia={value => setCont(value)} />
             <p>El contador vale {cont}</p>
             {elelement}
             {nombre && <h3 className='alert alert-danger'>Hola {nombre.toUpperCase()}!!!</h3>}
@@ -202,7 +202,7 @@ export default function Demos() {
                 ))}
             </ul>
             {/* <Coordenadas /> */}
-            <Calculadora coma onChange={value => setCont(value)} />
+            <Calculadora coma onCambia={value => setCont(value)} />
             <Card title="Titulo de la tarjeta">
                 <Saluda nombre="Don Pepito" edad={33} />
                 <Saluda nombre="Don Jose" />

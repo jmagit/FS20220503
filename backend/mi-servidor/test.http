@@ -165,6 +165,7 @@ get http://localhost:4200/admin/users
 ###
 
 get http://localhost:4200/admin/users/kk@kk.kk
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3IiOiJhZG1pbiIsIm5hbWUiOiJBZG1pbmlzdHJhZG9yIiwicm9sZXMiOlsiVXN1YXJpb3MiLCJBZG1pbmlzdHJhZG9yZXMiXSwiaWF0IjoxNjU1ODg0MjQ2LCJleHAiOjE2NTU4ODc4NDZ9.jNGE_jfdQhmT8MPhZpFspeQxy16KrZvPAx1aXUi3VMI
 
 ###
 
