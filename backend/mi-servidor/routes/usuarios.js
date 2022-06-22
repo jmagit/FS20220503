@@ -7,7 +7,7 @@ const security = require("../lib/security");
 
 const router = express.Router();
 
-if(process.env.NODE_ENV !== 'development')
+if (process.env.NODE_ENV !== 'development')
     router.use(security.onlyInRole('Administradores'))
 
 router.route('/')
@@ -48,26 +48,46 @@ router.route('/')
 //     }
 // })
 
+
+async function getOne(id) {
+    let row = await dbContext.Usuarios.findByPk(id, { include: 'RolesPorUsuarios' })
+    if (row) {
+        return {
+            status: 200, body: {
+                idUsuario: row.idUsuario,
+                nombre: row.nombre,
+                roles: row.RolesPorUsuarios.map(item => item.idRol),
+            }
+        }
+    } else
+        return { status: 404 }
+
+}
 router.route('/:id')
     .get(async function (req, res) { // get one
-        try {
-            let row = await dbContext.Usuarios.findByPk(req.params.id, { include: 'RolesPorUsuarios' })
-            if (row) {
-                res.json({
-                    idUsuario: row.idUsuario,
-                    nombre: row.nombre,
-                    roles: row.RolesPorUsuarios.map(item => item.idRol),
-                })
-                // res.json({
-                //     idUsuario: row.idUsuario,
-                //     nombre: row.nombre,
-                //     roles: row.roles.split(','),
-                // })
-            } else
-                res.sendStatus(404)
-        } catch (error) {
-            res.sendStatus(404)
-        }
+        let respuesta = await getOne(req.params.id)
+        if (respuesta.body)
+            res.status(respuesta.status).json(respuesta.body)
+        else
+            res.sendStatus(respuesta.status)
+        // try {
+        //     let row = await dbContext.Usuarios.findByPk(req.params.id, { include: 'RolesPorUsuarios' })
+        //     if (row) {
+        //         res.json({
+        //             idUsuario: row.idUsuario,
+        //             nombre: row.nombre,
+        //             roles: row.RolesPorUsuarios.map(item => item.idRol),
+        //         })
+        //         // res.json({
+        //         //     idUsuario: row.idUsuario,
+        //         //     nombre: row.nombre,
+        //         //     roles: row.roles.split(','),
+        //         // })
+        //     } else
+        //         res.sendStatus(404)
+        // } catch (error) {
+        //     res.sendStatus(404)
+        // }
     })
     .put(async function (req, res) { // update
         if (req.body.idUsuario && req.body.idUsuario != req.params.id) {
