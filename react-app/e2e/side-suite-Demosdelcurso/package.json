@@ -1,0 +1,25 @@
+{
+  "name": "Demosdelcurso",
+  "version": "0.0.0",
+  "jest": {
+    "extraGlobals": [],
+    "modulePaths": [
+      "C:\\Users\\javie\\AppData\\Roaming\\nvm\\v16.14.2\\node_modules\\selenium-side-runner\\node_modules",
+      "C:\\Users\\javie\\AppData\\Roaming\\nvm\\v16.14.2\\node_modules"
+    ],
+    "setupFilesAfterEnv": [
+      "C:\\Users\\javie\\AppData\\Roaming\\nvm\\v16.14.2\\node_modules\\selenium-side-runner\\node_modules\\jest-environment-selenium\\dist\\setup.js"
+    ],
+    "testEnvironment": "jest-environment-selenium",
+    "testEnvironmentOptions": {
+      "capabilities": {
+        "browserName": "firefox"
+      },
+      "params": {},
+      "runId": "1aee581e857aec281346f51308f23dc8",
+      "path": "C:\\Users\\javie\\AppData\\Roaming\\nvm\\v16.14.2\\node_modules\\",
+      "timeout": 15000
+    }
+  },
+  "dependencies": {}
+}
