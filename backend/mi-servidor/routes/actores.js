@@ -41,10 +41,13 @@ router.route('/')
         }
         try {
             let resultado = await dbContext.actor.findAll(options)
-            res.json(resultado)
+            let totalRows = await dbContext.actor.count()
+            // res.json(resultado)
+            res.json({ totalRows, page, totalPages: Math.ceil(totalRows / limit), listado: resultado})
         } catch (error) {
             res.status(400).json(formatError(error))
         }
+        
     })
     .post(async function (req, res) { // add
         let row = await dbContext.actor.build({ first_name: req.body.first_name, last_name: req.body.last_name })
