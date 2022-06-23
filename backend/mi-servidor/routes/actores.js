@@ -3,11 +3,48 @@ const { Sequelize, DataTypes, Op, QueryTypes } = require('sequelize');
 const { formatError, formatLocation } = require('../lib/data')
 const { sequelize, dbContext } = require('../lib/sakila-db')
 const security = require("../lib/security");
+const Ajv = require("ajv")
+const addFormats = require("ajv-formats")
+
+const ajv = new Ajv()
+addFormats(ajv)
+
+const schema = {
+    "type": "object",
+    "properties": {
+      "actor_id": {
+        "type": "integer"
+      },
+      "first_name": {
+        "type": "string"
+      },
+      "last_name": {
+        "type": "string"
+      },
+      "last_update": {
+        "type": "string"
+      }
+    },
+    "required": [
+      "actor_id",
+      "first_name",
+      "last_name",
+      "last_update"
+    ]
+  }
+
+const validate = ajv.compile(schema)
+
+function noSonDatosValidos(data) {
+    const valid = validate(data)
+    if (!valid) console.log(validate.errors)
+    return !valid;
+}
 
 const router = express.Router();
 
 // router.use(security.onlyAuthenticated)
-router.use(security.onlyInRole('Empleados,Administradores'))
+// router.use(security.onlyInRole('Empleados,Administradores'))
 
 // router.use(function (req, res, next) {
 //     if (!res.locals.isAuthenticated) {
@@ -76,6 +113,10 @@ router.route('/:id')
     .put(async function (req, res) { // update
         if (req.body.actor_id && req.body.actor_id != req.params.id) {
             res.status(400).json({ message: 'Invalid identifier' })
+            return
+        }
+        if(noSonDatosValidos(req.body)){
+            res.status(400).json({ message: 'Invalid format' })
             return
         }
         let row = await dbContext.actor.findByPk(req.params.id)

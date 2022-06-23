@@ -1,0 +1,530 @@
+{
+	"info": {
+		"_postman_id": "29fc7c38-c436-4f19-a4cb-d764f29fe339",
+		"name": "MockServer",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "8273928"
+	},
+	"item": [
+		{
+			"name": "Biblioteca",
+			"item": [
+				{
+					"name": "OK",
+					"item": [
+						{
+							"name": "GET",
+							"item": [
+								{
+									"name": "Get all",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 200\", function () {\r",
+													"    pm.response.to.have.status(200);\r",
+													"});\r",
+													"pm.test(\"Content-Type is present\", function () {\r",
+													"    pm.response.to.have.header(\"Content-Type\", \"application/json; charset=utf-8\");\r",
+													"    pm.response.to.have.jsonBody()\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{url_base}}/biblioteca",
+											"host": [
+												"{{url_base}}"
+											],
+											"path": [
+												"biblioteca"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Get paginado",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Cuenta filas\", function () {\r",
+													"    var jsonData = pm.response.json();\r",
+													"    pm.expect(jsonData.length).to.eql(15);\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "application/json",
+												"type": "text"
+											}
+										],
+										"url": {
+											"raw": "{{url_base}}/biblioteca?_page=1&_rows=15",
+											"host": [
+												"{{url_base}}"
+											],
+											"path": [
+												"biblioteca"
+											],
+											"query": [
+												{
+													"key": "_page",
+													"value": "1"
+												},
+												{
+													"key": "_rows",
+													"value": "15"
+												}
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Get uno",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Verifica contenido\", function () {\r",
+													"    var jsonData = pm.response.json();\r",
+													"    pm.expect(jsonData.id).to.eql(2);\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "application/json",
+												"type": "text"
+											}
+										],
+										"url": {
+											"raw": "{{url_base}}/biblioteca/2",
+											"host": [
+												"{{url_base}}"
+											],
+											"path": [
+												"biblioteca",
+												"2"
+											]
+										}
+									},
+									"response": []
+								}
+							],
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											""
+										]
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});"
+										]
+									}
+								}
+							]
+						},
+						{
+							"name": "POST",
+							"item": [
+								{
+									"name": "Crea libro",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 201\", function () {\r",
+													"    pm.response.to.have.status(201);\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"id\": 0,\r\n    \"autor\": \"Anonimo y otros\",\r\n    \"numPag\": 555,\r\n    \"titulo\": \"La biblia\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{url_base}}/biblioteca",
+											"host": [
+												"{{url_base}}"
+											],
+											"path": [
+												"biblioteca"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Modifica libro",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 200\", function () {\r",
+													"    pm.response.to.have.status(200);\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"id\": 101,\r\n    \"autor\": \"Anonimo y otros\",\r\n    \"numPag\": 555,\r\n    \"titulo\": \"LA BIBLIA\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{url_base}}/biblioteca/101",
+											"host": [
+												"{{url_base}}"
+											],
+											"path": [
+												"biblioteca",
+												"101"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Borrar libro",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 204\", function () {\r",
+													"    pm.response.to.have.status(204);\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "DELETE",
+										"header": [],
+										"url": {
+											"raw": "{{url_base}}/biblioteca/101",
+											"host": [
+												"{{url_base}}"
+											],
+											"path": [
+												"biblioteca",
+												"101"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						}
+					],
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Content-Type is present\", function () {",
+									"    pm.response.to.have.header(\"Content-Type\", \"application/json; charset=utf-8\");",
+									"    pm.response.to.have.jsonBody()",
+									"});"
+								]
+							}
+						}
+					]
+				},
+				{
+					"name": "KO",
+					"item": [
+						{
+							"name": "400",
+							"item": [
+								{
+									"name": "Modifica libro",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													""
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"id\": 101,\r\n    \"autor\": \"Anonimo y otros\",\r\n    \"numPag\": 555,\r\n    \"titulo\": \"LA BIBLIA\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{url_base}}/biblioteca/102",
+											"host": [
+												"{{url_base}}"
+											],
+											"path": [
+												"biblioteca",
+												"102"
+											]
+										}
+									},
+									"response": []
+								}
+							],
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											""
+										]
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											"pm.test(\"BAD REQUEST\", function () {",
+											"    pm.response.to.have.status(400);",
+											"});"
+										]
+									}
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "404",
+					"item": [
+						{
+							"name": "Get uno",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{url_base}}/biblioteca/kk",
+									"host": [
+										"{{url_base}}"
+									],
+									"path": [
+										"biblioteca",
+										"kk"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Borrar libro",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{url_base}}/biblioteca/kk",
+									"host": [
+										"{{url_base}}"
+									],
+									"path": [
+										"biblioteca",
+										"kk"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Modifica libro",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"id\": 101,\r\n    \"autor\": \"Anonimo y otros\",\r\n    \"numPag\": 555,\r\n    \"titulo\": \"LA BIBLIA\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url_base}}/biblioteca/0",
+									"host": [
+										"{{url_base}}"
+									],
+									"path": [
+										"biblioteca",
+										"0"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Not found\", function () {",
+									"    pm.response.to.have.status(404);",
+									"});"
+								]
+							}
+						}
+					]
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "url_base",
+			"value": "http://localhost:4321/api",
+			"type": "string"
+		}
+	]
+}

@@ -34,14 +34,14 @@ get http://localhost:4200/api/actores?page=all&rows=10&order=first_name,last_nam
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3IiOiJhZG1pbiIsIm5hbWUiOiJBZG1pbmlzdHJhZG9yIiwicm9sZXMiOlsiVXN1YXJpb3MiLCJBZG1pbmlzdHJhZG9yZXMiXSwiaWF0IjoxNjU1OTY3NjU0LCJleHAiOjE2NTU5NzEyNTR9.L1BbMqmOAY9roIFgamIqui1_923cnnLc9erNvkl_QRk
 ###
 
-get http://localhost:4200/v1/api/actores?page=5
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3IiOiJhZG1pbiIsIm5hbWUiOiJBZG1pbmlzdHJhZG9yIiwicm9sZXMiOlsiVXN1YXJpb3MiLCJBZG1pbmlzdHJhZG9yZXMiXSwiaWF0IjoxNjU1OTY3NjU0LCJleHAiOjE2NTU5NzEyNTR9.L1BbMqmOAY9roIFgamIqui1_923cnnLc9erNvkl_QRk
+get http://localhost:4200/api/actores?page=all
+
 ###
 
 get http://localhost:4200/api/actores?find=pe
 ###
 
-get http://localhost:4200/api/actores/209
+get http://localhost:4200/api/actores/1
 
 ###
 
@@ -59,15 +59,12 @@ Content-Type: application/json
 
 ###
 
-put http://localhost:4200/api/actores/207
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3IiOiJhZG1pbiIsIm5hbWUiOiJBZG1pbmlzdHJhZG9yIiwicm9sZXMiOlsiVXN1YXJpb3MiLCJBZG1pbmlzdHJhZG9yZXMiXSwiaWF0IjoxNjU0NTIzOTUwLCJleHAiOjE2NTQ1Mjc1NTB9.PJ1SrZG7KUADzR-j7R0Xyyg5GoN0DE7N9-J9TiXj0o4
-X-XSRF-TOKEN: 123456790ABCDEF
+put http://localhost:4200/api/actores/218
 Content-Type: application/json
 
 {
-  "actor_id": 207,
+  "actor_id": 218,
   "first_name": "PEPITO",
-  "last_name": "Grillo",
   "last_update": "2006-02-15T04:34:33.000Z"
 }
 

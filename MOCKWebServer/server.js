@@ -26,7 +26,7 @@ const PROP_NAME = 'idUsuario'
 const PASSWORD_PATTERN = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*\W).{8,}$/
 const USR_FILENAME = __dirname + '/data/usuarios.json'
 
-const VALIDATE_XSRF_TOKEN = true;
+const VALIDATE_XSRF_TOKEN = false;
 
 process.argv.forEach((val, index) => {
   if (val.toLocaleLowerCase().startsWith('--port='))
