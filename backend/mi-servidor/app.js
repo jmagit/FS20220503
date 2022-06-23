@@ -24,8 +24,8 @@ app.use('/v1/admin/users', require('./routes/usuarios'));
 app.use('/v1/users', require('./routes/users'));
 app.use('/v2/users', require('./routes/users'));
 app.use('/v1/demos', require('./routes/demos'));
-app.use('/v1/api/actores', require('./routes/actores'));
-app.use('/v1/api/ciudades', require('./routes/ciudades'));
+app.use('/api/actores', require('./routes/actores'));
+app.use('/api/ciudades/v1', require('./routes/ciudades'));
 
 app.use(function (req, res, next) {
   var origen = req.header("Origin")
