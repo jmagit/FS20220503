@@ -1,4 +1,8 @@
 exports.onlyAuthenticated = (req, res, next) => {
+    if(req.method === 'OPTIONS') {
+        res.sendStatus(200)
+        return
+    }
     if (!res.locals.isAuthenticated) {
         res.status(401).end()
         return
@@ -6,6 +10,10 @@ exports.onlyAuthenticated = (req, res, next) => {
     next()
 }
 exports.onlyInRole = (roles) => (req, res, next) => {
+    if(req.method === 'OPTIONS') {
+        res.sendStatus(200)
+        return
+    }    
     if (!res.locals.isAuthenticated) {
         res.status(401).end()
         return
