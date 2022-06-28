@@ -71,6 +71,10 @@ Content-Type: application/json
 ###
 
 delete http://localhost:4200/api/actores/217
+###
+
+OPTIONS  http://localhost:4200/api/actores/217
+Origin: http://localhost:3000
 
 ###
 
@@ -196,6 +200,6 @@ Accept: application/xml
 
 ###
 
-http://localhost:8010/actores
+get http://localhost:8010/actores
 Accept: application/xml
 

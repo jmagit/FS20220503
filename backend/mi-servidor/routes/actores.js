@@ -43,8 +43,8 @@ function noSonDatosValidos(data) {
 
 const router = express.Router();
 
-// router.use(security.onlyAuthenticated)
-// router.use(security.onlyInRole('Empleados,Administradores'))
+router.use(security.onlyAuthenticated)
+router.use(security.onlyInRole('Empleados,Administradores'))
 
 // router.use(function (req, res, next) {
 //     if (!res.locals.isAuthenticated) {
