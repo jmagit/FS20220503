@@ -50,28 +50,19 @@ export function ContactosList() {
         setPagina(+searchParams.get('page') || 0);
     useEffect(() => {
         axios
-            .get(`${API_URL}?_page=count&_rows=${ROWS}`)
+            .get(`${API_URL}?_page=${pagina}&_rows=${ROWS}&_sort=nombre,apellidos`)
             .then(resp => {
-                let totalPaginas = resp.data.pages;
-                let paginaActual = pagina < totalPaginas ? pagina : totalPaginas - 1;
-                axios.get(`${API_URL}?_page=${paginaActual}&_rows=${ROWS}`)
-                    .then((response) => {
-                        setList(response.data);
-                        setLoading(false);
-                        if (paginaActual !== pagina) setPagina(paginaActual);
-                        if (totalPaginas !== paginas) setPaginas(totalPaginas);
-                    })
-                    .catch((err) => {
-                        store.AddErrNotify(err);
-                        if (paginaActual !== pagina) setPagina(paginaActual);
-                        if (totalPaginas !== paginas) setPaginas(totalPaginas);
-                        setLoading(false);
-                    });
+                let totalPaginas = resp.data.totalPages;
+                let paginaActual = resp.data.number - 1;
+                setList(resp.data.content);
+                setLoading(false);
+                if (paginaActual !== pagina) setPagina(paginaActual);
+                if (totalPaginas !== paginas) setPaginas(totalPaginas);
             }).catch(err => {
                 store.AddErrNotify(err);
                 setLoading(false);
             });
-    }, [pagina, paginas]);
+    }, [pagina]);
 
     const borrar = () => { }
 
@@ -147,7 +138,7 @@ export function ContactoView() {
                 store.AddErrNotify(err);
                 setLoading(false);
             });
-    }, [elemento]);
+    }, [id]);
 
     if (loading) return <Esperando />;
 
@@ -213,7 +204,7 @@ export function ContactoEdit() {
                 store.AddErrNotify(err);
                 setLoading(false);
             });
-    }, [elemento]);
+    }, [id]);
 
     const send = elemento => {
         setLoading(true)
