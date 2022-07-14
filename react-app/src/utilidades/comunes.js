@@ -1,7 +1,7 @@
 import { Component, useState, useEffect, useRef } from "react";
 import { NavLink } from 'react-router-dom';
 import './comunes.css';
-import loading from '../imagenes/loading.gif';
+import loadingImage from '../imagenes/loading.gif';
 
 export class ErrorBoundary extends Component {
   constructor(props) {
@@ -26,13 +26,11 @@ export class ErrorBoundary extends Component {
   }
 }
 
-export class Esperando extends Component {
-  render() {
+export function Esperando() {
     return <div>
       <div className="ajax-wait"></div>
-      <img className="ajax-wait" src={loading} alt="Cargando ..." />
+      <img className="ajax-wait" src={loadingImage} alt="Cargando ..." />
     </div>;
-  }
 }
 
 export function PageNotFound() {

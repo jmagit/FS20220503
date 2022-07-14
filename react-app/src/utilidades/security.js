@@ -53,13 +53,13 @@ export const LoginComponent = () => {
     if (auth.isAuth)
         return (
             <div>
-                Hola {auth.name} <input className="btn btn-outline-success" type="button btn-sm" value="logout" onClick={onLogout} />
+                Hola {auth.name} <input className="btn btn-outline-success btn-sm" type="button" value="logout" onClick={onLogout} />
             </div>
         );
     return (
         <form className="text-end d-flex justify-content-end flex-wrap flex-sm-nowrap">
-            <input type="text" value={usr} onChange={(e) => setUser(e.target.value)} placeholder='Usuario' className="form-control form-control-sm" />
-            <input type="password" value={pwd} onChange={(e) => setPwd(e.target.value)} placeholder='Contraseña' className="form-control form-control-sm" />
+            <input type="text" value={usr} onChange={(e) => setUser(e.target.value)} placeholder='Usuario' className="form-control form-control-sm" autoComplete="username" />
+            <input type="password" value={pwd} onChange={(e) => setPwd(e.target.value)} placeholder='Contraseña' className="form-control form-control-sm" autoComplete="current-password" />
             <input className="btn btn-outline-success btn-sm" type="button" value="login" onClick={onLogin} />
         </form>
     );
