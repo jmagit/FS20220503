@@ -1,9 +1,10 @@
 import { Component, useEffect, useState } from 'react';
 import { NavLink, Outlet, useParams, Routes, Route, useNavigate, useSearchParams } from 'react-router-dom';
 import axios from "axios";
-import { Esperando, PageNotFound, Paginacion } from '../utilidades/comunes';
+import { Esperando, Paginacion } from '../utilidades/comunes';
 import { esPasado } from '../utilidades/biblioteca';
 import store from "../store/store";
+import userNotFoundImage from '../imagenes/user-not-found.png';
 
 function ValidationMessage({ msg }) {
     if (msg) {
@@ -38,16 +39,22 @@ export function ContactosConRutas() {
 
 const API_URL = (process.env.REACT_APP_API_URL || 'http://localhost:4321/api/') + 'contactos'
 
+const onImageError = ({ currentTarget }) => {
+    currentTarget.onerror = null; // prevents looping
+    currentTarget.src = userNotFoundImage;
+}
+
+
 export function ContactosList() {
     const ROWS = 7
+    const pageParams = +useSearchParams()[0].get('page') || 0;
     const [list, setList] = useState([]);
     const [loading, setLoading] = useState(true);
-    const [searchParams, setSearchParams] = useSearchParams();
-    const [pagina, setPagina] = useState({ pagina: +searchParams.get('page') || 0 })
+    const [pagina, setPagina] = useState({ pagina: pageParams })
     const [paginas, setPaginas] = useState(0)
-    //console.log({ pagina, paginas, page: searchParams.get('page') || 0 })
-    if (pagina !== (+searchParams.get('page') || 0))
-        setPagina(+searchParams.get('page') || 0);
+    const navigate = useNavigate();
+    if (pagina !== pageParams)
+        setPagina(pageParams);
     useEffect(() => {
         axios
             .get(`${API_URL}?_page=${pagina}&_rows=${ROWS}&_sort=nombre,apellidos`)
@@ -64,7 +71,19 @@ export function ContactosList() {
             });
     }, [pagina]);
 
-    const borrar = () => { }
+    const borrar = key => {
+        if (!window.confirm("¿Seguro?")) return;
+        setLoading(true)
+        axios
+            .delete(`${API_URL}/${key}`)
+            .then(_resp => {
+                // setLoading(false);
+                navigate(0)
+            }).catch(err => {
+                store.AddErrNotify(err);
+                setLoading(false);
+            });
+    }
 
     if (loading) return <Esperando />;
 
@@ -84,7 +103,9 @@ export function ContactosList() {
                                 <div className="container-fluid">
                                     <div className="row">
                                         <div className="col-12 col-sm-2">
-                                            <img className="rounded-circle float-left" src={item.avatar} alt={`Foto de ${item.nombre} ${item.apellidos}`} width="75" height="75" />
+                                            <img className="rounded-circle float-left" src={item.avatar || userNotFoundImage}
+                                                alt={`Foto de ${item.nombre} ${item.apellidos || ''}`} width="75" height="75"
+                                                onError={onImageError} />
                                         </div>
                                         <div className="col-12 col-sm-10 container-fluid">
                                             <div className="row">
@@ -123,22 +144,21 @@ export function ContactosList() {
         </>
     );
 }
+
 export function ContactoView() {
     const { id } = useParams()
     const navigate = useNavigate();
-    const [elemento, setElemento] = useState([]);
-    const [loading, setLoading] = useState(true);
+    const [{ elemento, loading }, setEstado] = useState({ elemento: {}, loading: true });
     useEffect(() => {
         axios.get(`${API_URL}/${id}`)
             .then((response) => {
-                setElemento(response.data);
-                setLoading(false);
+                setEstado({ elemento: response.data, loading: false })
             })
             .catch((err) => {
                 store.AddErrNotify(err);
-                setLoading(false);
+                setEstado({ elemento: {}, loading: false })
             });
-    }, [id]);
+    }, []);
 
     if (loading) return <Esperando />;
 
@@ -149,22 +169,21 @@ export function ContactoView() {
                     <div className="well well-sm">
                         <div className="row">
                             <div className="col-sm-6 col-md-4">
-                                <img src={elemento.avatar}
-                                    alt={`Foto de ${elemento.nombre} ${elemento.apellidos}`} className="rounded" />
+                                <img src={elemento.avatar || userNotFoundImage}
+                                    alt={`Foto de ${elemento.nombre} ${elemento.apellidos || ''}`} className="rounded"
+                                    onError={onImageError} />
                             </div>
                             <div className="col-sm-6 col-md-8">
-                                <h4>{elemento.tratamiento} {elemento.nombre} {elemento.apellidos}</h4>
+                                <h4><img src={elemento.icono} alt="icono" />&nbsp;{elemento.tratamiento} {elemento.nombre} {elemento.apellidos}</h4>
                                 {elemento.conflictivo &&
                                     <p><small className="text-danger">
-                                        <i className="fas fa-skull-crossbones mr-2"></i>Persona conflictiva</small></p>}
+                                        <i className="fas fa-skull-crossbones mr-2">&nbsp;</i>Persona conflictiva</small></p>}
                                 <p>
-                                    <i className="fas fa-phone-alt mr-2"></i>{elemento.telefono}
+                                    <i className="fas fa-phone-alt mr-2">&nbsp;</i>{elemento.telefono}
                                     <br />
-                                    <i className="fas fa-envelope mr-2"></i>
-                                    <a href="mailto:{elemento.email}}">{elemento.email}</a>
+                                    <i className="fas fa-envelope mr-2"></i>&nbsp;<a href="mailto:{elemento.email}}">{elemento.email}</a>
                                     <br />
-                                    <i className="fas fa-gifts mr-2"></i>{elemento.nacimiento && new Date(elemento.nacimiento).toLocaleDateString()}
-                                    <i className="fas fa-gifts mr-2"></i>{elemento.nacimiento}
+                                    <i className="fas fa-gifts mr-2">&nbsp;</i>{elemento.nacimiento && new Date(elemento.nacimiento).toLocaleDateString()}
                                 </p>
                                 <div className="btn-group">
                                     <button type="button" className="btn btn-primary">
@@ -189,6 +208,7 @@ export function ContactoView() {
         </>
     )
 }
+
 export function ContactoEdit() {
     const { id } = useParams()
     const navigate = useNavigate();
@@ -204,7 +224,7 @@ export function ContactoEdit() {
                 store.AddErrNotify(err);
                 setLoading(false);
             });
-    }, [id]);
+    }, []);
 
     const send = elemento => {
         setLoading(true)
@@ -226,15 +246,8 @@ export function ContactoEdit() {
             onSend={e => send(e)}
         />
     );
-
-    // return (
-    //     <>
-    //         <p>Formulario de editar el contacto {id}</p>
-    //         <p>{JSON.stringify(elemento)}</p>
-    //         <input type="button" value="Volver" onClick={() => navigate(-1)} />
-    //     </>
-    // )
 }
+
 export function ContactoAdd() {
     const navigate = useNavigate();
     const [loading, setLoading] = useState(false);

@@ -19,11 +19,11 @@ export default function MainHeader() {
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="me-auto">
               <Nav.Item><NavLink className="nav-link" to="/">inicio</NavLink></Nav.Item>
-              {isAuthenticated && <Nav.Item><NavLink className="nav-link" to="/contactos">contactos</NavLink></Nav.Item>}
+              <Nav.Item><NavLink className="nav-link" to="/contactos">contactos</NavLink></Nav.Item>
               {isAdministrador && <Nav.Item><NavLink className="nav-link" to="/personas">personas</NavLink></Nav.Item>}
               {isEmpleado && <Nav.Item><NavLink className="nav-link" to="/blog">blog</NavLink></Nav.Item>}
               <Nav.Item><NavLink className="nav-link" to="/chisme/de/hacer/numeros">calculadora</NavLink></Nav.Item>
-              <Nav.Item><NavLink className="nav-link" to="/muro">muro</NavLink></Nav.Item>
+              {isAuthenticated && <Nav.Item><NavLink className="nav-link" to="/muro">muro</NavLink></Nav.Item>}
               <Nav.Item><NavLink className="nav-link" to="/formularios">formulario</NavLink></Nav.Item>
               <Nav.Item><NavLink className="nav-link" to="/falsa.html">html</NavLink></Nav.Item>
               <Nav.Item><NavLink className="nav-link" to="/cont">cont</NavLink></Nav.Item>

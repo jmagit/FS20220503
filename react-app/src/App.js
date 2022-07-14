@@ -31,7 +31,7 @@ export default function App() {
             <Route path='/chisme/de/hacer/numeros' element={<Calculadora />} />
             <Route path='/calculadora' element={<Navigate to='/chisme/de/hacer/numeros' />} />
             <Route path='/formularios' element={<Formulario />} />
-            <Route path='/muro' element={<FotoMuro />} />
+            {isAuthenticated && <Route path='/muro' element={<FotoMuro />} />}
             <Route path='/falsa.html' element={<FotoMuroEx />} />
             {/* 
               /personas --> list
@@ -40,13 +40,13 @@ export default function App() {
               /personas/add  --> add
              */}
             {/* <Route path='/personas' element={<PersonasRoute />}> */}
-            {true && <Route path='/personas'>
+            {isAdministrador && <Route path='/personas'>
               <Route index element={<PersonasMnt />} />
               <Route path='add' element={<PersonasMnt />} />
               <Route path=':id' element={<PersonasMnt />} />
               <Route path=':id/edit' element={<PersonasMnt />} />
             </Route>}
-            {isAuthenticated && <Route path='/contactos/*' element={<ContactosConRutas />} />}
+            <Route path='/contactos/*' element={<ContactosConRutas />} />
             {/* <Route path='/contactos' element={<Outlet />}>
               <Route index element={<ContactosList />} />
               <Route path='add' element={<ContactoAdd />} />
