@@ -4,7 +4,8 @@ import axios from "axios";
 import { Esperando, Paginacion } from '../utilidades/comunes';
 import { esPasado } from '../utilidades/biblioteca';
 import store from "../store/store";
-import userNotFoundImage from '../imagenes/user-not-found.png';
+import userNotFoundMaleImage from '../imagenes/user-not-found-male.png';
+import userNotFoundFemaleImage from '../imagenes/user-not-found-female.png';
 
 function ValidationMessage({ msg }) {
     if (msg) {
@@ -39,9 +40,9 @@ export function ContactosConRutas() {
 
 const API_URL = (process.env.REACT_APP_API_URL || 'http://localhost:4321/api/') + 'contactos'
 
-const onImageError = ({ currentTarget }) => {
+const onImageErrora = ({ currentTarget }) => {
     currentTarget.onerror = null; // prevents looping
-    currentTarget.src = userNotFoundImage;
+    currentTarget.src = userNotFoundMaleImage;
 }
 
 
@@ -103,9 +104,12 @@ export function ContactosList() {
                                 <div className="container-fluid">
                                     <div className="row">
                                         <div className="col-12 col-sm-2">
-                                            <img className="rounded-circle float-left" src={item.avatar || userNotFoundImage}
+                                            <img className="rounded-circle float-left" src={item.avatar || (item.sexo === 'H' ? userNotFoundMaleImage : userNotFoundFemaleImage)}
                                                 alt={`Foto de ${item.nombre} ${item.apellidos || ''}`} width="75" height="75"
-                                                onError={onImageError} />
+                                                onError={({ currentTarget }) => {
+                                                    currentTarget.onerror = null; // prevents looping
+                                                    currentTarget.src = item.sexo === 'H' ? userNotFoundMaleImage : userNotFoundFemaleImage;
+                                                }} />
                                         </div>
                                         <div className="col-12 col-sm-10 container-fluid">
                                             <div className="row">
@@ -169,9 +173,12 @@ export function ContactoView() {
                     <div className="well well-sm">
                         <div className="row">
                             <div className="col-sm-6 col-md-4">
-                                <img src={elemento.avatar || userNotFoundImage}
+                                <img src={elemento.avatar || (elemento.sexo === "H" ? userNotFoundMaleImage : userNotFoundFemaleImage)}
                                     alt={`Foto de ${elemento.nombre} ${elemento.apellidos || ''}`} className="rounded"
-                                    onError={onImageError} />
+                                    onError={({ currentTarget }) => {
+                                        currentTarget.onerror = null; // prevents looping
+                                        currentTarget.src = elemento.sexo === 'H' ? userNotFoundMaleImage : userNotFoundFemaleImage;
+                                    }} />
                             </div>
                             <div className="col-sm-6 col-md-8">
                                 <h4><img src={elemento.icono} alt="icono" />&nbsp;{elemento.tratamiento} {elemento.nombre} {elemento.apellidos}</h4>
@@ -268,7 +275,7 @@ export function ContactoAdd() {
     return (
         <ContactosForm
             isAdd
-            elemento={{}}
+            elemento={{ id: 0, sexo: 'H'}}
             onCancel={() => navigate(-1)}
             onSend={e => send(e)}
         />
