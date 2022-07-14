@@ -275,7 +275,7 @@ export function ContactoAdd() {
     return (
         <ContactosForm
             isAdd
-            elemento={{ id: 0, sexo: 'H'}}
+            elemento={{ id: 0, sexo: 'H' }}
             onCancel={() => navigate(-1)}
             onSend={e => send(e)}
         />
@@ -287,6 +287,7 @@ export class ContactosForm extends Component {
         super(props);
         this.state = { elemento: props.elemento, msgErr: [], invalid: false };
         this.handleChange = this.handleChange.bind(this);
+        this.fileChange = this.fileChange.bind(this);
         this.onSend = () => {
             if (this.props.onSend) this.props.onSend(this.state.elemento);
         };
@@ -303,6 +304,25 @@ export class ContactosForm extends Component {
         });
         this.validar();
     }
+    fileChange(event) {
+        let component = this;
+        let file = event.target.files[0];
+        let reader = new FileReader();
+        reader.readAsDataURL(file);
+
+        reader.onload = function () {
+            console.log(reader.result);
+            component.setState(prev => {
+                prev.elemento.icono = reader.result;
+                return { elemento: prev.elemento };
+            });
+        };
+
+        reader.onerror = function () {
+            console.log(reader.error);
+        };
+    }
+    
     validarCntr(cntr) {
         if (cntr.name) {
             // eslint-disable-next-line default-case
@@ -450,6 +470,13 @@ export class ContactosForm extends Component {
                     <input className={"form-control" + (this.state.msgErr.avatar ? " is-invalid" : "")} type="url" name="avatar" id="avatar"
                         value={this.state.elemento.avatar} onChange={this.handleChange} />
                     <ValidationMessage msg={this.state.msgErr.avatar} />
+                </div >
+                <div className="form-group">
+                    <label className="form-label" htmlFor="avatar">Icono:</label>
+                    <input className={"form-control" + (this.state.msgErr.icono ? " is-invalid" : "")} type="file" name="icono" id="icono"
+                        onChange={this.fileChange}  accept="image/*" />
+                    <ValidationMessage msg={this.state.msgErr.icono} />
+                    <img src={this.state.elemento.icono} alt="icono" />
                 </div >
 
                 <div className="form-group">
