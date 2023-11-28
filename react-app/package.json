@@ -45,6 +45,9 @@
     ]
   },
   "devDependencies": {
-    "chromedriver": "^102.0.0"
+    "chromedriver": "^119.0.1
+
+
+"
   }
 }
