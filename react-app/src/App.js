@@ -31,7 +31,7 @@ export default function App() {
             <Route path='/chisme/de/hacer/numeros' element={<Calculadora />} />
             <Route path='/calculadora' element={<Navigate to='/chisme/de/hacer/numeros' />} />
             <Route path='/formularios' element={<Formulario />} />
-            {isAuthenticated && <Route path='/muro' element={<FotoMuro />} />}
+            <Route path='/muro' element={<FotoMuro />} />
             <Route path='/falsa.html' element={<FotoMuroEx />} />
             {/* 
               /personas --> list
