@@ -109,11 +109,11 @@ export class Contador extends React.Component {
     }
     componentDidMount() {
         // console.log('componentDidMount')
-        this.btnSube.current.focus()
+        // this.btnSube.current.focus()
     }
     componentDidUpdate() {
         // console.log('componentDidUpdate')
-        this.btnSube.current.focus()
+        // this.btnSube.current.focus()
         // if (this.state.contador % 2)
         //     this.btnSube.current.textContent = 'SUBE'
         // else

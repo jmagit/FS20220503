@@ -23,7 +23,7 @@ export default function MainHeader() {
               {isAdministrador && <Nav.Item><NavLink className="nav-link" to="/personas">personas</NavLink></Nav.Item>}
               {isEmpleado && <Nav.Item><NavLink className="nav-link" to="/blog">blog</NavLink></Nav.Item>}
               <Nav.Item><NavLink className="nav-link" to="/chisme/de/hacer/numeros">calculadora</NavLink></Nav.Item>
-              {isAuthenticated && <Nav.Item><NavLink className="nav-link" to="/muro">muro</NavLink></Nav.Item>}
+              <Nav.Item><NavLink className="nav-link" to="/muro">muro</NavLink></Nav.Item>
               <Nav.Item><NavLink className="nav-link" to="/formularios">formulario</NavLink></Nav.Item>
               <Nav.Item><NavLink className="nav-link" to="/falsa.html">html</NavLink></Nav.Item>
               <Nav.Item><NavLink className="nav-link" to="/cont">cont</NavLink></Nav.Item>
